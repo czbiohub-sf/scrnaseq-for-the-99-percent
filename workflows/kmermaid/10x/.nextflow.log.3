@@ -1,0 +1,161 @@
+Nov-03 15:10:12.432 [main] DEBUG nextflow.cli.Launcher - $> nextflow run /home/olga/code/nf-core/kmermaid--olgabot-khtools-extract-coding -latest -profile czbiohub_local,docker --bam /home/olga/data_sm/tabula-microcebus/rawdata/aligned_micmur3/10x/antoine__180917_A00111_0211_AHGKCVDMXX/ANTOINE_LUNG_P3/ANTOINE_LUNG_P3/outs/possorted_genome_bam.bam --custom_config_base /home/olga/code/nf-core/configs --molecules dna,protein,dayhoff --peptide_fasta /home/olga/data_lg/czbiohub-reference/ensembl/release-97/fasta/homo_sapiens/pep/Homo_sapiens.GRCh38.pep.all.fa.gz --ksizes 21 --log2_sketch_sizes 10,12,14,16 --bloomfilter_tablesize 1e8 --extract_coding_peptide_ksize 11 --extract_coding_peptide_molecule dayhoff --outdir /home/olga/data_sm/tabula-microcebus/kmermaid/dayhoff_ksize11/antoine__180917_A00111_0211_AHGKCVDMXX/ANTOINE_LUNG_P3/ANTOINE_LUNG_P3/ --extract_coding_jaccard_threshold 0.5 -work-dir /home/olga/pureScratch/nextflow-intermediates/ -resume
+Nov-03 15:10:12.561 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 19.04.1
+Nov-03 15:10:13.518 [main] INFO  nextflow.cli.CmdRun - Launching `/home/olga/code/nf-core/kmermaid--olgabot-khtools-extract-coding/main.nf` [irreverent_volhard] - revision: c8df179f01
+Nov-03 15:10:13.532 [main] DEBUG nextflow.config.ConfigBuilder - Found config base: /home/olga/code/nf-core/kmermaid--olgabot-khtools-extract-coding/nextflow.config
+Nov-03 15:10:13.533 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/olga/code/nf-core/kmermaid--olgabot-khtools-extract-coding/nextflow.config
+Nov-03 15:10:13.542 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `czbiohub_local,docker`
+Nov-03 15:10:14.422 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [uppmax_devel, bigpurple, uppmax, test_bam, docker, gis, ccga, conda, singularity, munin, prince, czbiohub_aws, hebbe, cfc, uzh, debug, test, czbiohub_local, crick, czbiohub_aws_highpriority, phoenix, shh, mendel, uct_hex, awsbatch, binac]
+Nov-03 15:10:14.477 [main] DEBUG nextflow.Session - Session uuid: ead34009-a863-4ad2-9297-d33730942da7
+Nov-03 15:10:14.477 [main] DEBUG nextflow.Session - Run name: irreverent_volhard
+Nov-03 15:10:14.478 [main] DEBUG nextflow.Session - Executor pool size: 128
+Nov-03 15:10:14.496 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 19.04.1 build 5072
+  Modified: 03-05-2019 12:29 UTC (05:29 PDT)
+  System: Linux 4.4.0-165-generic
+  Runtime: Groovy 2.5.6 on OpenJDK 64-Bit Server VM 1.8.0_222-8u222-b10-1ubuntu1~16.04.1-b10
+  Encoding: UTF-8 (UTF-8)
+  Process: 70115@ndnd [192.168.99.28]
+  CPUs: 128 - Mem: 2 TB (40.4 GB) - Swap: 2 TB (2 TB)
+Nov-03 15:10:14.553 [main] DEBUG nextflow.Session - Work-dir: /home/olga/pureScratch/nextflow-intermediates [nfs]
+Nov-03 15:10:14.801 [main] DEBUG nextflow.Session - Session start invoked
+Nov-03 15:10:14.812 [main] DEBUG nextflow.processor.TaskDispatcher - Dispatcher > start
+Nov-03 15:10:14.814 [main] DEBUG nextflow.trace.TraceFileObserver - Flow starting -- trace file: /home/olga/data_sm/tabula-microcebus/kmermaid/dayhoff_ksize11/antoine__180917_A00111_0211_AHGKCVDMXX/ANTOINE_LUNG_P3/ANTOINE_LUNG_P3/pipeline_info/execution_trace.txt
+Nov-03 15:10:14.832 [main] DEBUG nextflow.script.ScriptRunner - > Script parsing
+Nov-03 15:10:15.512 [main] WARN  nextflow.Session - There's no process matching config selector: sourmash_compute_sketch_fastx -- Did you mean: sourmash_compute_sketch_bam?
+Nov-03 15:10:15.513 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Nov-03 15:10:15.700 [main] INFO  nextflow.Nextflow - [2m----------------------------------------------------[0m
+                                        [0;32m,--.[0;30m/[0;32m,-.[0m
+[0;34m        ___     __   __   __   ___     [0;32m/,-._.--~'[0m
+[0;34m  |\ | |__  __ /  ` /  \ |__) |__         [0;33m}  {[0m
+[0;34m  | \| |       \__, \__/ |  \ |___     [0;32m\`-._,-`-,[0m
+                                        [0;32m`._,._,'[0m
+[0;35m  nf-core/kmer-similarity v1.0dev[0m
+[2m----------------------------------------------------[0m
+
+Nov-03 15:10:15.704 [main] INFO  nextflow.Nextflow - Run Name          : irreverent_volhard
+BAM               : /home/olga/data_sm/tabula-microcebus/rawdata/aligned_micmur3/10x/antoine__180917_A00111_0211_AHGKCVDMXX/ANTOINE_LUNG_P3/ANTOINE_LUNG_P3/outs/possorted_genome_bam.bam
+K-mer sizes       : 21
+Molecule          : dna,protein,dayhoff
+Log2 Sketch Sizes : 10,12,14,16
+One Sig per Record: false
+Bam chunk line count: 350
+Count valid reads : 0
+Saved Fastas      : fastas
+Barcode umi read metadata: false
+Max Resources     : 512 GB memory, 32 cpus, 10d time per job
+Container         : docker - nfcore/kmermaid:dev
+Output dir        : /home/olga/data_sm/tabula-microcebus/kmermaid/dayhoff_ksize11/antoine__180917_A00111_0211_AHGKCVDMXX/ANTOINE_LUNG_P3/ANTOINE_LUNG_P3/
+Launch dir        : /home/olga/code/tabula-microcebus-extract-coding/workflows/kmermaid/10x
+Working dir       : /home/olga/pureScratch/nextflow-intermediates
+Script dir        : /home/olga/code/nf-core/kmermaid--olgabot-khtools-extract-coding
+User              : root
+Config Profile    : czbiohub_local,docker
+Config Description: Chan Zuckerberg Biohub AWS Batch profile provided by nf-core/configs.
+Config Contact    : Olga Botvinnik (@olgabot)
+Config URL        : https://www.czbiohub.org/
+Nov-03 15:10:15.705 [main] INFO  nextflow.Nextflow - [0m----------------------------------------------------[0m
+Nov-03 15:10:15.772 [main] DEBUG nextflow.util.CacheHelper - Config settings `withName:multiqc|get_software_versions` matches process get_software_versions
+Nov-03 15:10:15.775 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+Nov-03 15:10:15.775 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Nov-03 15:10:15.782 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Nov-03 15:10:15.785 [main] INFO  nextflow.executor.Executor - [warm up] executor > local
+Nov-03 15:10:15.789 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=32; memory=512 GB; capacity=128; pollInterval=100ms; dumpInterval=5m
+Nov-03 15:10:15.794 [main] DEBUG nextflow.processor.TaskDispatcher - Starting monitor: LocalPollingMonitor
+Nov-03 15:10:15.795 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Nov-03 15:10:15.798 [main] DEBUG nextflow.executor.Executor - Invoke register for executor: local
+Nov-03 15:10:15.833 [main] DEBUG nextflow.Session - >>> barrier register (process: get_software_versions)
+Nov-03 15:10:15.835 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > get_software_versions -- maxForks: 128
+Nov-03 15:10:15.897 [main] DEBUG nextflow.util.CacheHelper - Config settings `withLabel:low_memory` matches label `low_memory` for process with name peptide_bloom_filter
+Nov-03 15:10:15.899 [main] DEBUG nextflow.util.CacheHelper - Config settings `withName:peptide_bloom_filter|extract_coding` matches process peptide_bloom_filter
+Nov-03 15:10:15.902 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+Nov-03 15:10:15.902 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Nov-03 15:10:15.904 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Nov-03 15:10:15.905 [main] DEBUG nextflow.Session - >>> barrier register (process: peptide_bloom_filter)
+Nov-03 15:10:15.908 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > peptide_bloom_filter -- maxForks: 128
+Nov-03 15:10:15.949 [main] DEBUG nextflow.util.CacheHelper - Config settings `withLabel:high_memory` matches label `high_memory` for process with name sourmash_compute_sketch_bam
+Nov-03 15:10:15.950 [main] DEBUG nextflow.util.CacheHelper - Config settings `withName:sourmash_compute_sketch_bam` matches process sourmash_compute_sketch_bam
+Nov-03 15:10:15.950 [main] WARN  nextflow.util.CacheHelper - Unknown directive `one_signature_per_record` for process `sourmash_compute_sketch_bam`
+Nov-03 15:10:15.951 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+Nov-03 15:10:15.951 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Nov-03 15:10:15.951 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Nov-03 15:10:15.955 [main] DEBUG nextflow.Session - >>> barrier register (process: sourmash_compute_sketch_bam)
+Nov-03 15:10:15.960 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > sourmash_compute_sketch_bam -- maxForks: 128
+Nov-03 15:10:16.008 [main] DEBUG nextflow.util.CacheHelper - Config settings `withLabel:low_memory` matches label `low_memory` for process with name extract_coding
+Nov-03 15:10:16.009 [main] DEBUG nextflow.util.CacheHelper - Config settings `withName:peptide_bloom_filter|extract_coding` matches process extract_coding
+Nov-03 15:10:16.012 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+Nov-03 15:10:16.012 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Nov-03 15:10:16.012 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Nov-03 15:10:16.017 [main] DEBUG nextflow.Session - >>> barrier register (process: extract_coding)
+Nov-03 15:10:16.017 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > extract_coding -- maxForks: 128
+Nov-03 15:10:16.050 [main] DEBUG nextflow.util.CacheHelper - Config settings `withLabel:mid_memory` matches label `mid_memory` for process with name sourmash_compute_sketch_fastx_nucleotide
+Nov-03 15:10:16.052 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+Nov-03 15:10:16.052 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Nov-03 15:10:16.052 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Nov-03 15:10:16.066 [main] DEBUG nextflow.Session - >>> barrier register (process: sourmash_compute_sketch_fastx_nucleotide)
+Nov-03 15:10:16.068 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [0, 1]
+Nov-03 15:10:16.081 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > sourmash_compute_sketch_fastx_nucleotide -- maxForks: 128
+Nov-03 15:10:16.101 [main] DEBUG nextflow.util.CacheHelper - Config settings `withLabel:mid_memory` matches label `mid_memory` for process with name sourmash_compute_sketch_fastx_peptide
+Nov-03 15:10:16.103 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+Nov-03 15:10:16.103 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Nov-03 15:10:16.103 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Nov-03 15:10:16.105 [main] DEBUG nextflow.Session - >>> barrier register (process: sourmash_compute_sketch_fastx_peptide)
+Nov-03 15:10:16.106 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [0, 1, 2]
+Nov-03 15:10:16.107 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > sourmash_compute_sketch_fastx_peptide -- maxForks: 128
+Nov-03 15:10:16.141 [main] DEBUG nextflow.util.CacheHelper - Config settings `withLabel:high_memory` matches label `high_memory` for process with name sourmash_compare_sketches
+Nov-03 15:10:16.142 [main] DEBUG nextflow.util.CacheHelper - Config settings `withName:sourmash_compare_sketches` matches process sourmash_compare_sketches
+Nov-03 15:10:16.142 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+Nov-03 15:10:16.142 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Nov-03 15:10:16.143 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Nov-03 15:10:16.144 [main] DEBUG nextflow.Session - >>> barrier register (process: sourmash_compare_sketches)
+Nov-03 15:10:16.145 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > sourmash_compare_sketches -- maxForks: 128
+Nov-03 15:10:16.149 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Nov-03 15:10:16.150 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
+Nov-03 15:10:16.150 [main] DEBUG nextflow.Session - Session await
+Nov-03 15:10:16.158 [Task submitter] INFO  nextflow.Session - [7c/1641d2] Submitted process > peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)
+Nov-03 15:10:16.194 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Nov-03 15:10:16.195 [Task submitter] INFO  nextflow.Session - [54/b32d17] Submitted process > get_software_versions
+Nov-03 15:10:16.220 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Nov-03 15:10:16.221 [Task submitter] INFO  nextflow.Session - [62/1b666d] Submitted process > sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)
+Nov-03 15:10:18.820 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 1; name: get_software_versions; status: COMPLETED; exit: 0; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/54/b32d173c3588bbcf3b44cb9de1be47]
+Nov-03 15:10:18.916 [Actor Thread 1] DEBUG nextflow.Session - <<< barrier arrive (process: get_software_versions)
+Nov-03 15:11:05.622 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 2; name: peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11); status: COMPLETED; exit: 0; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/7c/1641d29334daa7e7fe9453d7939aed]
+Nov-03 15:11:05.635 [Actor Thread 1] DEBUG nextflow.Session - <<< barrier arrive (process: peptide_bloom_filter)
+Nov-03 15:15:15.965 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/62/1b666db7202ad9588aa83a37e548fa]
+Nov-03 15:20:10.806 [SIGINT handler] DEBUG nextflow.Session - Session aborted -- Cause: SIGINT
+Nov-03 15:20:10.846 [SIGINT handler] DEBUG nextflow.Session - The following nodes are still active:
+[process] extract_coding
+  status=ACTIVE
+  port 0: (value) bound ; channel: -
+  port 1: (queue) OPEN  ; channel: -
+  port 2: (cntrl) -     ; channel: $
+
+[process] sourmash_compute_sketch_fastx_nucleotide
+  status=ACTIVE
+  port 0: (value) bound ; channel: __$eachinparam<0>
+  port 1: (value) bound ; channel: __$eachinparam<1>
+  port 2: (queue) OPEN  ; channel: -
+  port 3: (cntrl) -     ; channel: $
+
+[process] sourmash_compute_sketch_fastx_peptide
+  status=ACTIVE
+  port 0: (value) bound ; channel: __$eachinparam<0>
+  port 1: (value) bound ; channel: __$eachinparam<1>
+  port 2: (value) bound ; channel: __$eachinparam<2>
+  port 3: (queue) OPEN  ; channel: -
+  port 4: (cntrl) -     ; channel: $
+
+[process] sourmash_compare_sketches
+  status=ACTIVE
+  port 0: (queue) OPEN  ; channel: -
+  port 1: (cntrl) -     ; channel: $
+
+Nov-03 15:20:10.851 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local)
+Nov-03 15:20:10.853 [main] DEBUG nextflow.Session - Session await > all process finished
+Nov-03 15:20:10.853 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Nov-03 15:20:10.982 [main] INFO  nextflow.Nextflow - [0;35m[nf-core/kmermaid][0;31m Pipeline completed with errors[0m
+Nov-03 15:20:10.993 [main] WARN  n.processor.TaskPollingMonitor - Killing pending tasks (1)
+Nov-03 15:20:11.008 [main] DEBUG nextflow.trace.StatsObserver - Workflow completed > WorkflowStats[succeedCount=2; failedCount=1; ignoredCount=0; cachedCount=0; succeedDuration=48.5s; failedDuration=0ms; cachedDuration=0ms]
+Nov-03 15:20:11.009 [main] DEBUG nextflow.trace.TraceFileObserver - Flow completing -- flushing trace file
+Nov-03 15:20:11.015 [main] DEBUG nextflow.trace.ReportObserver - Flow completing -- rendering html report
+Nov-03 15:20:11.051 [SIGINT handler] INFO  nextflow.Session - Adieu

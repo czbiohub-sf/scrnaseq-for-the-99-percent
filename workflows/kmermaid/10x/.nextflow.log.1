@@ -1,0 +1,552 @@
+Nov-03 15:20:58.287 [main] DEBUG nextflow.cli.Launcher - $> nextflow run nf-core/kmermaid -r olgabot/khtools-extract-coding -latest -profile czbiohub_local,docker --bam /home/olga/data_sm/tabula-microcebus/rawdata/aligned_micmur3/10x/antoine__180917_A00111_0211_AHGKCVDMXX/ANTOINE_LUNG_P3/ANTOINE_LUNG_P3/outs/possorted_genome_bam.bam --custom_config_base /home/olga/code/nf-core/configs --molecules dna,protein,dayhoff --peptide_fasta /home/olga/data_lg/czbiohub-reference/ensembl/release-97/fasta/homo_sapiens/pep/Homo_sapiens.GRCh38.pep.all.fa.gz --ksizes 21 --log2_sketch_sizes 10,12,14,16 --bloomfilter_tablesize 1e8 --extract_coding_peptide_ksize 11 --extract_coding_peptide_molecule dayhoff --outdir /home/olga/data_sm/tabula-microcebus/kmermaid/dayhoff_ksize11/antoine__180917_A00111_0211_AHGKCVDMXX/ANTOINE_LUNG_P3/ANTOINE_LUNG_P3/ --extract_coding_jaccard_threshold 0.5 -work-dir /home/olga/pureScratch/nextflow-intermediates/ -resume
+Nov-03 15:20:58.422 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 19.04.1
+Nov-03 15:20:59.410 [main] DEBUG nextflow.scm.AssetManager - Git config: /home/olga/.nextflow/assets/nf-core/kmermaid/.git/config; branch: master; remote: origin; url: https://github.com/nf-core/kmermaid.git
+Nov-03 15:20:59.419 [main] DEBUG nextflow.scm.AssetManager - Git config: /home/olga/.nextflow/assets/nf-core/kmermaid/.git/config; branch: master; remote: origin; url: https://github.com/nf-core/kmermaid.git
+Nov-03 15:20:59.420 [main] INFO  nextflow.cli.CmdRun - Pulling nf-core/kmermaid ...
+Nov-03 15:20:59.420 [main] DEBUG nextflow.scm.AssetManager - Pull pipeline nf-core/kmermaid  -- Using local path: /home/olga/.nextflow/assets/nf-core/kmermaid
+Nov-03 15:21:00.413 [main] INFO  nextflow.cli.CmdRun -  Already-up-to-date
+Nov-03 15:21:00.465 [main] DEBUG nextflow.scm.AssetManager - Git config: /home/olga/.nextflow/assets/nf-core/kmermaid/.git/config; branch: master; remote: origin; url: https://github.com/nf-core/kmermaid.git
+Nov-03 15:21:00.465 [main] INFO  nextflow.cli.CmdRun - Launching `nf-core/kmermaid` [cranky_almeida] - revision: 26588f6495 [olgabot/khtools-extract-coding]
+Nov-03 15:21:00.488 [main] DEBUG nextflow.config.ConfigBuilder - Found config base: /home/olga/.nextflow/assets/nf-core/kmermaid/nextflow.config
+Nov-03 15:21:00.489 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /home/olga/code/tabula-microcebus-extract-coding/workflows/kmermaid/10x/nextflow.config
+Nov-03 15:21:00.490 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/olga/.nextflow/assets/nf-core/kmermaid/nextflow.config
+Nov-03 15:21:00.490 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/olga/code/tabula-microcebus-extract-coding/workflows/kmermaid/10x/nextflow.config
+Nov-03 15:21:00.505 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `czbiohub_local,docker`
+Nov-03 15:21:01.234 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `czbiohub_local,docker`
+Nov-03 15:21:01.263 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [uppmax_devel, bigpurple, uppmax, test_bam, docker, gis, ccga, conda, singularity, munin, prince, czbiohub_aws, hebbe, cfc, uzh, debug, test, czbiohub_local, crick, czbiohub_aws_highpriority, phoenix, shh, mendel, uct_hex, awsbatch, binac]
+Nov-03 15:21:01.319 [main] DEBUG nextflow.Session - Session uuid: ead34009-a863-4ad2-9297-d33730942da7
+Nov-03 15:21:01.319 [main] DEBUG nextflow.Session - Run name: cranky_almeida
+Nov-03 15:21:01.320 [main] DEBUG nextflow.Session - Executor pool size: 128
+Nov-03 15:21:01.338 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 19.04.1 build 5072
+  Modified: 03-05-2019 12:29 UTC (05:29 PDT)
+  System: Linux 4.4.0-165-generic
+  Runtime: Groovy 2.5.6 on OpenJDK 64-Bit Server VM 1.8.0_222-8u222-b10-1ubuntu1~16.04.1-b10
+  Encoding: UTF-8 (UTF-8)
+  Process: 69577@ndnd [192.168.99.28]
+  CPUs: 128 - Mem: 2 TB (82.4 GB) - Swap: 2 TB (2 TB)
+Nov-03 15:21:01.545 [main] DEBUG nextflow.Session - Work-dir: /home/olga/pureScratch/nextflow-intermediates [nfs]
+Nov-03 15:21:03.260 [main] DEBUG nextflow.Session - Session start invoked
+Nov-03 15:21:03.265 [main] DEBUG nextflow.processor.TaskDispatcher - Dispatcher > start
+Nov-03 15:21:03.266 [main] DEBUG nextflow.trace.TraceFileObserver - Flow starting -- trace file: /home/olga/data_sm/tabula-microcebus/kmermaid/dayhoff_ksize11/antoine__180917_A00111_0211_AHGKCVDMXX/ANTOINE_LUNG_P3/ANTOINE_LUNG_P3/pipeline_info/execution_trace.txt
+Nov-03 15:21:03.587 [main] DEBUG nextflow.script.ScriptRunner - > Script parsing
+Nov-03 15:21:04.393 [main] WARN  nextflow.Session - There's no process matching config selector: sourmash_compute_sketch_fastx -- Did you mean: sourmash_compute_sketch_bam?
+Nov-03 15:21:04.396 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Nov-03 15:21:04.678 [main] INFO  nextflow.Nextflow - [2m----------------------------------------------------[0m
+                                        [0;32m,--.[0;30m/[0;32m,-.[0m
+[0;34m        ___     __   __   __   ___     [0;32m/,-._.--~'[0m
+[0;34m  |\ | |__  __ /  ` /  \ |__) |__         [0;33m}  {[0m
+[0;34m  | \| |       \__, \__/ |  \ |___     [0;32m\`-._,-`-,[0m
+                                        [0;32m`._,._,'[0m
+[0;35m  nf-core/kmer-similarity v1.0dev[0m
+[2m----------------------------------------------------[0m
+
+Nov-03 15:21:04.685 [main] INFO  nextflow.Nextflow - Pipeline Release  : olgabot/khtools-extract-coding
+Run Name          : cranky_almeida
+BAM               : /home/olga/data_sm/tabula-microcebus/rawdata/aligned_micmur3/10x/antoine__180917_A00111_0211_AHGKCVDMXX/ANTOINE_LUNG_P3/ANTOINE_LUNG_P3/outs/possorted_genome_bam.bam
+K-mer sizes       : 21
+Molecule          : dna,protein,dayhoff
+Log2 Sketch Sizes : 10,12,14,16
+One Sig per Record: false
+Bam chunk line count: 350
+Count valid reads : 0
+Saved Fastas      : fastas
+Barcode umi read metadata: false
+Max Resources     : 512 GB memory, 32 cpus, 10d time per job
+Container         : docker - nfcore/kmermaid:dev
+Output dir        : /home/olga/data_sm/tabula-microcebus/kmermaid/dayhoff_ksize11/antoine__180917_A00111_0211_AHGKCVDMXX/ANTOINE_LUNG_P3/ANTOINE_LUNG_P3/
+Launch dir        : /home/olga/code/tabula-microcebus-extract-coding/workflows/kmermaid/10x
+Working dir       : /home/olga/pureScratch/nextflow-intermediates
+Script dir        : /home/olga/.nextflow/assets/nf-core/kmermaid
+User              : root
+Config Profile    : czbiohub_local,docker
+Config Description: Chan Zuckerberg Biohub AWS Batch profile provided by nf-core/configs.
+Config Contact    : Olga Botvinnik (@olgabot)
+Config URL        : https://www.czbiohub.org/
+Nov-03 15:21:04.686 [main] INFO  nextflow.Nextflow - [0m----------------------------------------------------[0m
+Nov-03 15:21:04.813 [main] DEBUG nextflow.util.CacheHelper - Config settings `withName:multiqc|get_software_versions` matches process get_software_versions
+Nov-03 15:21:04.815 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+Nov-03 15:21:04.815 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Nov-03 15:21:04.822 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Nov-03 15:21:04.824 [main] INFO  nextflow.executor.Executor - [warm up] executor > local
+Nov-03 15:21:04.828 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=32; memory=512 GB; capacity=128; pollInterval=100ms; dumpInterval=5m
+Nov-03 15:21:04.833 [main] DEBUG nextflow.processor.TaskDispatcher - Starting monitor: LocalPollingMonitor
+Nov-03 15:21:04.834 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Nov-03 15:21:04.837 [main] DEBUG nextflow.executor.Executor - Invoke register for executor: local
+Nov-03 15:21:04.874 [main] DEBUG nextflow.Session - >>> barrier register (process: get_software_versions)
+Nov-03 15:21:04.877 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > get_software_versions -- maxForks: 128
+Nov-03 15:21:04.960 [main] DEBUG nextflow.util.CacheHelper - Config settings `withLabel:low_memory` matches label `low_memory` for process with name peptide_bloom_filter
+Nov-03 15:21:04.965 [main] DEBUG nextflow.util.CacheHelper - Config settings `withName:peptide_bloom_filter|extract_coding` matches process peptide_bloom_filter
+Nov-03 15:21:04.966 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+Nov-03 15:21:04.966 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Nov-03 15:21:04.966 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Nov-03 15:21:04.969 [main] DEBUG nextflow.Session - >>> barrier register (process: peptide_bloom_filter)
+Nov-03 15:21:04.970 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > peptide_bloom_filter -- maxForks: 128
+Nov-03 15:21:05.013 [main] DEBUG nextflow.util.CacheHelper - Config settings `withLabel:high_memory` matches label `high_memory` for process with name sourmash_compute_sketch_bam
+Nov-03 15:21:05.014 [main] DEBUG nextflow.util.CacheHelper - Config settings `withName:sourmash_compute_sketch_bam` matches process sourmash_compute_sketch_bam
+Nov-03 15:21:05.015 [main] WARN  nextflow.util.CacheHelper - Unknown directive `one_signature_per_record` for process `sourmash_compute_sketch_bam`
+Nov-03 15:21:05.016 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+Nov-03 15:21:05.016 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Nov-03 15:21:05.016 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Nov-03 15:21:05.019 [main] DEBUG nextflow.Session - >>> barrier register (process: sourmash_compute_sketch_bam)
+Nov-03 15:21:05.020 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > sourmash_compute_sketch_bam -- maxForks: 128
+Nov-03 15:21:05.053 [main] DEBUG nextflow.util.CacheHelper - Config settings `withLabel:low_memory` matches label `low_memory` for process with name extract_coding
+Nov-03 15:21:05.054 [main] DEBUG nextflow.util.CacheHelper - Config settings `withName:peptide_bloom_filter|extract_coding` matches process extract_coding
+Nov-03 15:21:05.057 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+Nov-03 15:21:05.058 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Nov-03 15:21:05.058 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Nov-03 15:21:05.061 [main] DEBUG nextflow.Session - >>> barrier register (process: extract_coding)
+Nov-03 15:21:05.062 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > extract_coding -- maxForks: 128
+Nov-03 15:21:05.081 [main] DEBUG nextflow.util.CacheHelper - Config settings `withLabel:mid_memory` matches label `mid_memory` for process with name sourmash_compute_sketch_fastx_nucleotide
+Nov-03 15:21:05.082 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+Nov-03 15:21:05.082 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Nov-03 15:21:05.082 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Nov-03 15:21:05.087 [main] DEBUG nextflow.Session - >>> barrier register (process: sourmash_compute_sketch_fastx_nucleotide)
+Nov-03 15:21:05.089 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [0, 1]
+Nov-03 15:21:05.103 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > sourmash_compute_sketch_fastx_nucleotide -- maxForks: 128
+Nov-03 15:21:05.111 [main] DEBUG nextflow.util.CacheHelper - Config settings `withLabel:mid_memory` matches label `mid_memory` for process with name sourmash_compute_sketch_fastx_peptide
+Nov-03 15:21:05.112 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+Nov-03 15:21:05.113 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Nov-03 15:21:05.113 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Nov-03 15:21:05.114 [main] DEBUG nextflow.Session - >>> barrier register (process: sourmash_compute_sketch_fastx_peptide)
+Nov-03 15:21:05.115 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [0, 1, 2]
+Nov-03 15:21:05.116 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > sourmash_compute_sketch_fastx_peptide -- maxForks: 128
+Nov-03 15:21:05.138 [main] DEBUG nextflow.util.CacheHelper - Config settings `withLabel:high_memory` matches label `high_memory` for process with name sourmash_compare_sketches
+Nov-03 15:21:05.139 [main] DEBUG nextflow.util.CacheHelper - Config settings `withName:sourmash_compare_sketches` matches process sourmash_compare_sketches
+Nov-03 15:21:05.139 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+Nov-03 15:21:05.139 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Nov-03 15:21:05.150 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Nov-03 15:21:05.151 [main] DEBUG nextflow.Session - >>> barrier register (process: sourmash_compare_sketches)
+Nov-03 15:21:05.151 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > sourmash_compare_sketches -- maxForks: 128
+Nov-03 15:21:05.154 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
+Nov-03 15:21:05.154 [main] DEBUG nextflow.Session - Session await
+Nov-03 15:21:05.647 [Actor Thread 5] INFO  nextflow.processor.TaskProcessor - [7c/1641d2] Cached process > peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)
+Nov-03 15:21:05.678 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Nov-03 15:21:05.686 [Task submitter] INFO  nextflow.Session - [df/17588e] Submitted process > get_software_versions
+Nov-03 15:21:05.715 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Nov-03 15:21:05.716 [Task submitter] INFO  nextflow.Session - [0f/36f7ed] Submitted process > sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)
+Nov-03 15:21:05.830 [Actor Thread 10] DEBUG nextflow.Session - <<< barrier arrive (process: peptide_bloom_filter)
+Nov-03 15:21:09.414 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 1; name: get_software_versions; status: COMPLETED; exit: 0; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/df/17588e84540451c4db025556eae02b]
+Nov-03 15:21:09.419 [Actor Thread 10] DEBUG nextflow.Session - <<< barrier arrive (process: get_software_versions)
+Nov-03 15:26:04.953 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 15:31:05.006 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 15:36:05.046 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 15:41:05.085 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 15:46:05.103 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 15:51:05.197 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 15:56:05.221 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 16:01:05.245 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 16:06:05.279 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 16:11:05.337 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 16:16:05.369 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 16:21:05.387 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 16:26:05.472 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 16:31:05.566 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 16:36:05.574 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 16:41:05.661 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 16:46:05.757 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 16:51:05.847 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 16:56:05.941 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 17:01:05.965 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 17:06:05.969 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 17:11:06.052 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 17:16:06.128 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 17:21:06.154 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 17:26:06.237 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 17:31:06.333 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 17:36:06.423 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 17:41:06.436 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 17:46:06.534 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 17:51:06.539 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 17:56:06.558 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 18:01:06.560 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 18:06:06.571 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 18:11:06.572 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 18:16:06.591 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 18:21:06.607 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 18:26:06.657 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 18:31:06.728 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 18:36:06.770 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 18:41:06.827 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 18:46:06.877 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 18:51:06.929 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 18:56:06.989 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 19:01:07.057 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 19:06:07.115 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 19:11:07.179 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 19:16:07.239 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 19:21:07.298 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 19:26:07.357 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 19:31:07.415 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 19:36:07.472 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 19:41:07.509 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 19:46:07.544 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 19:51:07.597 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 19:56:07.663 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 20:01:07.737 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 20:06:07.812 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 20:11:07.887 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 20:16:07.917 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 20:21:07.948 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 20:26:07.979 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 20:31:08.027 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 20:36:08.080 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 20:41:08.130 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 20:46:08.182 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 20:51:08.253 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 20:56:08.320 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 21:01:08.387 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 21:06:08.433 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 21:11:08.475 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 21:16:08.524 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 21:21:08.566 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 21:26:08.610 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 21:31:08.657 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 21:36:08.690 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 21:41:08.735 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 21:46:08.756 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 21:51:08.766 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 21:56:08.858 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 22:01:08.933 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 22:06:08.937 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 22:11:08.958 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 22:16:09.049 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 22:21:09.132 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 22:25:30.543 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 3; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: COMPLETED; exit: 1; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/0f/36f7edd1863878ff23a4c747c2e81d]
+Nov-03 22:25:30.563 [Task monitor] INFO  nextflow.processor.TaskProcessor - [0f/36f7ed] NOTE: Process `sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)` terminated with an error exit status (1) -- Execution is retried (1)
+Nov-03 22:25:30.600 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Nov-03 22:25:30.601 [Task submitter] INFO  nextflow.Session - [1c/b4f769] Re-submitted process > sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)
+Nov-03 22:26:09.193 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 22:31:09.239 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 22:36:09.278 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 22:41:09.297 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 22:46:09.324 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 22:51:09.354 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 22:56:09.369 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 23:01:09.395 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 23:06:09.415 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 23:11:09.438 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 23:16:09.464 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 23:21:09.501 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 23:26:09.528 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 23:31:09.563 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 23:36:09.581 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 23:41:09.604 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 23:46:09.654 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 23:51:09.697 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-03 23:56:09.758 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 00:01:09.824 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 00:06:09.856 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 00:11:09.890 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 00:16:09.932 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 00:21:09.971 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 00:26:09.994 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 00:31:10.016 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 00:36:10.042 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 00:41:10.081 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 00:46:10.110 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 00:51:10.168 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 00:56:10.215 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 01:01:10.281 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 01:06:10.342 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 01:11:10.393 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 01:16:10.415 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 01:21:10.468 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 01:26:10.548 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 01:31:10.593 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 01:36:10.678 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 01:41:10.738 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 01:46:10.769 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 01:51:10.792 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 01:56:10.861 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 02:01:10.884 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 02:06:10.887 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 02:11:10.888 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 02:16:10.988 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 02:21:11.019 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 02:26:11.058 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 02:31:11.081 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 02:36:11.105 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 02:41:11.141 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 02:46:11.185 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 02:51:11.226 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 02:56:11.252 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 03:01:11.283 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 03:06:11.317 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 03:11:11.335 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 03:16:11.347 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 03:21:11.375 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 03:26:11.390 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 03:31:11.425 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 03:36:11.453 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 03:41:11.484 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 03:46:11.510 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 03:51:11.538 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 03:56:11.599 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 04:01:11.666 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 04:06:11.705 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 04:11:11.752 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 04:16:11.778 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 04:21:11.809 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 04:26:11.839 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: RUNNING; exit: -; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 04:29:45.830 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 4; name: sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10); status: COMPLETED; exit: 1; error: -; workDir: /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5]
+Nov-04 04:29:45.894 [Task monitor] ERROR nextflow.processor.TaskProcessor - Error executing process > 'sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)'
+
+Caused by:
+  Process `sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)` terminated with an error exit status (1)
+
+Command executed:
+
+  sourmash compute \
+    --ksize 21 \
+    --dna \
+     \
+    --num-hashes $((2**10)) \
+    --processes 32 \
+    --count-valid-reads 0 \
+    --line-count 350 \
+     \
+     \
+    --save-fastas . \
+     \
+    --output possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10.sig \
+    --input-is-10x possorted_genome_bam.bam
+  find . -type f -name "*.fasta" | while read src; do if [[ $src == *"|"* ]]; then mv "$src" $(echo "$src" | tr "|" "_"); fi done
+
+Command exit status:
+  1
+
+Command output:
+  (empty)
+
+Command error:
+  385018218it [5:24:57, 19305.21it/s]
+  385020154it [5:24:57, 18632.53it/s]
+  385022079it [5:24:57, 18707.53it/s]
+  385023956it [5:24:57, 18336.06it/s]
+  385025940it [5:24:57, 18724.69it/s]
+  385027819it [5:24:57, 18663.82it/s]
+  385029802it [5:24:57, 18631.38it/s]
+  385031877it [5:24:57, 19141.33it/s]
+  385033797it [5:24:57, 18604.88it/s]
+  385035760it [5:24:58, 18900.91it/s]
+  385037657it [5:24:58, 18336.40it/s]
+  385039630it [5:24:58, 18558.35it/s]
+  385041705it [5:24:58, 19165.53it/s]
+  385043631it [5:24:58, 18932.62it/s]
+  385045532it [5:24:58, 18821.15it/s]
+  385047420it [5:24:58, 18601.51it/s]
+  385049457it [5:24:58, 19039.14it/s]
+  385051193it [5:24:58, 19747.42it/s]
+  multiprocess.pool.RemoteTraceback: 
+  """
+  Traceback (most recent call last):
+    File "/opt/conda/envs/nfcore-kmermaid-0.1dev/lib/python3.6/site-packages/multiprocess/pool.py", line 119, in worker
+      result = (True, func(*args, **kwds))
+    File "/opt/conda/envs/nfcore-kmermaid-0.1dev/lib/python3.6/site-packages/multiprocess/pool.py", line 44, in mapstar
+      return list(map(*args))
+    File "/opt/conda/envs/nfcore-kmermaid-0.1dev/lib/python3.6/site-packages/bam2fasta/cli.py", line 289, in <lambda>
+      lambda x: func(x.encode('utf-8')),
+    File "/opt/conda/envs/nfcore-kmermaid-0.1dev/lib/python3.6/site-packages/bam2fasta/tenx_utils.py", line 213, in bam_to_temp_fasta
+      filenames = list(set(write_cell_sequences(cell_sequences, delimiter)))
+    File "/opt/conda/envs/nfcore-kmermaid-0.1dev/lib/python3.6/site-packages/bam2fasta/tenx_utils.py", line 249, in write_cell_sequences
+      with open(filename, "a") as f:
+  OSError: [Errno 28] No space left on device: '/tmp/tmpoxumgy9g/CGCCAAGAGAGTAATC-1.fasta'
+  """
+  
+  The above exception was the direct cause of the following exception:
+  
+  Traceback (most recent call last):
+    File "/opt/conda/envs/nfcore-kmermaid-0.1dev/bin/sourmash", line 8, in <module>
+      sys.exit(main())
+    File "/opt/conda/envs/nfcore-kmermaid-0.1dev/lib/python3.6/site-packages/sourmash/__main__.py", line 83, in main
+      cmd(sys.argv[2:])
+    File "/opt/conda/envs/nfcore-kmermaid-0.1dev/lib/python3.6/site-packages/sourmash/command_compute.py", line 309, in compute
+      fastas = bam2fasta_cli.convert(bam_to_fasta_args)
+    File "/opt/conda/envs/nfcore-kmermaid-0.1dev/lib/python3.6/site-packages/bam2fasta/cli.py", line 290, in convert
+      filenames, chunksize=chunksize))))
+    File "/opt/conda/envs/nfcore-kmermaid-0.1dev/lib/python3.6/site-packages/multiprocess/pool.py", line 320, in <genexpr>
+      return (item for chunk in result for item in chunk)
+    File "/opt/conda/envs/nfcore-kmermaid-0.1dev/lib/python3.6/site-packages/multiprocess/pool.py", line 735, in next
+      raise value
+  OSError: [Errno 28] No space left on device: '/tmp/tmpoxumgy9g/CGCCAAGAGAGTAATC-1.fasta'
+
+Work dir:
+  /home/olga/pureScratch/nextflow-intermediates/1c/b4f769b576791ee0f5a78e44ad72f5
+
+Tip: when you have fixed the problem you can continue the execution appending to the nextflow command line the option `-resume`
+Nov-04 04:29:45.902 [Actor Thread 10] DEBUG nextflow.Session - <<< barrier arrive (process: sourmash_compute_sketch_bam)
+Nov-04 04:29:45.907 [Actor Thread 10] DEBUG nextflow.Session - <<< barrier arrive (process: extract_coding)
+Nov-04 04:29:45.916 [Actor Thread 16] DEBUG nextflow.Session - <<< barrier arrive (process: sourmash_compute_sketch_fastx_peptide)
+Nov-04 04:29:45.918 [Actor Thread 17] DEBUG nextflow.Session - <<< barrier arrive (process: sourmash_compute_sketch_fastx_nucleotide)
+Nov-04 04:29:45.919 [Task monitor] DEBUG nextflow.Session - Session aborted -- Cause: Process `sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)` terminated with an error exit status (1)
+Nov-04 04:29:45.967 [Actor Thread 10] DEBUG nextflow.Session - <<< barrier arrive (process: sourmash_compare_sketches)
+Nov-04 04:29:45.967 [main] DEBUG nextflow.Session - Session await > all process finished
+Nov-04 04:29:46.046 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Nov-04 04:29:46.049 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local)
+Nov-04 04:29:46.206 [main] INFO  nextflow.Nextflow - [0;35m[nf-core/kmermaid][0;31m Pipeline completed with errors[0m
+Nov-04 04:29:46.214 [main] DEBUG nextflow.trace.StatsObserver - Workflow completed > WorkflowStats[succeedCount=1; failedCount=2; ignoredCount=0; cachedCount=1; succeedDuration=802ms; failedDuration=8d 18h 18m 38s; cachedDuration=47.7s]
+Nov-04 04:29:46.214 [main] DEBUG nextflow.trace.TraceFileObserver - Flow completing -- flushing trace file
+Nov-04 04:29:46.217 [main] DEBUG nextflow.trace.ReportObserver - Flow completing -- rendering html report
+Nov-04 04:29:46.287 [main] DEBUG nextflow.trace.ReportObserver - Execution report summary data:
+  {"sourmash_compute_sketch_bam":{"cpu":null,"mem":null,"vmem":null,"time":{"mean":23659946,"min":21855186,"q1":22757566,"q2":23659946,"q3":24562326,"max":25464706,"minLabel":"sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)","maxLabel":"sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)","q1Label":"sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)","q2Label":"sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)","q3Label":"sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)"},"reads":null,"writes":null,"cpuUsage":null,"memUsage":null,"timeUsage":{"mean":63.18,"min":37.94,"q1":50.56,"q2":63.18,"q3":75.8,"max":88.42,"minLabel":"sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)","maxLabel":"sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)","q1Label":"sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)","q2Label":"sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)","q3Label":"sourmash_compute_sketch_bam (possorted_genome_bam_molecule-dna_ksize-21_log2sketchsize-10)"}},"peptide_bloom_filter":{"cpu":{"mean":102.4,"min":102.4,"q1":102.4,"q2":102.4,"q3":102.4,"max":102.4,"minLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","maxLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q1Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q2Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q3Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)"},"mem":{"mean":245469184,"min":245469184,"q1":245469184,"q2":245469184,"q3":245469184,"max":245469184,"minLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","maxLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q1Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q2Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q3Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)"},"vmem":{"mean":2968510464,"min":2968510464,"q1":2968510464,"q2":2968510464,"q3":2968510464,"max":2968510464,"minLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","maxLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q1Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q2Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q3Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)"},"time":{"mean":47654,"min":47654,"q1":47654,"q2":47654,"q3":47654,"max":47654,"minLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","maxLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q1Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q2Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q3Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)"},"reads":{"mean":84324767,"min":84324767,"q1":84324767,"q2":84324767,"q3":84324767,"max":84324767,"minLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","maxLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q1Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q2Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q3Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)"},"writes":{"mean":100024260,"min":100024260,"q1":100024260,"q2":100024260,"q3":100024260,"max":100024260,"minLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","maxLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q1Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q2Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q3Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)"},"cpuUsage":{"mean":102.4,"min":102.4,"q1":102.4,"q2":102.4,"q3":102.4,"max":102.4,"minLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","maxLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q1Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q2Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q3Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)"},"memUsage":{"mean":1.43,"min":1.43,"q1":1.43,"q2":1.43,"q3":1.43,"max":1.43,"minLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","maxLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q1Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q2Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q3Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)"},"timeUsage":{"mean":0.66,"min":0.66,"q1":0.66,"q2":0.66,"q3":0.66,"max":0.66,"minLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","maxLabel":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q1Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q2Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)","q3Label":"peptide_bloom_filter (Homo_sapiens.GRCh38.pep.all.fa.gz__molecule-dayhoff_ksize-11)"}},"get_software_versions":{"cpu":{"mean":213.6,"min":213.6,"q1":213.6,"q2":213.6,"q3":213.6,"max":213.6,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"},"mem":{"mean":12845056,"min":12845056,"q1":12845056,"q2":12845056,"q3":12845056,"max":12845056,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"},"vmem":{"mean":48091136,"min":48091136,"q1":48091136,"q2":48091136,"q3":48091136,"max":48091136,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"},"time":{"mean":802,"min":802,"q1":802,"q2":802,"q3":802,"max":802,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"},"reads":{"mean":13015458,"min":13015458,"q1":13015458,"q2":13015458,"q3":13015458,"max":13015458,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"},"writes":{"mean":13308,"min":13308,"q1":13308,"q2":13308,"q3":13308,"max":13308,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"},"cpuUsage":{"mean":213.6,"min":213.6,"q1":213.6,"q2":213.6,"q3":213.6,"max":213.6,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"},"memUsage":{"mean":0.6,"min":0.6,"q1":0.6,"q2":0.6,"q3":0.6,"max":0.6,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"},"timeUsage":{"mean":0.01,"min":0.01,"q1":0.01,"q2":0.01,"q3":0.01,"max":0.01,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"}}}
+Nov-04 04:29:47.012 [main] DEBUG nextflow.trace.TimelineObserver - Flow completing -- rendering html timeline
+Nov-04 04:29:47.334 [main] DEBUG nextflow.CacheDB - Closing CacheDB done
+Nov-04 04:29:47.349 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye
