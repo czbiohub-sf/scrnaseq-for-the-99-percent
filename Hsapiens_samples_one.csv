@@ -1,0 +1,7 @@
+sample_id,reads_1
+AGER_1,/home/ntpierce/2020-simulate-rnaseq/output_simreads/simulate_reads/Homo_sapiens_Ensembl_GRCh37/AGER/AGER_01.fq.gz
+GNAS_1,/home/ntpierce/2020-simulate-rnaseq/output_simreads/simulate_reads/Homo_sapiens_Ensembl_GRCh37/GNAS/GNAS_01.fq.gz
+CDKN2A_1,/home/ntpierce/2020-simulate-rnaseq/output_simreads/simulate_reads/Homo_sapiens_Ensembl_GRCh37/CDKN2A/CDKN2A_01.fq.gz
+CSF2RA_1,/home/ntpierce/2020-simulate-rnaseq/output_simreads/simulate_reads/Homo_sapiens_Ensembl_GRCh37/CSF2RA/CSF2RA_01.fq.gz
+GNRHR_1,/home/ntpierce/2020-simulate-rnaseq/output_simreads/simulate_reads/Homo_sapiens_Ensembl_GRCh37/GNRHR/GNRHR_01.fq.gz
+XBP1_1,/home/ntpierce/2020-simulate-rnaseq/output_simreads/simulate_reads/Homo_sapiens_Ensembl_GRCh37/XBP1/XBP1_01.fq.gz
