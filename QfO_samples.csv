@@ -1,0 +1,6 @@
+sample_id,reads_1
+QfO_Hsapiens_DNA_1,/home/ntpierce/2020-simulate-rnaseq/output_simreads/simulate_reads/QfO_Hsapiens_DNA/QfO_Hsapiens_DNA_01.fq.gz
+QfO_Hsapiens_DNA_2,/home/ntpierce/2020-simulate-rnaseq/output_simreads/simulate_reads/QfO_Hsapiens_DNA/QfO_Hsapiens_DNA_02.fq.gz
+QfO_Hsapiens_DNA_3,/home/ntpierce/2020-simulate-rnaseq/output_simreads/simulate_reads/QfO_Hsapiens_DNA/QfO_Hsapiens_DNA_03.fq.gz
+QfO_Hsapiens_DNA_4,/home/ntpierce/2020-simulate-rnaseq/output_simreads/simulate_reads/QfO_Hsapiens_DNA/QfO_Hsapiens_DNA_04.fq.gz
+QfO_Hsapiens_DNA_5,/home/ntpierce/2020-simulate-rnaseq/output_simreads/simulate_reads/QfO_Hsapiens_DNA/QfO_Hsapiens_DNA_05.fq.gz
