@@ -15,5 +15,6 @@
 #nextflow run /home/ntpierce/nf-predictorthologs -c ucdavis-farm.profile,config/test.config #Hsapiens_genes.config #,ucdavis-farm.config
 
 
-nextflow run /home/ntpierce/nf-predictorthologs -c ucdavis-farm.profile,config/Hsapiens_genes.config 
+#nextflow run /home/ntpierce/nf-predictorthologs -c ucdavis-farm.profile,config/Hsapiens_genes.config -resume
+nextflow run /home/ntpierce/nf-predictorthologs -c ucdavis-farm.profile,config/QfO_Hsapiens_DNA.config -resume
 
