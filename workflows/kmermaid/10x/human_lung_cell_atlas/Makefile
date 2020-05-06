@@ -7,7 +7,6 @@ PEPTIDE_FASTA=/home/olga/data_lg/czbiohub-reference/uniprot/releases/2019_11/man
 SOFTLINK_DIR=/home/olga/data_sm/tabula-microcebus/rawdata/tenx/lung-soft-links//human
 
 COMMON_FLAGS=		nf-core/kmermaid \
-		-r olgabot/10x-tgz \
 		-latest \
 		-profile docker \
 		-work-dir ${WORK} \
@@ -26,6 +25,7 @@ COMMON_FLAGS=		nf-core/kmermaid \
 firstrun:
 	nextflow run \
 		${COMMON_FLAGS} \
+		-r olgabot/10x-tgz \
 		--tenx_tgz ${DIR}/'**.tgz' \
 		--outdir ${OUT}/$@
 
@@ -33,5 +33,13 @@ firstrun:
 normal_lung_only:
 	nextflow run \
 		${COMMON_FLAGS} \
+		-r olgabot/10x-tgz \
+		--tenx_tgz ${SOFTLINK_DIR}/'**.tgz' \
+		--outdir ${OUT}/$@
+
+normal_lung_only_dev:
+	nextflow run \
+		${COMMON_FLAGS} \
+		-r dev \
 		--tenx_tgz ${SOFTLINK_DIR}/'**.tgz' \
 		--outdir ${OUT}/$@
