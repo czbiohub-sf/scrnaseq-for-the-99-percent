@@ -1,0 +1,79 @@
+proteome_id,tax_id,oscode,n_main_fasta_canonical,n_additional_fasta_isoforms,n_gene2acc,species_name,divergence_from_human_mya,scientific_name,common_name_or_strain
+UP000005640,9606,HUMAN,21146,74769,96332,Homo sapiens (Human),0,Homo sapiens,Human
+UP000002277,9598,PANTR,23006,25788,49266,Pan troglodytes (Chimpanzee),6.7,Pan troglodytes,Chimpanzee
+UP000001519,9595,GORGO,21795,22932,44943,Gorilla gorilla gorilla (Western lowland gorilla),9.06,Gorilla gorilla gorilla,Western lowland gorilla
+UP000000589,10090,MOUSE,22287,40369,63134,Mus musculus (Mouse),90,Mus musculus,Mouse
+UP000002494,10116,RAT,21678,9885,32629,Rattus norvegicus (Rat),90,Rattus norvegicus,Rat
+UP000009136,9913,BOVIN,23774,14534,38438,Bos taurus (Bovine),96,Bos taurus,Bovine
+UP000002254,9615,CANLF,20271,5269,25631,Canis lupus familiaris (Dog) (Canis familiaris),96,Canis lupus familiaris,Dog
+UP000002280,13616,MONDO,21276,968,22319,Monodelphis domestica (Gray short-tailed opossum),159,Monodelphis domestica,Gray short-tailed opossum
+UP000000539,9031,CHICK,18124,9932,28206,Gallus gallus (Chicken),312,Gallus gallus,Chicken
+UP000008143,8364,XENTR,24386,5307,29884,Xenopus tropicalis (Western clawed frog) (Silurana tropicalis),351.8,Xenopus tropicalis,Western clawed frog
+UP000000437,7955,DANRE,25939,21219,47517,Danio rerio (Zebrafish) (Brachydanio rerio),435,Danio rerio,Zebrafish
+UP000018468,7918,LEPOC,18320,4140,22480,Lepisosteus oculatus (Spotted gar),435,Lepisosteus oculatus,Spotted gar
+UP000001038,8090,ORYLA,23617,12536,36234,Oryzias latipes (Japanese rice fish) (Japanese killifish),435,Oryzias latipes,Japanese rice fish
+UP000008144,7719,CIOIN,16678,631,17317,Ciona intestinalis (Transparent sea squirt) (Ascidia intestinalis),676,Ciona intestinalis,Transparent sea squirt
+UP000001554,7739,BRAFL,28542,2,28608,Branchiostoma floridae (Florida lancelet) (Amphioxus),684,Branchiostoma floridae,Florida lancelet
+UP000007062,7165,ANOGA,12553,971,13619,Anopheles gambiae (African malaria mosquito),797,Anopheles gambiae,African malaria mosquito
+UP000001940,6239,CAEEL,19986,8309,28507,Caenorhabditis elegans,797,Caenorhabditis elegans,Roundworm
+UP000000803,7227,DROME,13788,9516,23457,Drosophila melanogaster (Fruit fly),797,Drosophila melanogaster,Fruit fly
+UP000015101,6412,HELRO,23328,0,23433,Helobdella robusta (Californian leech),797,Helobdella robusta,Californian leech
+UP000001555,6945,IXOSC,20473,0,20482,Ixodes scapularis (Black-legged tick) (Deer tick),797,Ixodes scapularis,Black-legged tick
+UP000007266,7070,TRICA,16579,1926,18539,Tribolium castaneum (Red flour beetle),797,Tribolium castaneum,Red flour beetle
+UP000001593,45351,NEMVE,24429,15,24622,Nematostella vectensis (Starlet sea anemone),824,Nematostella vectensis,Starlet sea anemone
+UP000001357,81824,MONBE,9188,0,9204,Monosiga brevicollis (Choanoflagellate),1023,Monosiga brevicollis,Choanoflagellate
+UP000007241,684364,BATDJ,8610,0,8685,Batrachochytrium dendrobatidis (strain JAM81 / FGSC 10211) (Frog chytrid fungus),1105,Batrachochytrium dendrobatidis,strain JAM81 / FGSC 10211
+UP000000559,237561,CANAL,6035,1,6051,Candida albicans (strain SC5314 / ATCC MYA-2876) (Yeast),1105,Candida albicans,strain SC5314 / ATCC MYA-2876
+UP000002149,214684,CRYNJ,6604,142,6773,Cryptococcus neoformans var. neoformans serotype D (strain JEC21 / ATCC MYA-565) (Filobasidiella neoformans),1105,Cryptococcus neoformans var. neoformans serotype D,strain JEC21 / ATCC MYA-565
+UP000002530,330879,ASPFU,9647,0,9652,Neosartorya fumigata (strain ATCC MYA-4609 / Af293 / CBS 101355 / FGSC A1100) (Aspergillus fumigatus),1105,Neosartorya fumigata,strain ATCC MYA-4609 / Af293 / CBS 101355 / FGSC A1100
+UP000001805,367110,NEUCR,9759,508,10271,Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987),1105,Neurospora crassa,strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987
+UP000001055,321614,PHANO,15998,0,16008,Phaeosphaeria nodorum (strain SN15 / ATCC MYA-4574 / FGSC 10173) (Glume blotch fungus) (Parastagonospora nodorum),1105,Phaeosphaeria nodorum,strain SN15 / ATCC MYA-4574 / FGSC 10173
+UP000008783,418459,PUCGT,15689,119,15920,Puccinia graminis f. sp. tritici (strain CRL 75-36-700-3 / race SCCL) (Black stem rust fungus),1105,Puccinia graminis f. sp. tritici,strain CRL 75-36-700-3 / race SCCL
+UP000002311,559292,YEAST,6049,28,6082,Saccharomyces cerevisiae (strain ATCC 204508 / S288c) (Baker's yeast),1105,Saccharomyces cerevisiae,strain ATCC 204508 / S288c
+UP000002485,284812,SCHPO,5141,9,5154,Schizosaccharomyces pombe (strain 972 / ATCC 24843) (Fission yeast),1105,Schizosaccharomyces pombe,strain 972 / ATCC 24843
+UP000001312,665079,SCLS1,14445,0,14472,Sclerotinia sclerotiorum (strain ATCC 18683 / 1980 / Ss-1) (White mold) (Whetzelinia sclerotiorum),1105,Sclerotinia sclerotiorum,strain ATCC 18683 / 1980 / Ss-1
+UP000000561,237631,USTMA,6788,18,6809,Ustilago maydis (strain 521 / FGSC 9021) (Corn smut fungus),1105,Ustilago maydis,strain 521 / FGSC 9021
+UP000001300,284591,YARLI,6449,5,6477,Yarrowia lipolytica (strain CLIB 122 / E 150) (Yeast) (Candida lipolytica),1105,Yarrowia lipolytica,strain CLIB 122 / E 150
+UP000002195,44689,DICDI,12739,27,13120,Dictyostelium discoideum (Slime mold),1480,Dictyostelium discoideum,Slime mold
+UP000006548,3702,ARATH,27475,14123,41920,Arabidopsis thaliana (Mouse-ear cress),1496,Arabidopsis thaliana,Mouse-ear cress
+UP000006906,3055,CHLRE,17614,1214,19033,Chlamydomonas reinhardtii (Chlamydomonas smithii),1496,Chlamydomonas reinhardtii,Chlamydomonas smithii
+UP000059680,39947,ORYSJ,43858,5369,51020,Oryza sativa subsp. japonica (Rice),1496,Oryza sativa subsp. japonica,Rice
+UP000006727,3218,PHYPA,30792,66,31878,Physcomitrella patens subsp. patens (Moss),1496,Physcomitrella patens subsp. patens,Moss
+UP000007305,4577,MAIZE,39448,59948,100330,Zea mays (Maize),1496,Zea mays,Maize
+UP000000542,5664,LEIMA,8038,0,8315,Leishmania major,1660,Leishmania major,
+UP000001542,5722,TRIVA,50190,0,59533,Trichomonas vaginalis,1660,Trichomonas vaginalis,
+UP000000600,5888,PARTE,39461,0,39753,Paramecium tetraurelia,1768,Paramecium tetraurelia,
+UP000005238,164328,PHYRM,15349,0,15605,Phytophthora ramorum (Sudden oak death agent),1768,Phytophthora ramorum,Sudden oak death agent
+UP000001450,36329,PLAF7,5448,1,5463,Plasmodium falciparum (isolate 3D7),1768,Plasmodium falciparum,isolate 3D7
+UP000001449,35128,THAPS,11717,1,11762,Thalassiosira pseudonana (Marine diatom) (Cyclotella nana),1768,Thalassiosira pseudonana,Marine diatom
+UP000001548,184922,GIAIC,7154,0,7364,Giardia intestinalis (strain ATCC 50803 / WB clone C6) (Giardia lamblia),2101,Giardia intestinalis,strain ATCC 50803 / WB clone C6
+UP000000798,224324,AQUAE,1553,0,1557,Aquifex aeolicus (strain VF5),4290,Aquifex aeolicus,strain VF5
+UP000001570,224308,BACSU,4260,7,4268,Bacillus subtilis (strain 168),4290,Bacillus subtilis,strain 168
+UP000001414,226186,BACTN,4782,0,4823,Bacteroides thetaiotaomicron (strain ATCC 29148 / DSM 2079 / NCTC 10582 / E50 / VPI-5482),4290,Bacteroides thetaiotaomicron,strain ATCC 29148 / DSM 2079 / NCTC 10582 / E50 / VPI-5482
+UP000002526,224911,BRADU,8253,0,8314,Bradyrhizobium diazoefficiens (strain JCM 10833 / IAM 13628 / NBRC 14792 / USDA 110),4290,Bradyrhizobium diazoefficiens,strain JCM 10833 / IAM 13628 / NBRC 14792 / USDA 110
+UP000000431,272561,CHLTR,895,0,895,Chlamydia trachomatis (strain D/UW-3/Cx),4290,Chlamydia trachomatis,strain D/UW-3/Cx
+UP000002008,324602,CHLAA,3850,0,3853,Chloroflexus aurantiacus (strain ATCC 29366 / DSM 635 / J-10-fl),4290,Chloroflexus aurantiacus,strain ATCC 29366 / DSM 635 / J-10-fl
+UP000002524,243230,DEIRA,3085,0,3103,Deinococcus radiodurans (strain ATCC 13939 / DSM 20539 / JCM 16871 / LMG 4051 / NBRC 15346 / NCIMB 9279 / R1 / VKM B-1422),4290,Deinococcus radiodurans,strain ATCC 13939 / DSM 20539 / JCM 16871 / LMG 4051 / NBRC 15346 / NCIMB 9279 / R1 / VKM B-1422
+UP000007719,515635,DICTD,1743,0,1744,Dictyoglomus turgidum (strain Z-1310 / DSM 6724),4290,Dictyoglomus turgidum,strain Z-1310 / DSM 6724
+UP000000625,83333,ECOLI,4391,12,8529,Escherichia coli (strain K12),4290,Escherichia coli,strain K12
+UP000002521,190304,FUSNN,2046,0,2064,Fusobacterium nucleatum subsp. nucleatum (strain ATCC 25586 / CIP 101130 / JCM 8532 / LMG 13131),4290,Fusobacterium nucleatum subsp. nucleatum,strain ATCC 25586 / CIP 101130 / JCM 8532 / LMG 13131
+UP000000577,243231,GEOSL,3402,0,3433,Geobacter sulfurreducens (strain ATCC 51573 / DSM 12127 / PCA),4290,Geobacter sulfurreducens,strain ATCC 51573 / DSM 12127 / PCA
+UP000000557,251221,GLOVI,4406,0,4427,Gloeobacter violaceus (strain ATCC 29082 / PCC 7421),4290,Gloeobacter violaceus,strain ATCC 29082 / PCC 7421
+UP000000554,64091,HALSA,2426,0,2607,Halobacterium salinarum (strain ATCC 700922 / JCM 11081 / NRC-1) (Halobacterium halobium),4290,Halobacterium salinarum,strain ATCC 700922 / JCM 11081 / NRC-1
+UP000000429,85962,HELPY,1553,0,1577,Helicobacter pylori (strain ATCC 700392 / 26695) (Campylobacter pylori),4290,Helicobacter pylori,strain ATCC 700392 / 26695
+UP000001686,374847,KORCO,1602,0,1602,Korarchaeum cryptofilum (strain OPF8),4290,Korarchaeum cryptofilum,strain OPF8
+UP000001408,189518,LEPIN,3676,0,3707,Leptospira interrogans serogroup Icterohaemorrhagiae serovar Lai (strain 56601),4290,Leptospira interrogans serogroup Icterohaemorrhagiae serovar Lai,strain 56601
+UP000000805,243232,METJA,1787,0,1788,Methanocaldococcus jannaschii (strain ATCC 43067 / DSM 2661 / JAL-1 / JCM 10045 / NBRC 100440) (Methanococcus jannaschii),4290,Methanocaldococcus jannaschii,strain ATCC 43067 / DSM 2661 / JAL-1 / JCM 10045 / NBRC 100440
+UP000002487,188937,METAC,4468,0,4540,Methanosarcina acetivorans (strain ATCC 35395 / DSM 2834 / JCM 12185 / C2A),4290,Methanosarcina acetivorans,strain ATCC 35395 / DSM 2834 / JCM 12185 / C2A
+UP000001584,83332,MYCTU,3993,4,5634,Mycobacterium tuberculosis (strain ATCC 25618 / H37Rv),4290,Mycobacterium tuberculosis,strain ATCC 25618 / H37Rv
+UP000000807,243273,MYCGE,483,0,483,Mycoplasma genitalium (strain ATCC 33530 / G-37 / NCTC 10195),4290,Mycoplasma genitalium,strain ATCC 33530 / G-37 / NCTC 10195
+UP000000425,122586,NEIMB,2001,0,2062,Neisseria meningitidis serogroup B (strain MC58),4290,Neisseria meningitidis serogroup B,strain MC58
+UP000000792,436308,NITMS,1795,0,1795,Nitrosopumilus maritimus (strain SCM1),4290,Nitrosopumilus maritimus,strain SCM1
+UP000002438,208964,PSEAE,5563,2,5576,Pseudomonas aeruginosa (strain ATCC 15692 / DSM 22644 / CIP 104116 / JCM 14847 / LMG 12228 / 1C / PRS 101 / PAO1),4290,Pseudomonas aeruginosa,strain ATCC 15692 / DSM 22644 / CIP 104116 / JCM 14847 / LMG 12228 / 1C / PRS 101 / PAO1
+UP000001025,243090,RHOBA,7271,0,7325,Rhodopirellula baltica (strain DSM 10527 / NCIMB 13988 / SH1),4290,Rhodopirellula baltica,strain DSM 10527 / NCIMB 13988 / SH1
+UP000001974,273057,SACS2,2938,0,2995,Saccharolobus solfataricus (strain ATCC 35092 / DSM 1617 / JCM 11322 / P2) (Sulfolobus solfataricus),4290,Saccharolobus solfataricus,strain ATCC 35092 / DSM 1617 / JCM 11322 / P2
+UP000001973,100226,STRCO,8038,1,8154,Streptomyces coelicolor (strain ATCC BAA-471 / A3(2) / M145),4290,Streptomyces coelicolor,strain ATCC BAA-471 / A3(2
+UP000001425,1111708,SYNY3,3507,0,3565,Synechocystis sp. (strain PCC 6803 / Kazusa),4290,Synechocystis sp.,strain PCC 6803 / Kazusa
+UP000000536,69014,THEKO,2301,0,2305,Thermococcus kodakarensis (strain ATCC BAA-918 / JCM 12380 / KOD1) (Pyrococcus kodakaraensis (strain KOD1)),4290,Thermococcus kodakarensis,strain ATCC BAA-918 / JCM 12380 / KOD1
+UP000000718,289376,THEYD,1982,0,2033,Thermodesulfovibrio yellowstonii (strain ATCC 51303 / DSM 11347 / YP87),4290,Thermodesulfovibrio yellowstonii,strain ATCC 51303 / DSM 11347 / YP87
+UP000008183,243274,THEMA,1852,0,2872,Thermotoga maritima (strain ATCC 43589 / MSB8 / DSM 3109 / JCM 10099),4290,Thermotoga maritima,strain ATCC 43589 / MSB8 / DSM 3109 / JCM 10099
