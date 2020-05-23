@@ -29,7 +29,7 @@ dev:
 remove_ribo:
 	nextflow run \
 		nf-core/kmermaid \
-		-r olgabot/remove-ribosomal \
+		-r olgabot/propagate-peptide-ksize \
 		-latest \
 		-profile docker \
 		--tenx_tgz ${DATA_DIR}/'**.tgz' \
