@@ -1,0 +1,12 @@
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.7
+  - ipykernel
+  - jupyter
+  - s3fs
+  - pip
+  - pip:
+    - git+https://github.com/czbiohub/sencha
