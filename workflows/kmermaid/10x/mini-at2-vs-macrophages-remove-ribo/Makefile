@@ -5,6 +5,7 @@ PEPTIDE_FASTA=/home/olga/data_lg/czbiohub-reference/uniprot/releases/2019_11/man
 TRANSLATE_FASTA="/home/olga/data_lg/czbiohub-reference/uniprot/releases/2019_11/manually_downloaded/uniprot-reviewed_yes+taxonomy_Mammalia_9MAMM_40674.fasta.gz"
 
 
+
 dev:
 	nextflow run \
 		nf-core/kmermaid \
