@@ -11,11 +11,10 @@ run-1:
 		-resume \
 		-work-dir ${WORK_DIR} \
 		--molecules protein,dayhoff \
-		--sketch_scaled 2,5,10 \
+		--sketch_scaled 10 \
 		--translate_peptide_ksize 11 \
 		--reference_proteome_fasta ${REFERENCE_PROTEOME_FASTA} \
 		--tenx_min_umi_per_cell 1000 \
 		--bam '/mnt/ibm_sm/home/phoenix/batlas/BatBams/immune-tissue-softlinks/*.bam' \
 		--track_abundance \
 		--outdir ${OUTDIR_BASE}/$@ \
-
