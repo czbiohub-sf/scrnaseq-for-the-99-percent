@@ -18,3 +18,6 @@ run-1:
 		--bam '/mnt/ibm_sm/home/phoenix/batlas/BatBams/immune-tissue-softlinks/*.bam' \
 		--track_abundance \
 		--outdir ${OUTDIR_BASE}/$@ \
+		--skip_compute \
+		--skip_compare \
+#		--ksizes 27,30,33,36,39,42,45,48,51,54,57,60,63
