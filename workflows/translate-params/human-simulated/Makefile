@@ -89,13 +89,13 @@ busco-mammalia-mouse:
 rnaseq:
 	nextflow run nf-core/rnaseq \
 		-latest \
-		-r dev \
+		-profile docker \
+		-r 1.4.2 \
 		--fasta ${FASTA} \
 		--gtf ${GTF} \
 		--star_index ${STAR_INDEX} \
-		-profile docker \
-		--skip_trimming \
-		--skip_fastqc \
+		--skipTrimming \
+		--skipFastQC \
 		--reads ${READS_DIR}/'*.fq.gz' \
 		-with-tower \
 		-w ${WORK_DIR} \
@@ -105,5 +105,6 @@ rnaseq:
 		--max_cpus 90 \
 		--max-memory 500.GB \
 		--max_time 200.h \
-		--outdir ${OUTDIR_BASE}--$@/
+		--outdir ${OUTDIR_BASE}--$@/ \
+		--fc_group_features_type gene_type
 
