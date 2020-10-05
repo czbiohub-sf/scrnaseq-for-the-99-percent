@@ -15,7 +15,7 @@ run-1:
 		--translate_peptide_ksize 11 \
 		--reference_proteome_fasta ${REFERENCE_PROTEOME_FASTA} \
 		--tenx_min_umi_per_cell 1000 \
-		--bam '/mnt/ibm_sm/home/phoenix/batlas/BatBams/immune-tissue-softlinks/*.bam' \
+		--read_singles '/home/olga/data_sm/immune-evolution/pipeline-results/bat/kmermaid/run-1/10x-fastqs/per-cell/*LU*/*.fastq.gz' \
 		--track_abundance \
 		--outdir ${OUTDIR_BASE}/$@ \
 		--skip_compute \
