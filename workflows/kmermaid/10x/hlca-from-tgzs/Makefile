@@ -1,13 +1,12 @@
-TGZ_DIR=/home/olga/data_sm/tabula-microcebus/rawdata/tenx/lung-soft-links/human
-TRANSLATE_FASTA=/home/olga/data_lg/czbiohub-reference/uniprot/releases/2019_11/manually_downloaded/uniprot-reviewed_yes+taxonomy_Mammalia_9MAMM_40674.fasta.gz
-OUTDIR_BASE=/home/olga/data_sm/tabula-microcebus/analyses/kmermaid/tenx-tgz--hlca-v2
+TGZ_DIR=/data_sm/olga/tabula-microcebus/rawdata/tenx/lung-soft-links/human
+TRANSLATE_FASTA=/data_lg/olga/czbiohub-reference/uniprot/releases/2019_11/manually_downloaded/uniprot-reviewed_yes+taxonomy_Mammalia_9MAMM_40674.fasta.gz
+OUTDIR_BASE=/data_sm/olga/tabula-microcebus/analyses/kmermaid/tenx-tgz--hlca-v2
 
 normal-lung:
-	/home/olga/miniconda3/bin/nextflow run \
+	nextflow run \
                 nf-core/kmermaid \
-		-r dev \
+		-r pv-patch-2 \
 		-latest \
-		-profile docker \
 		--tenx_tgz ${TGZ_DIR}'/P1**.tgz' \
 		--skip_compute \
 		--skip_compare \
