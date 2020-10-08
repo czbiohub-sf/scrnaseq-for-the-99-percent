@@ -6,7 +6,7 @@ WORK_DIR=/mnt/ibm_sm/home/phoenix/nextflow-work
 
 run-1:
 	nextflow run nf-core/kmermaid \
-		-r phoenix-bam-input-fix \
+		-r phoenix/no-multiqc \
 		-latest \
 		-profile docker \
 		-resume \
@@ -21,4 +21,5 @@ run-1:
 		--outdir ${OUTDIR_BASE}/$@ \
 		--skip_compute \
 		--skip_compare \
+		--skip_multiqc
 #		--ksizes 27,30,33,36,39,42,45,48,51,54,57,60,63
