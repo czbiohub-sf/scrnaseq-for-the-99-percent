@@ -1,13 +1,14 @@
-BAM_DIR=/home/olga/data_sm/tabula-microcebus/analyses/kmermaid/tenx-tgz--alldata/10x-bams/immune-softlinks
+TGZ_DIR=/home/olga/data_sm/tabula-microcebus/rawdata/tenx/lung-soft-links/human
 TRANSLATE_FASTA=/home/olga/data_lg/czbiohub-reference/uniprot/releases/2019_11/manually_downloaded/uniprot-reviewed_yes+taxonomy_Mammalia_9MAMM_40674.fasta.gz
+OUTDIR_BASE=/home/olga/data_sm/tabula-microcebus/analyses/kmermaid/tenx-tgz--hlca-v2
 
-antoine:
-	nextflow run \
+normal-lung:
+	/home/olga/miniconda3/bin/nextflow run \
                 nf-core/kmermaid \
-		-r olgabot/grep-per-cell-fastqs \
+		-r dev \
 		-latest \
 		-profile docker \
-		--bam ${BAM_DIR}'/*LUNG*.bam' \
+		--tenx_tgz ${TGZ_DIR}'/P1**.tgz' \
 		--skip_compute \
 		--skip_compare \
 		--molecules dayhoff \
@@ -15,8 +16,8 @@ antoine:
 		--sketch_scaled 10 \
 		--track_abundance \
 		--reference_proteome_fasta ${TRANSLATE_FASTA} \
-		--outdir ~/data_sm/tabula-microcebus/analyses/kmermaid/tenx-tgz--alldata-v2-from-bams \
-		-work-dir ~/data_sm/nextflow-intermediates/ \
-		 --tenx_min_umi_per_cell 5000 \
+		--outdir ${OUTDIR_BASE}--$@ \
+		-work-dir ~/data_sm/nextflow-work-lrrr/ \
+		 --tenx_min_umi_per_cell 1000 \
 		-with-tower \
 		-resume
