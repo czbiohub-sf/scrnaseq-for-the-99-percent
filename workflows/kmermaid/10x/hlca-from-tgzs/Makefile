@@ -1,9 +1,9 @@
-TGZ_DIR=/data_sm/olga/tabula-microcebus/rawdata/tenx/lung-soft-links/human
-TRANSLATE_FASTA=/data_lg/olga/czbiohub-reference/uniprot/releases/2019_11/manually_downloaded/uniprot-reviewed_yes+taxonomy_Mammalia_9MAMM_40674.fasta.gz
-OUTDIR_BASE=/data_sm/olga/tabula-microcebus/analyses/kmermaid/tenx-tgz--hlca-v2
+TGZ_DIR=/mnt/data_sm/olga/tabula-microcebus/rawdata/tenx/lung-soft-links/human
+TRANSLATE_FASTA=/mnt/data_lg/olga/czbiohub-reference/uniprot/releases/2019_11/manually_downloaded/uniprot-reviewed_yes+taxonomy_Mammalia_9MAMM_40674.fasta.gz
+OUTDIR_BASE=/mnt/data_sm/olga/tabula-microcebus/analyses/kmermaid/tenx-tgz--hlca-v2
 
 normal-lung:
-	nextflow run \
+	/home/pranathi/nextflow run \
                 nf-core/kmermaid \
 		-r pranathivemuri-patch-1 \
 		-latest \
@@ -16,13 +16,13 @@ normal-lung:
 		--track_abundance \
 		--reference_proteome_fasta ${TRANSLATE_FASTA} \
 		--outdir ${OUTDIR_BASE}--$@ \
-		work-dir ~/data_sm/nextflow-work-lrrr/ \
+		-work-dir /mnt/data_lg/pranathi/nextflow-work-lrrr/ \
 		 --tenx_min_umi_per_cell 1000 \
 		-with-tower \
 		-resume --skip_multiqc
 
 normal-lung-remove-riborna:        
-	nextflow run \
+	/home/pranathi/nextflow run \
                 nf-core/kmermaid \
                 -r pranathivemuri-patch-1 \
                 -latest \
@@ -35,7 +35,7 @@ normal-lung-remove-riborna:
                 --track_abundance \
                 --reference_proteome_fasta ${TRANSLATE_FASTA} \
                 --outdir ${OUTDIR_BASE}--$@ \
-                work-dir ~/data_sm/nextflow-work-lrrr/ \
+                -work-dir /mnt/data_lg/pranathi/nextflow-work-lrrr/ \
                  --tenx_min_umi_per_cell 1000 \
                 -with-tower --remove_ribo_rna --save_non_rrna_reads \
                 -resume --skip_multiqc
