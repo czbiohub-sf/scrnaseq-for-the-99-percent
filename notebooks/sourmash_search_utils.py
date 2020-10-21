@@ -1,8 +1,10 @@
 
 import csv
+import itertools
 import os
 import sys
 
+from joblib import Parallel, delayed
 import pandas as pd
 from sourmash import MinHash, load_sbt_index, create_sbt_index
 from sourmash import signature as sig
@@ -10,8 +12,11 @@ from sourmash import sourmash_args
 from sourmash.logging import notify, error, print_results, set_quiet
 from sourmash.search import search_databases
 from sourmash.index import LinearIndex
-
 from tqdm import tqdm
+
+KSIZES = 21,24,27,30,33,36,39,42,45,48,51,54,57,60,63,66,69,72,75
+MOLECULES = 'protein', 'dayhoff'
+SCALEDS = 2, 5, 10
 
 
 def calculate_moltype(dna=False, dayhoff=False, hp=False, protein=False, default=None):
@@ -123,6 +128,7 @@ def search_singletons(
     best_only=False,
     num_results=3,
     quiet=False,
+    use_tqdm=False
 ):
 
     set_quiet(quiet)
@@ -147,7 +153,7 @@ def search_singletons(
     # do the actual search
     results = {}
     
-    if quiet:
+    if use_tqdm:
         query_iterator = tqdm(queries)
     else:
         query_iterator = queries
@@ -334,3 +340,112 @@ def check_signature_compatibilty_to_tree(ksizes, moltypes, nums, scaleds):
         error("trying to build an SBT with incompatible signatures.")
         error("nums = {}; scaleds = {}", repr(nums), repr(scaleds))
         sys.exit(-1)
+
+        
+        
+def do_sourmash_search(query_sig, database_sigs, ksize, molecule, scaled=5):
+    protein = False
+    dayhoff = False
+    if molecule == 'protein':
+        protein = True
+        dayhoff = False
+    elif molecule == 'dayhoff':
+        protein = False
+        dayhoff = True
+    else:
+        raise ValueError(f"Unrecognized molecule provided: '{molecule}', must be one of 'dayhoff' or 'protein'")
+    
+    df = sourmash_search_utils.search_singletons(
+        query_sig, 
+        database_sigs, 
+        ksize=ksize, 
+        dayhoff=dayhoff, 
+        protein=protein, 
+        containment=True, 
+        quiet=True,
+        scaled=scaled,
+    )
+    if not df.empty:
+        tidy = df.unstack().reset_index()
+        tidy = tidy.rename(
+            columns={
+                'level_0': 'refseq_query',
+                'level_1': 'fasta_id', 
+                0: 'containment'
+            }
+        )
+        fasta_info = tidy['fasta_id'].str.split('__', expand=True)
+        tidy['channel'] = fasta_info[0]
+        tidy['alignment_status'] = fasta_info[1]
+        tidy['cell_barcode'] = fasta_info[2]
+        tidy['ksize'] = ksize
+        tidy['molecule'] = molecule
+        tidy['scaled'] = scaled
+        tidy['cell_id'] = tidy.apply(lambda x: "{channel}__{cell_barcode}".format(**x), axis=1)
+        return tidy
+    
+    
+
+def do_sourmash_search(query_sig, database_sigs, ksize, molecule, scaled=5, **kwargs):
+    if molecule == 'protein':
+        protein = True
+        dayhoff = False
+    elif molecule == 'dayhoff':
+        protein = False
+        dayhoff = True
+    
+    df = search_singletons(
+        query_sig, 
+        database_sigs, 
+        ksize=ksize, 
+        dayhoff=dayhoff, 
+        protein=protein, 
+        containment=True, 
+        quiet=True,
+        scaled=scaled,
+        **kwargs,
+    )
+    if not df.empty:
+        tidy = df.unstack().reset_index()
+        tidy = tidy.rename(
+            columns={
+                'level_0': 'refseq_query',
+                'level_1': 'fasta_id', 
+                0: 'containment'
+            }
+        )
+        fasta_info = tidy['fasta_id'].str.split('__', expand=True)
+        tidy['channel'] = fasta_info[0]
+        tidy['alignment_status'] = fasta_info[1]
+        tidy['cell_barcode'] = fasta_info[2]
+        tidy['ksize'] = ksize
+        tidy['molecule'] = molecule
+        tidy['scaled'] = scaled
+        tidy['cell_id'] = tidy.apply(lambda x: "{channel}__{cell_barcode}".format(**x), axis=1)
+        return tidy
+    
+    
+
+def search_parallel(
+    query_sig, 
+    database_sigs, 
+    cell_annotation, 
+    ksizes=KSIZES, 
+    molecules=MOLECULES, 
+    scaleds=SCALEDS, 
+    n_jobs=64,
+    **kwargs
+):
+
+    dfs = Parallel(n_jobs=n_jobs)(
+        delayed(do_sourmash_search)(
+            query_sig, database_sigs, ksize, molecule, scaled, **kwargs) 
+        for ksize, molecule, scaled in tqdm(itertools.product(ksizes, molecules, scaleds))
+    )
+
+    results = pd.concat(dfs)
+    
+    # add cell type annotation
+    results_annotated = results.join(cell_annotation, rsuffix='_x', on='cell_id')
+
+    return results_annotated
