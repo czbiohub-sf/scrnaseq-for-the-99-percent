@@ -1,0 +1,235 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>OSF | Sign In </title>
+
+        
+        <link rel="stylesheet" href="/css/cas.css" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+        <!--[if lt IE 9]>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+        <![endif]-->
+
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700' rel='stylesheet' type='text/css'>
+    </head>
+
+    <script>
+        function resizeCasContent() {
+            if (!document.getElementById("inst-login")) {
+                return;
+            }
+            const casContent = document.getElementById("content");
+            if (window.innerWidth >= 420) {
+                casContent.style.width = "360px";
+            } else {
+                casContent.style.width = "90%";
+            }
+        }
+    </script>
+
+    <body id="cas" onresize="resizeCasContent()">
+
+        <div id="container">
+            <br/>
+            <header>
+                <div class="center">
+                    
+                    <a id="logo" class="center" href="https://osf.io/" title="OSF Sign In">OSF | Sign In</a>
+                </div>
+                <br>
+                <div class="center">
+                    <span id="title">
+                        
+                            
+                            
+                                <span>OSF</span>
+                            
+                        
+                    </span>
+                </div>
+                <div class="responsive">
+                    <div id="description">
+                        <br><br>
+                        
+                            
+                            
+                                Sign in with your OSF account to continue
+                            
+                        
+                    </div>
+                </div>
+            </header>
+            <br>
+            <div id="content">
+
+
+
+
+
+
+    
+
+
+<div class="box" id="login">
+    <form id="fm1" action="/login?service=https://osf.io/5943q/download" method="post">
+
+        
+        
+            
+            
+                <section class="row">
+                    <a id="alt-login-orcid" class="btn-alt-login" href="https://orcid.org/oauth/authorize?client_id=APP-VGLDMYSOHONDWCV8&scope=%2Fauthenticate&response_type=code&redirect_uri=https%3A%2F%2Faccounts.osf.io%2Flogin%3Fclient_name%3DOrcidClient#show_login">
+                        <img class="orcid-logo" src="../images/orcid-logo.png">
+                        <span class="label-login">Sign in with ORCID</span>
+                    </a>
+                </section>
+            
+        
+
+        
+        
+        
+        <section class="row">
+            <a id="alt-login-inst" class="btn-alt-login" href="/login?campaign=institution&service=https%3A%2F%2Fosf.io%2F5943q%2Fdownload">
+                <img class="osf-alt-logo" src="../images/institution-logo.png">
+                <span class="label-login">Sign in through institution</span>
+            </a>
+        </section>
+
+        <section class="row">
+            <hr class="hr-text" data-content="OR" />
+        </section>
+
+        
+        <section class="row">
+            <label for="username" style="display: none"><span class="accesskey">E</span>mail:</label>
+            
+                
+                
+                    
+                    <input id="username" name="username" class="required" tabindex="1" placeholder="Email" type="email" autofocus="autofocus" accesskey="e" value="" size="25" autocomplete="off"/>
+                
+            
+        </section>
+        <section class="row">
+            <label for="password" style="display: none"><span class="accesskey">P</span>assword:</label>
+            
+            <input id="password" name="password" class="required" tabindex="2" placeholder="Password" accesskey="p" type="password" value="" size="25" autocomplete="off"/>
+            <span id="capslock-on" style="display:none;"> <p><img src="images/warning.png" valign="top">CAPSLOCK key is turned on!</p></span>
+        </section>
+        
+        <section class="row btn-row">
+            <input type="hidden" name="lt" value="LT-84715-DCRgIYeh6nzDg45LcRkcO397waaA3H-accounts.osf.io"/>
+            <input type="hidden" name="execution" value="5d789069-0bcf-4f48-8ec7-0a7173eaf515_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"/>
+            <input type="hidden" name="_eventId" value="submit"/>
+            <input type="submit" class="btn-submit" name="submit" accesskey="l" tabindex="4" value="SIGN IN"/>
+        </section>
+        <section class="row check">
+            <input type="checkbox" name="rememberMe" id="rememberMe" value="true" checked tabindex="5"/>
+            <label for="rememberMe">Stay signed in</label>
+            
+            <a id="forgot-password" class='need-help' href="https://osf.io/forgotpassword/" title="OSF Sign In">Forgot your password&#63;</a>
+        </section>
+
+    <div>
+</div></form>
+</div>
+
+
+
+
+
+
+
+
+
+
+</div>  <!-- END #content -->
+
+
+
+
+
+
+
+
+
+<div class="bottom-link">
+    <br/>
+    
+    
+    
+    
+        <span><a id="link-create-account" href="https://osf.io/register/">Create an OSF account</a></span>
+        <span style="padding: 25px"></span>
+    
+    
+        <span><a id="link-back-to-osf" href="https://osf.io/">Back to OSF</a></span>
+    
+    <br/>
+</div>
+
+<footer>
+    <div class="copyright">
+        <div class="row">
+            <p>Copyright &copy; 2011-2020 <a style="white-space: nowrap" href="https://cos.io">Center for Open Science</a> &#124; <a style="white-space: nowrap" href="https://github.com/CenterForOpenScience/centerforopenscience.org/blob/master/TERMS_OF_USE.md">Terms of Use</a> &#124; <a style="white-space: nowrap" href="https://github.com/CenterForOpenScience/centerforopenscience.org/blob/master/PRIVACY_POLICY.md">Privacy Policy</a></p>
+        </div>
+    </div>
+</footer>
+
+</div>  <!-- END #container -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.min.js"></script>
+
+<script type="text/javascript" src="/js/cas.js"></script>
+
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', "${GOOGLE_ANALYTICS_ID:}", 'auto', {'allowLinker': true});
+        ga('require', 'linker');
+        
+        
+        ga('linker:autoLink', ['${GOOGLE_ANALYTICS_AUTOLINK:}']);
+        
+        ga('send', 'pageview');
+    </script>
+
+
+</body>
+
+</html>
+
