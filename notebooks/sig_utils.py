@@ -7,8 +7,9 @@ import sys
 from joblib import Parallel, delayed
 import pandas as pd
 import sourmash
-from sourmash.logging import error, notify
+from sourmash.logging import error, notify, set_quiet
 from sourmash import sourmash_args
+
 
 from tqdm import tqdm
 
@@ -194,6 +195,151 @@ def _merge_signatures(params, df, outdir_base, ksize=None, moltype=None, style='
         sourmash.save_signatures([merged_sigobj], fp=f)
     return cell_id, True
         
+def _flatten(
+    filename, 
+    ksize, 
+    moltype, 
+    cell_id, # to rename 
+    md5=None, 
+    name=None,
+    quiet=True
+):
+    set_quiet(quiet)
+    siglist = sourmash_args.load_file_as_signatures(
+        filename,
+        ksize=ksize,
+        select_moltype=moltype,
+#         traverse=True,
+    )
+    
+    outlist = []
+    total_loaded = 0
+    siglist = list(siglist)
+    #raise ValueError
+    total_loaded += len(siglist)
+
+    # select!
+    if md5 is not None:
+        siglist = [ ss for ss in siglist if md5 in ss.md5sum() ]
+        
+    if name is not None:
+        siglist = [ ss for ss in siglist if name in ss.name() ]
+
+    for ss in siglist:
+        flattened_mh = ss.minhash.copy_and_clear()
+        flattened_mh.track_abundance = False
+        flattened_mh.add_many(ss.minhash.get_mins())
+
+        ss.minhash = flattened_mh
+    
+    outlist.extend(siglist)
+    flattened = sourmash.save_signatures(outlist)
+    
+    flattened = sourmash.load_one_signature(
+        flattened,
+        ksize=ksize,
+        select_moltype=moltype
+    )
+    flattened._name = cell_id
+    return flattened
+
+
+def _subtract(
+    original_sig, 
+    subtracted_sig_path, 
+    ksize, 
+    cell_id,
+    moltype="dayhoff",
+    quiet=True
+):
+    """
+    subtract one or more signatures from another
+    """
+    set_quiet(quiet)
+    from_sigobj = original_sig
+
+    from_mh = from_sigobj.minhash
+    subtract_mins = set(from_mh.hashes)
+
+    total_loaded = 0
+
+    for sigobj in sourmash_args.load_file_as_signatures(
+        subtracted_sig_path,
+        ksize=ksize,
+        select_moltype=moltype
+    ):
+        if not sigobj.minhash.is_compatible(from_mh):
+            print("incompatible minhashes; specify -k and/or molecule type.")
+            return
+
+        subtract_mins -= set(sigobj.minhash.hashes)
+
+        print('loaded and subtracted signatures from {}...', sigobj.name(), end='\r')
+        total_loaded += 1
+
+    if not total_loaded:
+        print("no signatures to subtract!?")
+        return
+
+    subtract_mh = from_sigobj.minhash.copy_and_clear()
+    subtract_mh.add_many(subtract_mins)
+
+    subtract_sigobj = sourmash.SourmashSignature(subtract_mh)
+    subtract_sigobj._name = cell_id
+    
+    return subtract_sigobj
+
+
+def _intersect(
+    ksize,  
+    signatures_to_merge: list, 
+    abund_sig,
+    cell_id, # to rename 
+    moltype="dayhoff",
+    quiet=True
+):
+    """
+    intersect one or more signatures by taking the intersection of hashes.
+    This function always removes abundances.
+    """
+    set_quiet(quiet)
+
+    first_sig = None
+    mins = None
+    total_loaded = 0
+
+    for sigfile in signatures_to_merge:
+        for sigobj in sigfile:
+            if first_sig is None:
+                first_sig = sigobj
+                mins = set(sigobj.minhash.hashes)
+            else:
+                # check signature compatibility --
+                if not sigobj.minhash.is_compatible(first_sig.minhash):
+                    raise ValueError("incompatible minhashes; specify -k and/or molecule type.")
+
+            mins.intersection_update(sigobj.minhash.hashes)
+            total_loaded += 1
+            print('loaded and intersected signatures from {}...', sigobj.name, end='\r')
+
+    if total_loaded == 0:
+        raise ValueError("no signatures to merge!?")
+
+    if not abund_sig.minhash.track_abundance:
+        raise ValueError("--track-abundance not set on loaded signature?! exiting.")
+        
+    intersect_mh = abund_sig.minhash.copy_and_clear()
+    abund_mins = abund_sig.minhash.hashes
+
+    # do one last intersection
+    mins.intersection_update(abund_mins)
+    abund_mins = { k: abund_mins[k] for k in mins }
+
+    intersect_mh.set_abundances(abund_mins)
+    intersect_sigobj = sourmash.SourmashSignature(intersect_mh)
+    intersect_sigobj._name = cell_id
+    return intersect_sigobj
+
 
 def parallel_merge_aligned_unaligned_sigs(sig_df, outdir_base, groupby=['channel', 'cell_barcode'], 
                                           verbose=False, n_jobs=32, ksizes=KSIZES, 
