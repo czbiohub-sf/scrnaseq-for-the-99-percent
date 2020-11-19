@@ -3,6 +3,7 @@ import glob
 import itertools
 import os
 import sys
+import logging
 
 from joblib import Parallel, delayed
 import pandas as pd
@@ -13,6 +14,7 @@ from sourmash import sourmash_args
 
 from tqdm import tqdm
 
+logging.basicConfig(filename='sig_utils.log', level=logging.DEBUG)
 
 KSIZES = 21,24,27,30,33,36,39,42,45,48,51,54,57,60,63,66,69,72,75
 MOLECULES = 'protein', 'dayhoff'
@@ -205,13 +207,8 @@ def _flatten(
     quiet=True
 ):
     set_quiet(quiet)
-    siglist = sourmash_args.load_file_as_signatures(
-        filename,
-        ksize=ksize,
-        select_moltype=moltype,
-#         traverse=True,
-    )
-    
+
+    siglist = [filename]
     outlist = []
     total_loaded = 0
     siglist = list(siglist)
@@ -241,6 +238,7 @@ def _flatten(
         select_moltype=moltype
     )
     flattened._name = cell_id
+    
     return flattened
 
 
@@ -269,7 +267,7 @@ def _subtract(
         select_moltype=moltype
     ):
         if not sigobj.minhash.is_compatible(from_mh):
-            print("incompatible minhashes; specify -k and/or molecule type.")
+            logging.debug("incompatible minhashes; specify -k and/or molecule type.")
             return
 
         subtract_mins -= set(sigobj.minhash.hashes)
@@ -278,7 +276,7 @@ def _subtract(
         total_loaded += 1
 
     if not total_loaded:
-        print("no signatures to subtract!?")
+        logging.debug(f"no signatures to subtrac from {original_sig} {subtracted_sig_path}t!?")
         return
 
     subtract_mh = from_sigobj.minhash.copy_and_clear()
@@ -308,37 +306,39 @@ def _intersect(
     mins = None
     total_loaded = 0
 
-    for sigfile in signatures_to_merge:
-        for sigobj in sigfile:
-            if first_sig is None:
-                first_sig = sigobj
-                mins = set(sigobj.minhash.hashes)
-            else:
-                # check signature compatibility --
-                if not sigobj.minhash.is_compatible(first_sig.minhash):
-                    raise ValueError("incompatible minhashes; specify -k and/or molecule type.")
+    for sigobj in signatures_to_merge:
+        if first_sig is None:
+            first_sig = sigobj
+            mins = set(sigobj.minhash.hashes)
+        else:
+            # check signature compatibility --
+            if not sigobj.minhash.is_compatible(first_sig.minhash):
+                raise ValueError("incompatible minhashes; specify -k and/or molecule type.")
 
-            mins.intersection_update(sigobj.minhash.hashes)
-            total_loaded += 1
-            print('loaded and intersected signatures from {}...', sigobj.name, end='\r')
+        mins.intersection_update(sigobj.minhash.hashes)
+        total_loaded += 1
+        logging.debug(f'loaded and intersected signatures from {sigobj.name}...')
 
     if total_loaded == 0:
         raise ValueError("no signatures to merge!?")
 
     if not abund_sig.minhash.track_abundance:
-        raise ValueError("--track-abundance not set on loaded signature?! exiting.")
-        
-    intersect_mh = abund_sig.minhash.copy_and_clear()
-    abund_mins = abund_sig.minhash.hashes
+        logging.debug(f" abundances not set for: {abund_sig} with ksize {ksize} and cell_id {cell_id}")
+        pass
+        #raise ValueError("--track-abundance not set on loaded signature?! exiting.")
+    else:
+        intersect_mh = abund_sig.minhash.copy_and_clear()
+        abund_mins = abund_sig.minhash.hashes
 
-    # do one last intersection
-    mins.intersection_update(abund_mins)
-    abund_mins = { k: abund_mins[k] for k in mins }
+        # do one last intersection
+        mins.intersection_update(abund_mins)
+        abund_mins = { k: abund_mins[k] for k in mins }
 
-    intersect_mh.set_abundances(abund_mins)
-    intersect_sigobj = sourmash.SourmashSignature(intersect_mh)
-    intersect_sigobj._name = cell_id
-    return intersect_sigobj
+        intersect_mh.set_abundances(abund_mins)
+        intersect_sigobj = sourmash.SourmashSignature(intersect_mh)
+        intersect_sigobj._name = cell_id
+        logging.debug(f" intersect passed for: {abund_sig}, {ksize}, {cell_id}")
+        return intersect_sigobj
 
 
 def parallel_merge_aligned_unaligned_sigs(sig_df, outdir_base, groupby=['channel', 'cell_barcode'], 
