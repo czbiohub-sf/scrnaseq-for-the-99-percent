@@ -323,7 +323,7 @@ def _intersect(
         raise ValueError("no signatures to merge!?")
 
     if not abund_sig.minhash.track_abundance:
-        logging.debug(f" abundances not set for: {abund_sig} with ksize {ksize} and cell_id {cell_id}")
+        logging.debug(f" abundances not set for: ksize {ksize} and cell_id {cell_id}")
         pass
         #raise ValueError("--track-abundance not set on loaded signature?! exiting.")
     else:
@@ -337,7 +337,7 @@ def _intersect(
         intersect_mh.set_abundances(abund_mins)
         intersect_sigobj = sourmash.SourmashSignature(intersect_mh)
         intersect_sigobj._name = cell_id
-        logging.debug(f" intersect passed for: {abund_sig}, {ksize}, {cell_id}")
+        logging.debug(f" intersect passed for: ksize {ksize}, cell_id {cell_id}")
         return intersect_sigobj
 
 
