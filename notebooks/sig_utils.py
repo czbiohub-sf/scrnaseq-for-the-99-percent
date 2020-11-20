@@ -341,9 +341,16 @@ def _intersect(
         return intersect_sigobj
 
 
-def parallel_merge_aligned_unaligned_sigs(sig_df, outdir_base, groupby=['channel', 'cell_barcode'], 
-                                          verbose=False, n_jobs=32, ksizes=KSIZES, 
-                                          moltype='dayhoff', sig_fullpath='sig_fullpath'):
+def parallel_merge_aligned_unaligned_sigs(
+    sig_df, 
+    outdir_base, 
+    groupby=['channel', 'cell_barcode'], 
+    verbose=False, 
+    n_jobs=32, 
+    ksizes=KSIZES, 
+    moltype='dayhoff', 
+    sig_fullpath='sig_fullpath'
+):
 
     ## Merge signatures from same channel, cell barcode, ksize, molecule, scaled value
     grouped = sig_df.groupby(groupby)

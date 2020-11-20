@@ -193,7 +193,7 @@ def make_sourmash_search_commands(
                 if not os.path.exists(sketch_id_search_dir):
                     os.makedirs(sketch_id_search_dir)
 
-                if not cell_ids.any():
+                if not cell_ids:
                     query_sig_files = [
                         os.path.join(sketch_id_merged_sig_dir, sig) for sig in 
                         glob.glob(os.path.join(sketch_id_merged_sig_dir, "*.sig"))
