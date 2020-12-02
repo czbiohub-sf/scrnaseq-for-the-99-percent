@@ -195,8 +195,7 @@ def make_sourmash_search_commands(
     containment=True,
     moltype="dayhoff",
     num_results=3,
-    n_jobs=96,
-    threshold=0
+    n_jobs=96
 ):    
     """
     PARAMS:
@@ -250,8 +249,7 @@ def make_sourmash_search_commands(
                         moltype_args = f'--{moltype} --no-protein --no-dayhoff'
                     else:
                         moltype_args = f'--{moltype} --no-dna'
-                    num_results_flag = f'--num-results {num_results}' if num_results is not None else ''
-                    flags = f"--quiet {moltype_args} {num_results_flag} --threshold {threshold} -k {k}"
+                    flags = f"--quiet {moltype_args} --num-results {num_results} --threshold 0.0001 -k {k}"
                     if containment:
                         flags += " --containment"
                     command = f"sourmash search {flags} --output {output_csv} {sig} {sbt_index}\n"
@@ -336,16 +334,12 @@ def join_sigs_with_ontologies(
         right_on=metadata_join_cols
     )
     
-    # subset to broad tissue types
-    if cell_ontology_groups:
-        merged_sigs_w_ontology_subset = merged_sigs_w_ontology[
-            merged_sigs_w_ontology[sample_from_col].isin(cell_ontology_groups)
-        ]
-        return merged_sigs_w_ontology_subset
     
-    else:
-        print("not taking subsets")
-        return merged_sigs_w_ontology.dropna(subset=metadata_cell_ontology_cols)
+    # subset to broad tissue types
+    merged_sigs_w_ontology_subset = merged_sigs_w_ontology[
+        merged_sigs_w_ontology[sample_from_col].isin(cell_ontology_groups)
+    ]
+    return merged_sigs_w_ontology_subset
     
     
 def subsample_sig_df_ontologies(
@@ -390,7 +384,6 @@ def sample_sigs_from_ontologies(
 ):
 
     merged_sigs = make_merged_sigs_df(merged_sigs_dir)
-    
     mouse_sigs_ontologies = join_sigs_with_ontologies(
         merged_sigs, 
         metadata=metadata,
