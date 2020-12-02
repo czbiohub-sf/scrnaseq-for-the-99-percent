@@ -107,8 +107,8 @@ def merge(filenames, ksize, moltype, name=None, flatten=False, outsig=None):
 
                 mh.merge(sigobj_mh)
             except:
-                error("ERROR when merging signature '{}' ({}) from file {}",
-                      sigobj.name(), sigobj.md5sum()[:8], sigfile)
+                logging.info("ERROR when merging signature '{}' ({}) from file {}",
+                      sigobj.name, sigobj.md5sum()[:8], sigfile)
                 raise
 
             this_n += 1
@@ -231,10 +231,10 @@ def _flatten(
 
     # select!
     if md5 is not None:
-        siglist = [ ss for ss in siglist if md5 in ss.md5sum() ]
+        siglist = [ ss for ss in siglist if md5 in ss.md5sum ]
         
     if name is not None:
-        siglist = [ ss for ss in siglist if name in ss.name() ]
+        siglist = [ ss for ss in siglist if name in ss.name ]
 
     for ss in siglist:
         flattened_mh = ss.minhash.copy_and_clear()
@@ -286,11 +286,11 @@ def _subtract(
 
         subtract_mins -= set(sigobj.minhash.hashes)
 
-        print('loaded and subtracted signatures from {}...', sigobj.name(), end='\r')
+        logging.info('loaded and subtracted signatures from {}...'.format(sigobj.name))
         total_loaded += 1
 
     if not total_loaded:
-        logging.debug(f"no signatures to subtrac from {original_sig} {subtracted_sig_path}t!?")
+        logging.debug(f"no signatures to subtract from {original_sig} {subtracted_sig_path}t!?")
         return
 
     subtract_mh = from_sigobj.minhash.copy_and_clear()
@@ -325,6 +325,7 @@ def _intersect(
             first_sig = sigobj
             mins = set(sigobj.minhash.hashes)
         else:
+            
             # check signature compatibility --
             if not sigobj.minhash.is_compatible(first_sig.minhash):
                 raise ValueError("incompatible minhashes; specify -k and/or molecule type.")
