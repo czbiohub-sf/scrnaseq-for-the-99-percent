@@ -334,12 +334,16 @@ def join_sigs_with_ontologies(
         right_on=metadata_join_cols
     )
     
-    
     # subset to broad tissue types
-    merged_sigs_w_ontology_subset = merged_sigs_w_ontology[
-        merged_sigs_w_ontology[sample_from_col].isin(cell_ontology_groups)
-    ]
-    return merged_sigs_w_ontology_subset
+    if cell_ontology_groups:
+        merged_sigs_w_ontology_subset = merged_sigs_w_ontology[
+            merged_sigs_w_ontology[sample_from_col].isin(cell_ontology_groups)
+        ]
+        return merged_sigs_w_ontology_subset
+    
+    else:
+        print("not taking subsets")
+        return merged_sigs_w_ontology.dropna(subset=metadata_cell_ontology_cols)
     
     
 def subsample_sig_df_ontologies(
@@ -384,6 +388,7 @@ def sample_sigs_from_ontologies(
 ):
 
     merged_sigs = make_merged_sigs_df(merged_sigs_dir)
+    
     mouse_sigs_ontologies = join_sigs_with_ontologies(
         merged_sigs, 
         metadata=metadata,
