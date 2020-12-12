@@ -1,4 +1,4 @@
-
+from collections import Counter
 import glob
 import itertools
 import os
@@ -27,7 +27,6 @@ SKETCH_PARAMS = ['alphabet', 'ksize', 'sketch_style', 'sketch_value']
 
 CELL_PARAMS = ['channel', 'cell_barcode']
 SKETCH_CELL_PARAMS = SKETCH_PARAMS + CELL_PARAMS
-
 
 def sanitize(name):
     """Make the name able to be a valid path name. 
@@ -107,8 +106,8 @@ def merge(filenames, ksize, moltype, name=None, flatten=False, outsig=None):
 
                 mh.merge(sigobj_mh)
             except:
-                logging.info("ERROR when merging signature '{}' ({}) from file {}",
-                      sigobj.name, sigobj.md5sum()[:8], sigfile)
+                error("ERROR when merging signature '{}' ({}) from file {}",
+                      sigobj.name(), sigobj.md5sum()[:8], sigfile)
                 raise
 
             this_n += 1
@@ -123,7 +122,6 @@ def merge(filenames, ksize, moltype, name=None, flatten=False, outsig=None):
             sourmash.save_signatures([merged_sigobj], fp=f)
     
     return merged_sigobj
-
 
 
 def merge_signatures(params, df, outdir_base):
@@ -181,11 +179,16 @@ def merge_aligned_unaligned_sigs(sig_folder, outdir_base, verbose=False, n_jobs=
 
 
 
-def _merge_signatures(params, df, outdir_base, ksize=None, moltype=None, style='scaled', value=10, sig_fullpath='sig_fullpath'):
+def _merge_signatures(params, df, outdir_base, ksize=None, moltype=None, style='scaled', value=10, sig_fullpath='sig_fullpath', force=False):
     channel, barcode = params
     
     sketch_id = f'alphabet-{moltype}__ksize-{ksize}__{style}-{value}'
     outdir = f"{outdir_base}/{sketch_id}"
+    cell_id = f'{channel}__{barcode}'
+    outsig = f'{outdir}/{cell_id}.sig'
+    
+    if not force and os.path.exists(outsig):
+        return cell_id, True
     
     if not os.path.exists(outdir):
         try:
@@ -194,8 +197,6 @@ def _merge_signatures(params, df, outdir_base, ksize=None, moltype=None, style='
             # Already created by another thread
             pass
     
-    cell_id = f'{channel}__{barcode}'
-    outsig = f'{outdir}/{cell_id}.sig'
 #     insigs = ' '.join(df['sig_fullpath'])
     
     try:
@@ -211,6 +212,7 @@ def _merge_signatures(params, df, outdir_base, ksize=None, moltype=None, style='
         sourmash.save_signatures([merged_sigobj], fp=f)
     return cell_id, True
         
+    
 def _flatten(
     filename, 
     ksize, 
@@ -364,7 +366,8 @@ def parallel_merge_aligned_unaligned_sigs(
     n_jobs=32, 
     ksizes=KSIZES, 
     moltype='dayhoff', 
-    sig_fullpath='sig_fullpath'
+    sig_fullpath='sig_fullpath',
+    force=False
 ):
 
     ## Merge signatures from same channel, cell barcode, ksize, molecule, scaled value
@@ -381,4 +384,71 @@ def parallel_merge_aligned_unaligned_sigs(
     return merged_success
 
 
+def get_hashes_to_remove(sigs, percent_threshold):
+    shared_hashes = Counter()
+    for sig in tqdm(sigs):
+        shared_hashes.update(sig.minhash.hashes)
+        
+    n_sigs_threshold = percent_threshold * len(sigs)
+    hashes_to_remove = set([x for x, count in shared_hashes.items() if count >= n_sigs_threshold])
+    return hashes_to_remove
 
+
+def remove_hashes(sig, hashes_to_remove):
+    subtract_mh = sig.minhash.copy_and_clear()
+    hash_dict = sig.minhash.hashes
+    hashes_to_keep = set(hash_dict.keys()) - hashes_to_remove
+    subtract_mh.add_many(hashes_to_keep)
+    subtract_mh.set_abundances(
+        {h: hash_dict[h] for h in hashes_to_keep}
+    )
+    subtract_sigobj = sourmash.SourmashSignature(
+        subtract_mh, 
+        name=sig.name()
+    )
+    return subtract_sigobj
+    
+def remove_common_hashes(sigs, percent_threshold):
+    hashes_to_remove = get_hashes_to_remove(sigs, percent_threshold)
+    subtracted_sigs = [remove_hashes(sig, hashes_to_remove) for sig in sigs]
+
+    return subtracted_sigs
+
+def load_sigfiles(sigfiles, ksize, moltype):
+    sigs = []
+    for filename in sigfiles:
+        sigs.extend(sourmash.load_file_as_signatures(filename, ksize=ksize, select_moltype=moltype))
+    return sigs
+
+
+def remove_common_hashes_from_sig_df(
+    sig_df, sketch_id, ksize, moltype, fraction_threshold=0.8, sig_col='sig_path', output_dir=None
+):
+    """
+    Remove hashes that are present in `fraction_threshold` of all signatures, e.g in 80% or more of signatures
+    
+    output_dir : str, optional
+        If set, then write the signatures to {output_dir}/{sketch_id}/{sig_df[sig_col].map.os.path(basename)}.sig
+    """
+    sigs = load_sigfiles(sig_df[sig_col].values, ksize, moltype)
+    sigs_without_common_hashes = remove_common_hashes(sigs, fraction_threshold)
+    series = pd.Series(
+        sigs_without_common_hashes,
+        index=[sig.name() for sig in sigs]
+    )
+    if output_dir:
+        basenames = sig_df[sig_col].map(os.path.basename)
+        sketch_dir = os.path.join(output_dir, sketch_id)
+        if not os.path.exists(sketch_dir):
+            try:
+                os.makedirs(sketch_dir)
+            except FileExistsError:
+                # Some other thread made this
+                pass
+            
+        for subtracted_sig, basename in zip(sigs_without_common_hashes, basenames):
+            outfile = os.path.join(sketch_dir, basename + '.sig')
+            with open(outfile, 'wt') as f:
+                sourmash.save_signatures([subtracted_sig], fp=f)
+            
+    return sigs_without_common_hashes

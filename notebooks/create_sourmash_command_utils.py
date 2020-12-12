@@ -70,7 +70,7 @@ def make_sourmash_compute_commands(
                 )
                 # removed --protein from command since we only use dayhoff signatures, and it will make loading the signatures ~2x faster (I think)
                 if input_is_protein:
-                    moltype_flag = '--input-is-protein --protein --dayhoff'
+                    moltype_flag = '--input-is-protein --protein --dayhoff --hp'
                 else: 
                     moltype_flag = '--dna'
                 command = f"sourmash compute --quiet --track-abundance --scaled {scaled} {ksizes_flag} {moltype_flag} {fasta} --name '{name}' -o {output} \n"
@@ -90,33 +90,39 @@ def remove_ribosomal(
     ribosomal_sig_path: str, 
     remove_ribosomal_output_dir: str, 
     moltype="dayhoff",
+    force=False
     
 ):
     """
     * probably should do this before building the SBTs
     """
-    
     sketch_id = sig_utils.make_sketch_id(
         moltype, ksize, style='scaled', value=10
     ) 
-                
     remove_ribosomal_sketch_id_dir = os.path.join(
         remove_ribosomal_output_dir, 
         sketch_id
     ) 
-    
-    os.makedirs(remove_ribosomal_sketch_id_dir, exist_ok=True)
-    
     output_sig = os.path.join(
         remove_ribosomal_sketch_id_dir, 
         os.path.basename(original_sig_path)
     )
     
-    original_sig = sourmash.load_one_signature(
-        original_sig_path,
-        ksize=ksize,
-        select_moltype=moltype
-    )
+    if not force and os.path.exists(output_sig):
+        return    
+
+    
+    os.makedirs(remove_ribosomal_sketch_id_dir, exist_ok=True)
+    
+    try:
+        original_sig = sourmash.load_one_signature(
+            original_sig_path,
+            ksize=ksize,
+            select_moltype=moltype
+        )
+    except ValueError:
+        logging.error(f"Could not load {original_sig_path} with ksize={ksize} and moltype={moltype}")
+        return
         
     original_sig_copy = copy.deepcopy(original_sig)
     flattened_sig = sig_utils._flatten(
