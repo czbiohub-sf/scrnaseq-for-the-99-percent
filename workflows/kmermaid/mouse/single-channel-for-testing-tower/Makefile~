@@ -1,0 +1,7 @@
+
+
+all:
+	nextflow run nf-core/kmermaid \
+		-profile docker \
+		--peptide_fasta /home/olga/data_lg/czbiohub-reference/uniprot/releases/2019_11/manually_downloaded/uniprot-reviewed_yes+taxonomy_2759.fasta.gz \
+		--bam 's3://czb-tabula-muris-senis/10x/18_month/MACA_18m_F_LUNG_50/*.bam'
