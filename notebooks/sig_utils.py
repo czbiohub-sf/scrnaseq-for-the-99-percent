@@ -384,10 +384,16 @@ def parallel_merge_aligned_unaligned_sigs(
     return merged_success
 
 
-def get_hashes_to_remove(sigs, percent_threshold):
+def get_hashes_to_remove(sigs, percent_threshold, output_csv=None):
     shared_hashes = Counter()
-    for sig in tqdm(sigs):
+    for sig in sigs:
         shared_hashes.update(sig.minhash.hashes)
+        
+    if output_csv is not None:
+        with open(output_csv, 'w') as f:
+            f.write('hashval,count\n')
+            for hashval, count in shared_hashes.items():
+                f.write(f'{hashval},{count/len(sigs)}\n')
         
     n_sigs_threshold = percent_threshold * len(sigs)
     hashes_to_remove = set([x for x, count in shared_hashes.items() if count >= n_sigs_threshold])
@@ -408,8 +414,8 @@ def remove_hashes(sig, hashes_to_remove):
     )
     return subtract_sigobj
     
-def remove_common_hashes(sigs, percent_threshold):
-    hashes_to_remove = get_hashes_to_remove(sigs, percent_threshold)
+def remove_common_hashes(sigs, percent_threshold, output_csv=None):
+    hashes_to_remove = get_hashes_to_remove(sigs, percent_threshold, output_csv=output_csv)
     subtracted_sigs = [remove_hashes(sig, hashes_to_remove) for sig in sigs]
 
     return subtracted_sigs
@@ -422,7 +428,9 @@ def load_sigfiles(sigfiles, ksize, moltype):
 
 
 def remove_common_hashes_from_sig_df(
-    sig_df, sketch_id, ksize, moltype, fraction_threshold=0.8, sig_col='sig_path', output_dir=None
+    sig_df, sketch_id, ksize, moltype, fraction_threshold=0.8, sig_col='sig_path', 
+    output_dir=None, force=False, channel=None,
+    create_hash_count_csv=True,
 ):
     """
     Remove hashes that are present in `fraction_threshold` of all signatures, e.g in 80% or more of signatures
@@ -430,22 +438,37 @@ def remove_common_hashes_from_sig_df(
     output_dir : str, optional
         If set, then write the signatures to {output_dir}/{sketch_id}/{sig_df[sig_col].map.os.path(basename)}.sig
     """
-    sigs = load_sigfiles(sig_df[sig_col].values, ksize, moltype)
-    sigs_without_common_hashes = remove_common_hashes(sigs, fraction_threshold)
-    series = pd.Series(
-        sigs_without_common_hashes,
-        index=[sig.name() for sig in sigs]
-    )
     if output_dir:
         basenames = sig_df[sig_col].map(os.path.basename)
-        sketch_dir = os.path.join(output_dir, sketch_id)
+        if channel is None:
+            sketch_dir = os.path.join(output_dir, sketch_id)
+        else:
+            sketch_dir = os.path.join(output_dir, channel, sketch_id)
+        # Early exit if force=False
+        if os.path.exists(sketch_dir) and not force:
+            return 
+        
         if not os.path.exists(sketch_dir):
             try:
                 os.makedirs(sketch_dir)
             except FileExistsError:
                 # Some other thread made this
                 pass
-            
+    
+    sigs = load_sigfiles(sig_df[sig_col].values, ksize, moltype)
+    
+    if create_hash_count_csv:
+        output_csv = os.path.join(sketch_dir, 'hash_counts.csv')
+    else:
+        output_csv = None
+        
+    sigs_without_common_hashes = remove_common_hashes(sigs, fraction_threshold, output_csv=output_csv)
+    series = pd.Series(
+        sigs_without_common_hashes,
+        index=[sig.name() for sig in sigs]
+    )
+
+    if output_dir:  
         for subtracted_sig, basename in zip(sigs_without_common_hashes, basenames):
             outfile = os.path.join(sketch_dir, basename + '.sig')
             with open(outfile, 'wt') as f:
