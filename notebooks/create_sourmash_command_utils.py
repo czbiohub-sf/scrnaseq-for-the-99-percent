@@ -204,8 +204,8 @@ def make_sourmash_search_commands(
     containment=True,
     moltype="dayhoff",
     num_results=3,
-    threshold=1e-10,
-    n_jobs=96
+    n_jobs=96,
+    threshold=1e-3
 ):    
     """
     PARAMS:
@@ -259,11 +259,18 @@ def make_sourmash_search_commands(
                         moltype_args = f'--{moltype} --no-protein --no-dayhoff'
                     else:
                         moltype_args = f'--{moltype} --no-dna'
-                    if num_results is not None:
-                        num_results_flag = f'--num-results {num_results}'
+                        
+                    if threshold is not None:
+                        threshold_args = f'--threshold {threshold}'
                     else:
-                        num_results_flag = ''
-                    flags = f"--quiet {moltype_args} {num_results_flag} --threshold {threshold} -k {k}"
+                        threshold_args = ''
+                        
+                    if num_results is not None:
+                        num_results_args = f'--num-results {num_results}'
+                    else:
+                        num_results_args = ''
+                        
+                    flags = f"--quiet {moltype_args} {num_results_args} {threshold_args} -k {k}"
                     if containment:
                         flags += " --containment"
                     command = f"sourmash search {flags} --output {output_csv} {sig} {sbt_index}\n"
