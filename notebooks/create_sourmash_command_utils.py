@@ -362,11 +362,16 @@ def subsample_sig_df_ontologies(
 #     Groupby sketch id, but only do this once since each cell should be represented once per sketch id
     one_sketch_id = merged_sigs_w_ontology_subset.head(1)['sketch_id'].values[0]
     df = merged_sigs_w_ontology_subset.query('sketch_id == @one_sketch_id')
-    sampled_number_of_cell_ids = df.groupby(sample_from_col, observed=True).apply(
-        lambda x: x.sample(n_samples, random_state=0, replace=False) if len(x) > n_samples else x
-    )
     
-    merged_sigs_w_ontology_subset = merged_sigs_w_ontology_subset.query("cell_id in @sampled_number_of_cell_ids.cell_id.values")
+    # Remove any NA entries
+    merged_sigs_w_ontology_subset = merged_sigs_w_ontology_subset.dropna(subset=[sample_from_col])
+    
+    if n_samples is not None:
+        sampled_number_of_cell_ids = df.groupby(sample_from_col, observed=True).apply(
+            lambda x: x.sample(n_samples, random_state=0, replace=False) if len(x) > n_samples else x
+        )
+
+        merged_sigs_w_ontology_subset = merged_sigs_w_ontology_subset.query("cell_id in @sampled_number_of_cell_ids.cell_id.values")
     
     return merged_sigs_w_ontology_subset
 
