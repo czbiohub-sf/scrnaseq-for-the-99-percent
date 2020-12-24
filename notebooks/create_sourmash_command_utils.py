@@ -274,7 +274,9 @@ def get_cells_with_both_aligned_unaligned_sigs_df(sig_folder):
         r"__aligned__aligned__|__unaligned__unaligned__", "__"
     ).str.replace(
         '__aligned__|__unaligned', '__').str.split(
-        "__coding_reads_peptides").str[0]
+        "__coding_reads_peptides").str[0].str.replace(
+        '_possorted_genome_bam', '').str.replace(
+        '____', '__')
     #df.head()
 
     df['fasta_id'] = df.basename.str.split('__coding_reads').str[0]
@@ -282,6 +284,7 @@ def get_cells_with_both_aligned_unaligned_sigs_df(sig_folder):
     df['cell_barcode'] = df.cell_id.str.split('__').str[1]
     print(df.shape)
 
+#     import pdb; pdb.set_trace()
     both_aligned_unaligned = df.groupby("cell_id").filter(lambda x: len(x)==2)
     print(both_aligned_unaligned.shape)
     both_aligned_unaligned.sort_values("cell_id").head()
