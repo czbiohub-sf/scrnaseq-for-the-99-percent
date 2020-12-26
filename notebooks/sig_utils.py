@@ -260,7 +260,7 @@ def _flatten(
 
 def _subtract(
     original_sig, 
-    subtracted_sig_path, 
+    sig_to_subtract_path, 
     ksize, 
     cell_id,
     moltype="dayhoff",
@@ -278,12 +278,12 @@ def _subtract(
     total_loaded = 0
 
     for sigobj in sourmash_args.load_file_as_signatures(
-        subtracted_sig_path,
+        sig_to_subtract_path,
         ksize=ksize,
         select_moltype=moltype
     ):
         if not sigobj.minhash.is_compatible(from_mh):
-            logging.debug("incompatible minhashes; specify -k and/or molecule type.")
+            logging.debug(f"incompatible minhashes from {sig_to_subtract_path}; specify -k and/or molecule type.")
             return
 
         subtract_mins -= set(sigobj.minhash.hashes)
@@ -292,7 +292,7 @@ def _subtract(
         total_loaded += 1
 
     if not total_loaded:
-        logging.debug(f"no signatures to subtract from {original_sig} {subtracted_sig_path}t!?")
+        logging.debug(f"no signatures to subtract from {original_sig} {sig_to_subtract_path}t!?")
         return
 
     subtract_mh = from_sigobj.minhash.copy_and_clear()
