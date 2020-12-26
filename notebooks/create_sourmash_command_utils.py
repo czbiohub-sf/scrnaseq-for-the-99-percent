@@ -141,6 +141,9 @@ def remove_ribosomal(
         cell_id,
         moltype=moltype
     )
+    if subtracted_sig is None:
+        logging.info(f"Could not subtract ribosomal hashes from {original_sig_path} (maybe scaled is off? scaled={original_sig.minhash.scaled})")
+        return
     
     intersected_sig = sig_utils._intersect(
         ksize,  
@@ -201,6 +204,7 @@ def make_sourmash_search_commands(
     containment=True,
     moltype="dayhoff",
     num_results=3,
+    threshold=1e-10,
     n_jobs=96
 ):    
     """
@@ -219,7 +223,7 @@ def make_sourmash_search_commands(
     num_results=5: Number of search results to return. Fewer means search goes faster
     """
 #     moltype_lower = moltype.lower()
-    valid_moltypes = 'dayhoff', 'protein', 'dna'
+    valid_moltypes = 'dayhoff', 'protein', 'dna', 'hp'
     if not isinstance(moltype, str) or moltype.lower() not in valid_moltypes:
         raise ValueError(f"{moltype} is not a valid molecule type. Only one of {valid_moltypes} are allowed")
     
@@ -255,7 +259,11 @@ def make_sourmash_search_commands(
                         moltype_args = f'--{moltype} --no-protein --no-dayhoff'
                     else:
                         moltype_args = f'--{moltype} --no-dna'
-                    flags = f"--quiet {moltype_args} --num-results {num_results} --threshold 0.0001 -k {k}"
+                    if num_results is not None:
+                        num_results_flag = f'--num-results {num_results}'
+                    else:
+                        num_results_flag = ''
+                    flags = f"--quiet {moltype_args} {num_results_flag} --threshold {threshold} -k {k}"
                     if containment:
                         flags += " --containment"
                     command = f"sourmash search {flags} --output {output_csv} {sig} {sbt_index}\n"
