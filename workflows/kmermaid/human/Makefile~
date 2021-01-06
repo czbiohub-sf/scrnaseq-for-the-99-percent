@@ -1,0 +1,48 @@
+REFSEQ_FASTA=/home/olga/data_lg/czbiohub-reference/ncbi/refseq/releases/refseq-release201--2020-07-21/nonredundant-protein/complete__nonredundant_protein.faa.gz
+BUSCO_METAZOA=/home/olga/data_sm/immune-evolution/databases/busco/orthodb-v10/metazoa_odb10/metazoa_odb10.fasta
+OUTDIR_BASE=/mnt/ibm_sm/olga/immune-evolution/pipeline-results/
+BAM_BASE=/mnt/ibm_lg/pranathi/immune-evolution/rawdata/human/bams/10X/
+WORK_DIR=/mnt/data_lg/pranathi/nextflow-human-immune-pipeline-work/
+REFSEQ_DIAMOND=/mnt/ibm_sm/olga/immune-evolution/pipeline-results/bat/nf-predictorthologs--busco_metazoa/diamond/complete__nonredundant_protein_db.dmnd
+
+busco_metazoa:
+	 nextflow run czbiohub/nf-predictorthologs \
+		-profile docker \
+		-r pranathi-translate-try -latest \
+		--bam ${BAM_BASE}/"**.bam" \
+		--diamond_database ${REFSEQ_DIAMOND} \
+		--proteome_translate_fasta ${BUSCO_METAZOA} \
+		--translate_jaccard_threshold 0.95 \
+		--translate_peptide_ksize 9,10,11,12,13,14,15,16,17,18,19,20,21 \
+		--translate_molecule protein,dayhoff \
+		--diamond_taxdmp_zip /mnt/ibm_lg/pranathi/diamond_zips/taxdmp.zip \
+		--diamond_taxonmap_gz /mnt/ibm_lg/pranathi/diamond_zips/prot.accession2taxid.gz \
+		-with-tower \
+		--work-dir ${WORK_DIR} \
+		--outdir ${OUTDIR_BASE}--$@ \
+		--single_end \
+		-resume \
+		--max_cpus 90 \
+		--max-memory 400.GB \
+		--max_time 48.h \
+		--search_noncoding 
+
+
+kmermaid:
+         nextflow run /home/pranathi/code/nf-core/kmermaid/main.nf \
+	 --bam /mnt/ibm_lg/pranathi/immune-evolution/rawdata/human/bams/10X/"**.bam" \
+	 --reference_proteome_fasta /home/olga/data_lg/czbiohub-reference/uniprot/releases/2019_11/manually_downloaded/uniprot-reviewed_yes+taxonomy_Mammalia_9MAMM_40674.fasta.gz  \
+	 --jaccard_threshold 0.95 \
+	 --translate_peptide_ksize 11 \
+	 --translate_peptide_molecule protein \
+	 --sketch_scaled 10 \
+	 -with-tower \
+	 -work-dir /mnt/ibm_lg/pranathi/human-kmermaid-ndnd-september15-work/ \
+	 --outdir /mnt/ibm_lg/pranathi/immune-evolution/human-kmermaid-ndnd-september15 \
+	 -resume --max_cpus 20 --max_memory 10.GB --max_time 400.h \
+	 --tenx_min_umi_per_cell 10000 \
+	 --molecules dayhoff \
+	 --track_abundance \
+	 --ksizes 27,30,33,36,39,42,45,48,51,54,57,60,63 \
+	 --skip_compute \
+	 --skip_compare
