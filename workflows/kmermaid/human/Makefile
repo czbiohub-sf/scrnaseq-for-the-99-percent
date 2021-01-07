@@ -9,16 +9,17 @@ REF_PROTEOME=/home/olga/data_lg/czbiohub-reference/uniprot/releases/2019_11/manu
 bladder:
 	nextflow run \
 		nf-core/kmermaid \
-		-r dev \
+		-r  olgabot/sourmash-sig-merge \
 		-latest \
-		 --bam ${BAM_BASE}/'Pilot*ladder**.bam' \
+		-profile docker \
+		 --bam ${BAM_BASE}/'**.bam' \
 		 --reference_proteome_fasta ${REF_PROTEOME} \
 		 --sketch_scaled 10 \
 		 -with-tower 'http://nftower.czbiohub.org:8000/api' \
 		 -work-dir ${WORK_DIR} \
 		 --outdir ${OUTDIR_BASE}/$@ \
 		 -resume \
-		 --tenx_min_umi_per_cell 10000 \
+		 --tenx_min_umi_per_cell 2500 \
 		 --molecules dayhoff \
 		 --track_abundance \
 		 --ksizes 27,30,33,36,39,42,45,48,51 \
