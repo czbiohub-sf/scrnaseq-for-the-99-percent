@@ -23,4 +23,5 @@ bladder:
 		 --molecules dayhoff \
 		 --track_abundance \
 		 --ksizes 27,30,33,36,39,42,45,48,51 \
-		 --skip_compare
+		 --skip_compare \
+		--skip_compute
