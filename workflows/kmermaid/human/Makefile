@@ -15,7 +15,7 @@ bladder:
 		 --bam ${BAM_BASE}/'**.bam' \
 		 --reference_proteome_fasta ${REF_PROTEOME} \
 		 --sketch_scaled 10 \
-		 -with-tower 'http://nftower.czbiohub.org:8000/api' \
+		 -with-tower \
 		 -work-dir ${WORK_DIR} \
 		 --outdir ${OUTDIR_BASE}/$@ \
 		 -resume \
