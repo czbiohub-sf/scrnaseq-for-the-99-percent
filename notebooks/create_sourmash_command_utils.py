@@ -39,7 +39,8 @@ def make_sourmash_compute_commands(
     scaled=10, 
     n_jobs=96,
     input_is_protein=True,
-    cell_id_as_name=True
+    cell_id_as_name=True,
+    force=False
 ):
     """
     PARAMS:
@@ -68,6 +69,8 @@ def make_sourmash_compute_commands(
                     sig_output_folder,
                     f_base_noext + ".sig"
                 )
+                if os.path.exists(output) and not force:
+                    continue
                 # removed --protein from command since we only use dayhoff signatures, and it will make loading the signatures ~2x faster (I think)
                 if input_is_protein:
                     moltype_flag = '--input-is-protein --protein --dayhoff --hp'
@@ -204,8 +207,9 @@ def make_sourmash_search_commands(
     containment=True,
     moltype="dayhoff",
     num_results=3,
+    threshold=1e-10,
     n_jobs=96,
-    threshold=1e-3
+    force=False,
 ):    
     """
     PARAMS:
@@ -255,6 +259,11 @@ def make_sourmash_search_commands(
                     #complete_sig_path = os.path.join(sketch_id_merged_sig_dir, sig)
                     basename = os.path.basename(sig)
                     output_csv = os.path.join(sketch_id_search_dir, basename.replace(".sig", ".csv"))
+                    
+                    # Don't add this command if it was already made
+                    if os.path.exists(output_csv) and not force:
+                        continue
+                    
                     if moltype.lower() == 'dna':
                         moltype_args = f'--{moltype} --no-protein --no-dayhoff'
                     else:
