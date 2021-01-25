@@ -324,14 +324,15 @@ def celltype_cleaner(celltype):
 
 
 def get_peptide_fasta(
-    translate_base, channel, cell_barcode, is_aligned=True, double_aligned=True
+    translate_base, channel, cell_barcode, is_aligned=True, double_aligned=True, channel_suffix=None
 ):
+    channel_suffix = '' if None else channel_suffix
     alignment_status = "aligned" if is_aligned else "unaligned"
     if double_aligned:
         alignment_status = "__".join([alignment_status, alignment_status])
 
     basename = (
-        f"{channel}__{alignment_status}__{cell_barcode}__coding_reads_peptides.fasta"
+        f"{channel}{channel_suffix}__{alignment_status}__{cell_barcode}__coding_reads_peptides.fasta"
     )
     fasta = os.path.join(translate_base, basename)
     return fasta
@@ -378,6 +379,7 @@ def get_diagnostic_kmers_for_cell(
     verbose=False,
     gene_name_tag="GN",
     seqout_template=None,
+    channel_suffix=None,
 ):
     """
     
@@ -402,6 +404,7 @@ def get_diagnostic_kmers_for_cell(
         cell_barcode,
         is_aligned=True,
         double_aligned=double_aligned,
+        channel_suffix=channel_suffix
     )
     unaligned_fasta = get_peptide_fasta(
         cell_fasta_dir,
@@ -409,6 +412,7 @@ def get_diagnostic_kmers_for_cell(
         cell_barcode,
         is_aligned=False,
         double_aligned=double_aligned,
+        channel_suffix=channel_suffix
     )
 
     fastas = {"aligned": aligned_fasta, "unaligned": unaligned_fasta}
