@@ -40,6 +40,7 @@ ksize_8:
 
 
 ksize_8_v2:
+	# Running "dev" version will include the gene names in the translated fastas
 	nextflow run nf-core/kmermaid \
 		-r dev \
 		${COMMON_FLAGS} \
