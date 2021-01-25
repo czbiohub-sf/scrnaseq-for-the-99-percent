@@ -31,9 +31,10 @@ def read_diamond_blastp_output(filename, read_is_uniprot=False, sketch_id_in_bas
         
         
 #     df['refseq_id'] = df['subject_id']
-    df['description_with_predicted'] = df.subject_title.str.extract(DIAMOND_PATTERN).iloc[:, 0].str.strip()
-    df['additional_status'] = df.subject_title.str.extract('([A-Z ]+):')
-    df['description'] = df['description_with_predicted'].str.split('PREDICTED: ').str[-1].str.strip()
+    df['description_with_status'] = df.subject_title.str.extract(DIAMOND_PATTERN).iloc[:, 0].str.strip()
+    df['additional_status'] = df.subject_title.str.extract('([A-Z]):')
+    df['description'] = df['description_with_status'].str.split(': ').str[-1].str.strip()
+    df['description_no_isoform'] = df['description'].str.split(' isoform').str[0]
     df['is_uncharacterized'] = df.subject_title.str.contains('uncharacterized')
     return df 
 

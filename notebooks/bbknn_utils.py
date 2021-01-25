@@ -162,10 +162,15 @@ def bbknn_similarity_matrix_and_assign_adata(
     COUNTS_BASED_UMAP_COORDS=None,
     neighbors_within_batch=15,
     set_use_rep=True,
+    batch_key='species'
     **kwargs,
 ):
+    """
+    COUNTS_BASED_UMAP_COORDS : array
+        Used for a sanity check to assert that the new UMAP doesn't match the original one
+    """
     print(adata)
-    batch_list = adata.obs['species'].tolist()
+    batch_list = adata.obs[batch_key].tolist()
     print(f"len(batch_list): {len(batch_list)}")
 #     import pdb; pdb.set_trace()
 
