@@ -4,7 +4,7 @@ READ_SINGLES='/home/olga/data_sm/immune-evolution/pipeline-results/bat/kmermaid/
 OUTDIR_BASE=/mnt/ibm_sm/olga/immune-evolution/pipeline-results/bat/kmermaid/
 WORK_DIR=/mnt/ibm_sm/home/phoenix/nextflow-work
 
-COMMON_FLAGS=-r phoenix/no-multiqc \
+COMMON_FLAGS= \
 		-latest \
 		-resume \
 		-work-dir ${WORK_DIR} \
@@ -22,6 +22,7 @@ COMMON_FLAGS=-r phoenix/no-multiqc \
 
 run-1:
 	nextflow run nf-core/kmermaid \
+		-r phoenix/no-multiqc \
 		${COMMON_FLAGS} \
 		--translate_peptide_ksize 11 \
 		--outdir ${OUTDIR_BASE}/$@
@@ -29,9 +30,19 @@ run-1:
 
 ksize_8:
 	nextflow run nf-core/kmermaid \
+		-r phoenix/no-multiqc \
 		${COMMON_FLAGS} \
 		--translate_peptide_ksize 8 \
 		--translate_jaccard_threshold 0.05 \
 		--remove_ribo_rna \
 		--save_non_rrna_reads \
+		--outdir ${OUTDIR_BASE}/$@
+
+
+ksize_8_v2:
+	nextflow run nf-core/kmermaid \
+		-r dev \
+		${COMMON_FLAGS} \
+		--translate_peptide_ksize 8 \
+		--translate_jaccard_threshold 0.05 \
 		--outdir ${OUTDIR_BASE}/$@
