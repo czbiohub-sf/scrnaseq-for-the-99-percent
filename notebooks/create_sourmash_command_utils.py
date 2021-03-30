@@ -163,6 +163,87 @@ def remove_ribosomal(
     except: 
         logging.debug(f"fileoutput failed for {original_sig_path}, {ksize}, {cell_id}")
         
+        
+def load_sig_and_remove_many(
+    ksize: int, 
+    cell_id: str,
+    original_sig_path: str,
+    hashes_to_remove: iter, 
+    remove_ribosomal_output_dir: str, 
+    moltype="dayhoff",
+    force=False
+    
+):
+    """
+    * probably should do this before building the SBTs
+    """
+    sketch_id = sig_utils.make_sketch_id(
+        moltype, ksize, style='scaled', value=10
+    ) 
+    remove_ribosomal_sketch_id_dir = os.path.join(
+        remove_ribosomal_output_dir, 
+        sketch_id
+    ) 
+    output_sig_path = os.path.join(
+        remove_ribosomal_sketch_id_dir, 
+        os.path.basename(original_sig_path)
+    )
+    
+    if not force and os.path.exists(output_sig):
+        return    
+
+    
+    os.makedirs(remove_ribosomal_sketch_id_dir, exist_ok=True)
+    
+    try:
+        original_sig = sourmash.load_one_signature(
+            original_sig_path,
+        )
+    except ValueError:
+        logging.error(f"Could not load {original_sig_path} with ksize={ksize} and moltype={moltype}")
+        return
+    
+    original_sig.minhash.remove_many(hashes_to_remove)
+
+    try:
+        with FileOutput(output_sig_path, 'wt') as fp:
+            sourmash.save_signatures([original_sig], fp=fp)
+            logging.info(f"intersected sig successfully save {intersected_sig} for cell_id {cell_id}")
+    except: 
+        logging.debug(f"fileoutput failed for {original_sig_path}, {ksize}, {cell_id}")
+        
+        
+        
+def remove_ribosomal_per_ksize_moltype_df(
+    ksize: int, 
+    moltype: str,
+    cell_sig_df: pd.DataFrame,
+    cell_id_col: str,
+    sig_path_col: str,
+    ribosomal_sig_path: str, 
+    remove_ribosomal_output_dir: str, 
+    force=False
+    
+):
+    """
+    * probably should do this before building the SBTs
+    """
+    
+    # Load the ribosomal signature for this ksize, moltype first
+    ribosomal_sig = sourmash_args.load_one_signature(
+            ribosomal_sig_path,
+            ksize=ksize,
+            select_moltype=moltype
+        )
+    for i, row in cell_sig_df.items():
+        remove_ribosomal(
+            ksize=ksize,
+            cell_id=row[cell_id_col],
+            original_sig_path=row[sig_path_col],
+            ribosomal_sig_path=ribosomal_sig,
+            remove_ribosomal_output_dir=remove_ribosomal_output_dir,
+            force=force,
+        )
     
 def make_sourmash_sbts(
     sbt_base_dir: str, 
@@ -197,7 +278,7 @@ def make_sourmash_sbts(
 
 def make_sourmash_search_commands(
     search_dir, 
-    merged_sigs_dir, 
+    query_sigs_dir, 
     sbt_base_dir, 
     k_sizes, 
     scaled_sizes=[10,],
@@ -210,6 +291,8 @@ def make_sourmash_search_commands(
     threshold=1e-10,
     n_jobs=96,
     force=False,
+    add_ksize_to_sig_dir=False,
+    traverse_directory=False
 ):    
     """
     PARAMS:
@@ -221,6 +304,7 @@ def make_sourmash_search_commands(
     scaled_sizes=[10,] : inputs 
     cell_ids: if interested in only certain cell_ids in groupings
     sbt_template_basename=r"mouse_ksize_{k}.sbt.zip": what template we use to name the SBTs 
+        if None, then assume this is a directory and add --traverse-directory to 'sourmash search' command
     query_sig_files: this is the signature files to be queryed
     containment=True: if you want to search with containment instead of similarity
     moltype=dayhoff: molecule or alphabet type. either 'dayhoff', 'protein', or 'dna'
@@ -236,7 +320,12 @@ def make_sourmash_search_commands(
         for k in k_sizes:
             for scale in scaled_sizes:
                 sketch_id = sig_utils.make_sketch_id(moltype, k, style='scaled', value=scale)
-                sketch_id_merged_sig_dir = os.path.join(merged_sigs_dir, sketch_id)
+                sketch_id_query_sig_dir = os.path.join(query_sigs_dir, sketch_id)
+                
+                
+                if add_ksize_to_sig_dir:
+                    sketch_id_query_sig_dir = os.path.join(query_sigs_dir, sketch_id, str(k))
+                
                 sketch_id_search_dir = os.path.join(search_dir, sketch_id) # where we'll write search results to
 
                 if not os.path.exists(sketch_id_search_dir):
@@ -244,8 +333,8 @@ def make_sourmash_search_commands(
 
                 if not cell_ids:
                     query_sig_files = [
-                        os.path.join(sketch_id_merged_sig_dir, sig) for sig in 
-                        glob.glob(os.path.join(sketch_id_merged_sig_dir, "*.sig"))
+                        os.path.join(sketch_id_query_sig_dir, sig) for sig in 
+                        glob.glob(os.path.join(sketch_id_query_sig_dir, "*.sig"))
                     ]
                 else:
                     # if cell id provided then create query sig files 
@@ -254,7 +343,12 @@ def make_sourmash_search_commands(
                         for cell_id in cell_ids
                     ]
                     
-                sbt_index = os.path.join(sbt_base_dir, sbt_template_basename.format(k=k, moltype=moltype))
+                if sbt_template_basename is not None:
+                    sbt_index = os.path.join(sbt_base_dir, sbt_template_basename.format(k=k, moltype=moltype))
+                else:
+                    sbt_index = sbt_base_dir
+                    
+                    
                 for sig in query_sig_files:
                     #complete_sig_path = os.path.join(sketch_id_merged_sig_dir, sig)
                     basename = os.path.basename(sig)
@@ -265,7 +359,7 @@ def make_sourmash_search_commands(
                         continue
                     
                     if moltype.lower() == 'dna':
-                        moltype_args = f'--{moltype} --no-protein --no-dayhoff'
+                        moltype_args = f'--{moltype.lower()} --no-protein --no-dayhoff'
                     else:
                         moltype_args = f'--{moltype} --no-dna'
                         
@@ -277,9 +371,10 @@ def make_sourmash_search_commands(
                     if num_results is not None:
                         num_results_args = f'--num-results {num_results}'
                     else:
-                        num_results_args = ''
-                        
-                    flags = f"--quiet {moltype_args} {num_results_args} {threshold_args} -k {k}"
+                        num_results_flag = ''
+                    flags = f"--quiet {moltype_args} {num_results_flag} --threshold {threshold} -k {k}"
+                    if traverse_directory:
+                        flags += ' --traverse-directory'
                     if containment:
                         flags += " --containment"
                     command = f"sourmash search {flags} --output {output_csv} {sig} {sbt_index}\n"
@@ -323,6 +418,9 @@ def make_merged_sigs_df(
     globber = globber_template.format(merged_sigs_dir=merged_sigs_dir)
     merged_sigs = df = pd.Series(glob.glob(globber), name='fullpath'
     ).to_frame()
+    if merged_sigs.empty:
+        raise ValueError(f"No signatures found at {globber}")
+    
     merged_sigs['basename'] = merged_sigs['fullpath'].map(os.path.basename)
     merged_sigs["cell_id"] = merged_sigs.basename.str.split(".sig").str[0]
     merged_sigs['channel'] = merged_sigs.cell_id.str.split('__').str[0]

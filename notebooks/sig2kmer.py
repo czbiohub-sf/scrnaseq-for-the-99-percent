@@ -6,6 +6,7 @@ k-mers and sequences that match a hashval in the signature file.
 
 Cribbed from https://github.com/dib-lab/sourmash/pull/724/
 """
+import logging
 import os
 import sys
 import argparse
@@ -24,6 +25,8 @@ import sig_utils
 import pandas as pd
 
 NOTIFY_EVERY_BP = 1e7
+
+logging.basicConfig(filename='sig2kmer.log', level=logging.INFO)
 
 
 def get_kmer_moltype(sequence, start, ksize, moltype, input_is_protein):
@@ -353,13 +356,16 @@ def get_celltype_sig_path(
 
 
 def get_cell_sig_path(
-    cell_sig_base, cell_id, ksize, alphabet, scaled
+    cell_sig_base, cell_id, ksize, alphabet, scaled, add_ksize_to_sig_path=False
 ):
     """Per-cell-id signature. In a base directory for the sketch id"""
     sketch_id = sig_utils.make_sketch_id(
         alpha=alphabet, ksize=ksize, style="scaled", value=scaled
     )
-    sig_path = os.path.join(cell_sig_base, sketch_id, f"{cell_id}.sig")
+    if add_ksize_to_sig_path:
+        sig_path = os.path.join(cell_sig_base, sketch_id, str(ksize), f"{cell_id}.sig")
+    else:
+        sig_path = os.path.join(cell_sig_base, sketch_id, f"{cell_id}.sig")
     return sig_path
 
 
@@ -380,6 +386,7 @@ def get_diagnostic_kmers_for_cell(
     gene_name_tag="GN",
     seqout_template=None,
     channel_suffix=None,
+    add_ksize_to_sig_path=False
 ):
     """
     
@@ -394,7 +401,7 @@ def get_diagnostic_kmers_for_cell(
         scaled=scaled,
     )
     cell_sig_path = get_cell_sig_path(
-        cell_sig_base, cell_id, ksize=ksize, alphabet=alphabet, scaled=scaled
+        cell_sig_base, cell_id, ksize=ksize, alphabet=alphabet, scaled=scaled, add_ksize_to_sig_path=add_ksize_to_sig_path
     )
 
     channel, cell_barcode = cell_id.split("__")
@@ -445,13 +452,18 @@ def get_diagnostic_kmers_for_cell(
         else:
             seqout_fp = None
             
-        df = get_kmers_in_seqfiles(
-            [fasta],
-            query_hashvals=intersecting_hashes.keys(),
-            ksize=ksize,
-            moltype=alphabet,
-            seqout_fp=seqout_fp,
-        )
+        try:
+            df = get_kmers_in_seqfiles(
+                [fasta],
+                query_hashvals=intersecting_hashes.keys(),
+                ksize=ksize,
+                moltype=alphabet,
+                seqout_fp=seqout_fp,
+            )
+        except FileNotFoundError:
+            logging.error(f"Could not open {fasta}")
+            return
+        
         if seqout_template is not None:
             seqout_fp.close()
             
