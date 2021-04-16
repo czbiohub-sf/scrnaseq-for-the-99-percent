@@ -1,4 +1,3 @@
-
 #! /usr/bin/env python3
 """
 Given a signature file and a collection of sequences, output all of the
@@ -11,12 +10,11 @@ import os
 import sys
 import argparse
 import sourmash
-from sourmash import MinHash
-from sourmash import sourmash_args
+
 from sourmash.minhash import hash_murmur
 import screed
 import csv
-from sourmash.logging import notify, error
+from sourmash.logging import notify, error, set_quiet
 from sourmash.cli.utils import add_construct_moltype_args, add_ksize_arg
 from sourmash.sourmash_args import calculate_moltype
 from sencha.sequence_encodings import encode_peptide, AMINO_ACID_SINGLE_LETTERS
@@ -26,14 +24,14 @@ import pandas as pd
 
 NOTIFY_EVERY_BP = 1e7
 
-logging.basicConfig(filename='sig2kmer.log', level=logging.INFO)
+# logging.basicConfig(filename='sig2kmer.log', level=logging.INFO)
 
 
 def get_kmer_moltype(sequence, start, ksize, moltype, input_is_protein):
     kmer_in_seq = sequence[start : start + ksize]
     if moltype == "DNA":
         # Get reverse complement
-        kmer_rc = screed.rc(kmer)
+        kmer_rc = screed.rc(kmer_in_seq)
         if kmer_in_seq > kmer_rc:  # choose fwd or rc
             kmer_encoded = kmer_rc
         else:
@@ -41,9 +39,7 @@ def get_kmer_moltype(sequence, start, ksize, moltype, input_is_protein):
     elif input_is_protein:
         kmer_encoded = encode_peptide(kmer_in_seq, moltype)
     elif not input_is_protein:
-        raise NotImplementedError(
-            "Currently cannot translate DNA to protein sequence"
-        )
+        raise NotImplementedError("Currently cannot translate DNA to protein sequence")
     return kmer_encoded, kmer_in_seq
 
 
@@ -75,7 +71,9 @@ def get_kmers_for_hashvals(sequence, hashvals, ksize, moltype, input_is_protein)
             if not all(x in AMINO_ACID_SINGLE_LETTERS for x in sequence):
                 continue
 
-        kmer_encoded, kmer_in_seq = get_kmer_moltype(sequence, start, ksize, moltype, input_is_protein)
+        kmer_encoded, kmer_in_seq = get_kmer_moltype(
+            sequence, start, ksize, moltype, input_is_protein
+        )
 
         # NOTE: we do not avoid non-ACGT characters, because those k-mers,
         # when hashed, shouldn't match anything that sourmash outputs.
@@ -109,17 +107,20 @@ def get_matching_hashes_in_file(
         for kmer_encoded, kmer_in_seq, hashval in get_kmers_for_hashvals(
             record.sequence, hashes, ksize, moltype, input_is_protein
         ):
-            found_kmers.append([kmer_in_seq, kmer_encoded, hashval, record['name']])
+            found_kmers.append([kmer_in_seq, kmer_encoded, hashval, record["name"]])
 
             # write out sequence
             if seqout_fp:
-                seqout_fp.write(">{}|hashval:{}|kmer:{}|kmer_encoded:{}\n{}\n".format(
-                    record.name, hashval, kmer_in_seq, kmer_encoded, record.sequence))
+                seqout_fp.write(
+                    ">{}|hashval:{}|kmer:{}|kmer_encoded:{}\n{}\n".format(
+                        record.name, hashval, kmer_in_seq, kmer_encoded, record.sequence
+                    )
+                )
                 m += len(record.sequence)
             if first:
                 return m, n
     return m, n
-            
+
 
 def main():
     p = argparse.ArgumentParser()
@@ -144,9 +145,16 @@ def main():
         action="store_true",
         help="Consume protein sequences - no translation needed.",
     )
+    p.add_argument(
+        '--quiet',
+        action="store_true",
+        help='suppress non-error output'
+    )
     add_ksize_arg(p)
     add_construct_moltype_args(p)
     args = p.parse_args()
+
+    set_quiet(args.quiet)
 
     # set up the outputs.
     seqout_fp = None
@@ -157,7 +165,9 @@ def main():
     if args.output_kmers:
         kmerout_fp = open(args.output_kmers, "wt")
         kmerout_w = csv.writer(kmerout_fp)
-        kmerout_w.writerow(["kmer_in_sequence", "kmer_in_alphabet", "hashval", "read_name"])
+        kmerout_w.writerow(
+            ["kmer_in_sequence", "kmer_in_alphabet", "hashval", "read_name"]
+        )
 
     # Ensure that protein ksizes are divisible by 3
     if (args.protein or args.dayhoff or args.hp) and not args.input_is_protein:
@@ -172,7 +182,9 @@ def main():
 
     # first, load the signature and extract the hashvals
     moltype = calculate_moltype(args)
-    sigobj = sourmash.load_one_signature(args.query, ksize=args.ksize, select_moltype=moltype)
+    sigobj = sourmash.load_one_signature(
+        args.query, ksize=args.ksize, select_moltype=moltype
+    )
     query_hashvals = set(sigobj.minhash.hashes)
     query_ksize = sigobj.minhash.ksize
 
@@ -199,7 +211,6 @@ def main():
             watermark,
         )
 
-
     if seqout_fp:
         notify("read {} bp, wrote {} bp in matching sequences", n, m)
 
@@ -208,7 +219,6 @@ def main():
             kmerout_w.writerow([kmer_in_seq, kmer_encoded, str(hashval), read_id])
         notify("read {} bp, found {} kmers matching hashvals", n, len(found_kmers))
 
-        
 
 def overlap(sig1, sig2, ksize, moltype):
     """
@@ -273,7 +283,7 @@ def get_intersecting_hashes(sig1, sig2, abundances_from=None):
     Get hashes present in both sig1 and sig2, optionally using abundances from one of the signatures
     """
     hashes = set(sig1.minhash.hashes).intersection(sig2.minhash.hashes)
-    
+
     if abundances_from is not None:
         hash_abundances = {hashval: sig1.minhash.hashes[hashval] for hashval in hashes}
     else:
@@ -327,24 +337,29 @@ def celltype_cleaner(celltype):
 
 
 def get_peptide_fasta(
-    translate_base, channel, cell_barcode, is_aligned=True, double_aligned=True, channel_suffix=None
+    translate_base,
+    channel,
+    cell_barcode,
+    is_aligned=True,
+    double_aligned=True,
+    channel_suffix=None,
 ):
-    channel_suffix = '' if None else channel_suffix
+    channel_suffix = "" if None else channel_suffix
     alignment_status = "aligned" if is_aligned else "unaligned"
     if double_aligned:
         alignment_status = "__".join([alignment_status, alignment_status])
 
     basename = (
-        f"{channel}{channel_suffix}__{alignment_status}__{cell_barcode}__coding_reads_peptides.fasta"
+        f"{channel}{channel_suffix}__{alignment_status}__{cell_barcode}__"
+        + "coding_reads_peptides.fasta"
     )
     fasta = os.path.join(translate_base, basename)
     return fasta
 
-def get_celltype_sig_path(
-    celltype_sig_base, celltype_name, ksize, alphabet, scaled
-):
+
+def get_celltype_sig_path(celltype_sig_base, celltype_name, ksize, alphabet, scaled):
     """Per-celltype (merged individual signatures per cell type)
-    
+
     Ends in .sig.sig for some reason
     """
     sketch_id = sig_utils.make_sketch_id(
@@ -369,8 +384,6 @@ def get_cell_sig_path(
     return sig_path
 
 
-
-
 def get_diagnostic_kmers_for_cell(
     cell_id,
     cell_sig_base,
@@ -386,12 +399,13 @@ def get_diagnostic_kmers_for_cell(
     gene_name_tag="GN",
     seqout_template=None,
     channel_suffix=None,
-    add_ksize_to_sig_path=False
+    add_ksize_to_sig_path=False,
 ):
     """
-    
+
     seqout_template: str
-        Where to write matching fasta files for kmers. Includes "{alignment_status}" in the name to put aligned/unaligned
+        Where to write matching fasta files for kmers. Includes "{alignment_status}"
+        in the name to put aligned/unaligned
     """
     celltype_sig_path = get_celltype_sig_path(
         celltype_sig_base,
@@ -401,7 +415,12 @@ def get_diagnostic_kmers_for_cell(
         scaled=scaled,
     )
     cell_sig_path = get_cell_sig_path(
-        cell_sig_base, cell_id, ksize=ksize, alphabet=alphabet, scaled=scaled, add_ksize_to_sig_path=add_ksize_to_sig_path
+        cell_sig_base,
+        cell_id,
+        ksize=ksize,
+        alphabet=alphabet,
+        scaled=scaled,
+        add_ksize_to_sig_path=add_ksize_to_sig_path,
     )
 
     channel, cell_barcode = cell_id.split("__")
@@ -411,7 +430,7 @@ def get_diagnostic_kmers_for_cell(
         cell_barcode,
         is_aligned=True,
         double_aligned=double_aligned,
-        channel_suffix=channel_suffix
+        channel_suffix=channel_suffix,
     )
     unaligned_fasta = get_peptide_fasta(
         cell_fasta_dir,
@@ -419,7 +438,7 @@ def get_diagnostic_kmers_for_cell(
         cell_barcode,
         is_aligned=False,
         double_aligned=double_aligned,
-        channel_suffix=channel_suffix
+        channel_suffix=channel_suffix,
     )
 
     fastas = {"aligned": aligned_fasta, "unaligned": unaligned_fasta}
@@ -447,11 +466,11 @@ def get_diagnostic_kmers_for_cell(
             dirname = os.path.dirname(seqout_filename)
             if not os.path.exists(dirname):
                 os.makedirs(dirname)
-            
-            seqout_fp = open(seqout_filename, 'wt')
+
+            seqout_fp = open(seqout_filename, "wt")
         else:
             seqout_fp = None
-            
+
         try:
             df = get_kmers_in_seqfiles(
                 [fasta],
@@ -463,10 +482,10 @@ def get_diagnostic_kmers_for_cell(
         except FileNotFoundError:
             logging.error(f"Could not open {fasta}")
             return
-        
+
         if seqout_template is not None:
             seqout_fp.close()
-            
+
         df["alignment_status"] = alignment_status
         dfs.append(df)
     kmers = pd.concat(dfs)
