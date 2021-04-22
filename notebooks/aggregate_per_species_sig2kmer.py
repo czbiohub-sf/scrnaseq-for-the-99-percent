@@ -1,4 +1,5 @@
 
+import argparse
 import os
 import glob
 import re
@@ -23,7 +24,6 @@ def process_single_kmer_csv(csv):
     test_species = re.findall("((test|train)-\w+)", csv)[0][0]
     species = test_species.split("-")[-1]
     df["species"] = species
-    dfs.append(df)
     df["cell_id"] = os.path.basename(csv).split(".")[0]
     mol_or_alpha, moltype, ksize, style, value = re.findall(SKETCH_INFO_PATTERN, csv)[0]
     df["sketch_id"] = split[-4]
@@ -40,13 +40,6 @@ def main():
     # base directory containing a 2--single-cell-kmers folder which contains sketch id directories with sig2kmer csvs
     p.add_argument("species_base_dir")
     p.add_argument(
-        "--output-parquet",
-        type=str,
-        required=True,
-        default=None,
-        help="Save concatenated kmer csvs to this file",
-    )
-    p.add_argument(
         "--n-jobs",
         type=int,
         default=16,
@@ -55,7 +48,7 @@ def main():
 
     args = p.parse_args()
 
-    kmer_dir = os.path.join(species_base_dir, "2--single-cell-kmers")
+    kmer_dir = os.path.join(args.species_base_dir, "2--single-cell-kmers")
 
     sketch_globber = os.path.join(
         kmer_dir,
@@ -70,9 +63,11 @@ def main():
             "*",
             "*.csv",
         )
-        total = sum(1 for _ in glob.iglob(globber))
+        total = sum(1 for _ in glob.iglob(csv_globber))
 
-        dfs = Parallel(n_jobs=args.n_jobs)(delayed(process_single_kmer_csv)(csv))
+        dfs = Parallel(n_jobs=args.n_jobs)(
+            delayed(process_single_kmer_csv)(csv) for csv in glob.iglob(csv_globber)
+        )
         kmers = pd.concat(dfs)
         parquet = os.path.join(sketch_dir, "hash2kmer.parquet")
         notify(f"Writing {parquet}")
