@@ -126,7 +126,7 @@ def merge(
 
     filter_hashes = min_sig_fraction is not None
 
-    if filter_hashes:      
+    if filter_hashes:
         bloomfilter = Countgraph(ksize, starting_size=1e7, n_tables=4)
 
     for sigfile in filenames:
@@ -187,9 +187,9 @@ def merge(
         filtered_mh.set_abundances(hashes_to_keep)
         merged_sigobj = sourmash.SourmashSignature(filtered_mh)
     #         merged_sigobj.minhash.remove_many(hashes_to_remove)
-#     import pdb
+    #     import pdb
 
-#     pdb.set_trace()
+    #     pdb.set_trace()
 
     if name is not None:
         merged_sigobj._name = name
@@ -491,7 +491,7 @@ def get_hashes_to_remove(sigs, percent_threshold, ksize):
     shared_hashes = Countgraph(ksize, starting_size=1e7, n_tables=4)
     n_sigs_threshold = percent_threshold * len(sigs)
     hashes_to_remove = set([])
-    
+
     for sig in sigs:
         for hashval in sig.minhash.hashes:
             shared_hashes.count(hashval)
@@ -512,9 +512,7 @@ def remove_hashes(sig, hashes_to_remove):
 
 
 def remove_common_hashes(sigs, percent_threshold, ksize):
-    hashes_to_remove = get_hashes_to_remove(
-        sigs, percent_threshold, ksize
-    )
+    hashes_to_remove = get_hashes_to_remove(sigs, percent_threshold, ksize)
     subtracted_sigs = [remove_hashes(sig, hashes_to_remove) for sig in sigs]
 
     return subtracted_sigs
@@ -541,7 +539,7 @@ def remove_common_hashes_from_sig_df(
     output_dir=None,
     force=False,
     output_subfolder=None,
-#     create_hash_count_csv=True,
+    #     create_hash_count_csv=True,
     use_sparse_matrix=True,
 ):
     """
@@ -585,9 +583,7 @@ def remove_common_hashes_from_sig_df(
 
     sigs = load_sigfiles(sig_df[sig_col].values, ksize, moltype)
 
-    sigs_without_common_hashes = remove_common_hashes(
-        sigs, fraction_threshold, ksize
-    )
+    sigs_without_common_hashes = remove_common_hashes(sigs, fraction_threshold, ksize)
     series = pd.Series(sigs_without_common_hashes, index=[sig.name() for sig in sigs])
 
     if output_dir:
@@ -600,6 +596,48 @@ def remove_common_hashes_from_sig_df(
     return sigs_without_common_hashes
 
 
+def extract_channel_alignment_barcode(singlecell_fasta, double_aligned=False):
+    basename = os.path.basename(singlecell_fasta)
+    if double_aligned:
+        # "__aligned__aligned__" or "__unaligned__unaligned__"
+        channel, alignment_status, alignment_status2, barcode, suffix = basename.split(
+            "__"
+        )
+    else:
+        # "__aligned__" or "__unaligned__"
+        channel, alignment_status, barcode, suffix = basename.split("__")
+    return channel.strip("_"), alignment_status.strip("_"), barcode.strip("_")
+
+
+def extract_cell_id_from_fasta(singlecell_fasta, double_aligned=False):
+    channel, alignment_status, barcode = extract_channel_alignment_barcode(
+        singlecell_fasta, double_aligned=double_aligned
+    )
+    return f"{channel}__{barcode}"
+
+
+def clean_fasta_name(
+    basename,
+    strings_to_remove=[
+        "__aligned",
+        "__possorted_genome_bam",
+        "_possorted_genome_bam",
+        "__unaligned",
+    ],
+):
+    """Remove alignment status and extra bam text from orpheum-created translated coding reads"""
+    new_name = None
+    for to_remove in strings_to_remove:
+        if new_name is None:
+            # First time --> take original basename
+            new_name = basename.replace(to_remove, "")
+        else:
+            new_name = new_name.replace(to_remove, "")
+
+    new_name = new_name.split("_coding_reads")[0].strip("_")
+    return new_name
+
+
 def get_hashvals_in_singlecell_fasta(
     singlecell_fasta,
     cell_ontology_classes,
@@ -610,16 +648,10 @@ def get_hashvals_in_singlecell_fasta(
     gene_name_tag="GN",
     double_aligned=False,
 ):
+    channel, alignment_status, barcode = extract_channel_alignment_barcode(
+        singlecell_fasta, double_aligned=double_aligned
+    )
 
-    basename = os.path.basename(singlecell_fasta)
-    if double_aligned:
-        # "__aligned__aligned__" or "__unaligned__unaligned__"
-        channel, alignment_status, alignment_status2, barcode, suffix = basename.split(
-            "__"
-        )
-    else:
-        # "__aligned__" or "__unaligned__"
-        channel, alignment_status, barcode, suffix = basename.split("__")
     cell_id = f"{channel}__{barcode}"
 
     # Only consider cells with annotation

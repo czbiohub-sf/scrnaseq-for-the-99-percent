@@ -424,7 +424,7 @@ def make_merged_sigs_df(
     merged_sigs['basename'] = merged_sigs['fullpath'].map(os.path.basename)
     merged_sigs["cell_id"] = merged_sigs.basename.str.split(".sig").str[0]
     merged_sigs['channel'] = merged_sigs.cell_id.str.split('__').str[0]
-    merged_sigs['cell_barcode'] = merged_sigs.cell_id.str.split('__').str[-1]
+    merged_sigs['cell_barcode'] = merged_sigs.cell_id.str.split('__').str[-1].str.strip('_')
     merged_sigs["alphabet"] = merged_sigs.fullpath.str.split("alphabet-").str[-1].str.split("__").str[0]
     merged_sigs["ksize"] = merged_sigs.fullpath.str.split("ksize-").str[-1].str.split("__").str[0].astype(int)
     merged_sigs["scaled"] = merged_sigs.fullpath.str.split("scaled-").str[-1].str.split("/").str[0].astype(int)
