@@ -17,7 +17,8 @@ import csv
 from sourmash.logging import notify, error, set_quiet
 from sourmash.cli.utils import add_construct_moltype_args, add_ksize_arg
 from sourmash.sourmash_args import calculate_moltype
-from sencha.sequence_encodings import encode_peptide, AMINO_ACID_SINGLE_LETTERS
+
+from orpheum.sequence_encodings import encode_peptide, AMINO_ACID_SINGLE_LETTERS
 
 import sig_utils
 import pandas as pd
