@@ -74,7 +74,12 @@ def main():
         dfs = Parallel(n_jobs=args.n_jobs)(
             delayed(process_single_kmer_csv)(csv) for csv in glob.iglob(csv_globber)
         )
-        kmers = pd.concat(dfs)
+        try:
+            kmers = pd.concat(dfs)
+        except ValueError:
+            # No objects to contatenate, continue
+            notify("No hash2kmer files found, skipping")
+            continue
         parquet = os.path.join(sketch_dir, "hash2kmer.parquet")
         notify(f"Writing {parquet}")
         kmers.to_parquet(parquet)
