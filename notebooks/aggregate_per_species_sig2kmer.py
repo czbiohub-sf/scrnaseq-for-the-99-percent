@@ -45,10 +45,16 @@ def main():
         default=16,
         help="Number of processes to use",
     )
+    p.add_argument(
+        "--kmer-subdir",
+        default="2--single-cell-kmers",
+        type=str,
+        help="Subdirectory containing csvs within each per-sketch id subdirectory",
+    )
 
     args = p.parse_args()
 
-    kmer_dir = os.path.join(args.species_base_dir, "2--single-cell-kmers")
+    kmer_dir = os.path.join(args.species_base_dir, args.kmer_subdir)
 
     sketch_globber = os.path.join(
         kmer_dir,
@@ -60,7 +66,7 @@ def main():
         csv_globber = os.path.join(
             sketch_dir,
             "csvs",
-            "*",
+            "*",  # "aligned" or "unaligned" directory
             "*.csv",
         )
         total = sum(1 for _ in glob.iglob(csv_globber))
