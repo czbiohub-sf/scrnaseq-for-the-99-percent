@@ -65,7 +65,7 @@ def get_kmers_for_hashvals(sequence, hashvals, ksize, moltype, input_is_protein)
 
     for start in range(0, len(sequence) - ksize + 1):
         # Skip protein sequences with invalid input
-        # (workaround for sencha bug that wrote "Writing translate
+        # (workaround for orpheum bug that wrote "Writing translate
         # summary to coding_summary.json" to standard output and thus to the
         # protein fasta)
         if input_is_protein:

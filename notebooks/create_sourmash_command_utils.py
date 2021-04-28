@@ -393,9 +393,9 @@ def get_cells_with_both_aligned_unaligned_sigs_df(sig_folder):
         r"__aligned__aligned__|__unaligned__unaligned__", "__"
     ).str.replace(
         '__aligned__|__unaligned', '__').str.split(
-        "__coding_reads_peptides").str[0].str.replace(
+        "__coding_reads_(peptides|nucleotides)").str[0].str.replace(
         '_possorted_genome_bam', '').str.replace(
-        '____', '__')
+        '____', '__').str.replace("___", "__")
     #df.head()
 
     df['fasta_id'] = df.basename.str.split('__coding_reads').str[0]
