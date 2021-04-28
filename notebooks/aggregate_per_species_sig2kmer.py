@@ -51,7 +51,15 @@ def main():
         type=str,
         help="Subdirectory containing csvs within each per-sketch id subdirectory",
     )
-
+    p.add_argument(
+        "--no-aligned-unaligned-subdir",
+        action="store_true",
+        help=(
+            "If not set, looks for files in {species_base_dir}/{kmer_subdir}/{sketch_id}/csvs/aligned and "
+            "{species_base_dir}/{kmer_subdir}/{sketch_id}/csvs/unaligned. Otherwise, "
+            "looks in {species_base_dir}/{kmer_subdir}/{sketch_id}/csvs/"
+        ),
+    )
     args = p.parse_args()
 
     kmer_dir = os.path.join(args.species_base_dir, args.kmer_subdir)
@@ -63,12 +71,19 @@ def main():
 
     for sketch_dir in glob.glob(sketch_globber):
         notify(f"Reading hash2kmer csvs from {sketch_dir}")
-        csv_globber = os.path.join(
-            sketch_dir,
-            "csvs",
-            "*",  # "aligned" or "unaligned" directory
-            "*.csv",
-        )
+        if args.no_aligned_unaligned_subdir:
+            csv_globber = os.path.join(
+                sketch_dir,
+                "csvs",
+                "*.csv",
+            )
+        else:
+            csv_globber = os.path.join(
+                sketch_dir,
+                "csvs",
+                "*",  # "aligned" or "unaligned" directory
+                "*.csv",
+            )
         total = sum(1 for _ in glob.iglob(csv_globber))
 
         dfs = Parallel(n_jobs=args.n_jobs)(
