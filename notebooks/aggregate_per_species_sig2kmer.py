@@ -66,7 +66,7 @@ def main():
 
     sketch_globber = os.path.join(
         kmer_dir,
-        "*",
+        "alphabet-*ksize-*",
     )
 
     for sketch_dir in glob.glob(sketch_globber):
