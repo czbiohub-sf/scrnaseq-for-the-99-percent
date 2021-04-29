@@ -6,6 +6,8 @@ import os
 import pandas as pd
 import scanpy as sc
 from joblib import Parallel, delayed
+from IPython.display import display
+from tqdm import tqdm
 
 SHARED_CELLTYPES = [
     "Alveolar Epithelial Type 2",
@@ -20,12 +22,13 @@ SHARED_CELLTYPES = [
     "T cell",
 ]
 
+
 def describe(df, random=False):
     print(df.shape)
     print("--- First 5 entries ---")
     display(df.head())
     if random:
-        print('--- Random subset ---')
+        print("--- Random subset ---")
         display(df.sample(5))
 
 
@@ -51,8 +54,10 @@ def process_hash2kmer(parquet, adata_shared, celltype_col):
 
     parquet_out = parquet.replace(".parquet", "__unique_kmers_per_celltype.parquet")
     hash2kmer_celltype_unique_hashvals.to_parquet(parquet_out)
+
+    # Show number of aligned/unaligned k-mers per celltype
     per_celltype_alignment_status_kmers = hash2kmer_celltype_unique_hashvals.groupby(
-        celltype_col
+        celltype_col, observed=True
     ).alignment_status.value_counts()
     print(per_celltype_alignment_status_kmers)
 
@@ -75,6 +80,7 @@ def main():
     p.add_argument(
         "--n-jobs",
         default=3,
+        type=int,
         help=(
             "Number of jobs to do in parallel. By default, 3 for the 3 molecule types (DNA, protein, Dayhoff)"
         ),
@@ -83,7 +89,7 @@ def main():
         "--celltype-col",
         default="broad_group",
         help=(
-            "Column name endcoding the cel type in the h5ad AnnData object, i.e. an adata.obs column"
+            "Column name endcoding the cell type in the h5ad AnnData object, i.e. an adata.obs column"
         ),
     )
 
@@ -103,10 +109,15 @@ def main():
         )
     )
 
-    Parallel(n_jobs=args.n_jobs)(
-        delayed(process_hash2kmer)(parquet, adata_shared, args.celltype_col)
-        for parquet in parquets
-    )
+    if args.n_jobs > 1:
+        Parallel(n_jobs=args.n_jobs)(
+            delayed(process_hash2kmer)(parquet, adata_shared, args.celltype_col)
+            for parquet in parquets
+        )
+    else:
+        for parquet in tqdm(parquets):
+            print("hash2kmer parquet:", parquet)
+            process_hash2kmer(parquet, adata_shared, args.celltype_col)
 
 
 if __name__ == "__main__":
