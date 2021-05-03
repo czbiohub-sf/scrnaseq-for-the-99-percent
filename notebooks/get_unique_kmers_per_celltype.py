@@ -48,6 +48,7 @@ def process_hash2kmer(parquet, adata_shared, celltype_col):
             "gene_name",
             "alignment_status",
             "broad_group",
+            "cell_id",
         ]
     )
     describe(hash2kmer_celltype_unique_hashvals)
