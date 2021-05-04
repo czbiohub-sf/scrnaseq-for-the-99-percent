@@ -16,7 +16,7 @@ import sqlite3
 def process_single_kmer_csv(csv):
     try:
         df = read_kmer_csv(csv)
-    except pd.errors.EmptyDataError:
+    except (pd.errors.EmptyDataError, pd.errors.ParserError):
         #         print(f"Empty file: {csv}")
         return
 
@@ -60,6 +60,13 @@ def main():
             "looks in {species_base_dir}/{kmer_subdir}/{sketch_id}/csvs/"
         ),
     )
+#     p.add_argument(
+#         "--gene-name-tag",
+#         default="GN",
+#         help=(
+#             "Set the bam file tag to look for gene names in the read information"
+#         ),
+#     )
     args = p.parse_args()
 
     kmer_dir = os.path.join(args.species_base_dir, args.kmer_subdir)
