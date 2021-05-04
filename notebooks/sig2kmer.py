@@ -327,8 +327,8 @@ def get_kmers_in_seqfiles(
     )
 
 
-def read_kmer_csv(csv, gene_name_tag="GN"):
-    kmers = pd.read_csv(csv)
+def read_kmer_csv(csv, gene_name_tag="GN", dtype=dict(hashval=str)):
+    kmers = pd.read_csv(csv, dtype=dtype)
     kmers["gene_name"] = kmers["read_name"].str.extract(f"{gene_name_tag}:Z:([\w-]+)")
     return kmers
 
