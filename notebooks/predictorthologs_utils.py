@@ -32,7 +32,7 @@ def read_diamond_blastp_output(filename, read_is_uniprot=False, sketch_id_in_bas
         
 #     df['refseq_id'] = df['subject_id']
     df['description_with_predicted'] = df.subject_title.str.extract(DIAMOND_PATTERN).iloc[:, 0].str.strip()
-    df['additional_status'] = df.subject_title.str.extract('([A-Z]):')
+    df['additional_status'] = df.subject_title.str.extract('([A-Z ]+):')
     df['description'] = df['description_with_predicted'].str.split('PREDICTED: ').str[-1].str.strip()
     df['is_uncharacterized'] = df.subject_title.str.contains('uncharacterized')
     return df 
@@ -50,3 +50,4 @@ def read_kmer_csv(csv, gene_name_tag='GN', cell_barcode_channel_pattern=CELL_BAR
     df = df.droplevel(-1)
     kmers_channels = pd.concat([kmers, df], axis=1)
     return kmers_channels
+

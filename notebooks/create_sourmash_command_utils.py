@@ -5,7 +5,9 @@ import glob
 import copy
 import logging
 
+
 from joblib import Parallel, delayed
+import numpy as np
 import sourmash
 from sourmash import sourmash_args
 import pandas as pd
@@ -13,7 +15,7 @@ from sourmash.sourmash_args import FileOutput
 
 import sig_utils
 
-logging.basicConfig(filename='create_sourmash_commands.log', level=logging.DEBUG)
+logging.basicConfig(filename='create_sourmash_commands.log', level=logging.INFO)
 
 
 def get_cell_id_from_fasta(fasta_basename_noextension):
@@ -34,8 +36,10 @@ def make_sourmash_compute_commands(
     compute_txt:str, 
     sig_output_folder:str, 
     ksizes=sig_utils.KSIZES, 
-    scaled=5, 
-    n_jobs=96
+    scaled=10, 
+    n_jobs=96,
+    input_is_protein=True,
+    cell_id_as_name=True
 ):
     """
     PARAMS:
@@ -43,6 +47,7 @@ def make_sourmash_compute_commands(
     fastas: fastas you want to make sigs from 
     compute_txt: name of file to write commands to
     sig_output_folder: output folder for new sigs
+    cell_id_as_name: use the cell ID as the name. Not useful for predictorthologs because need aligned/unaligned in the signature name
     """
     
     ksizes_flag = f'--ksizes {",".join(map(str, ksizes))}'
@@ -52,6 +57,11 @@ def make_sourmash_compute_commands(
             f_base = os.path.basename(f)
             f_base_noext = os.path.splitext(f_base)[0]
             cell_id = get_cell_id_from_fasta(f_base_noext)
+            
+            if cell_id_as_name:
+                name = cell_id
+            else:
+                name = f_base_noext
 
             try:
                 output = os.path.join(
@@ -59,7 +69,11 @@ def make_sourmash_compute_commands(
                     f_base_noext + ".sig"
                 )
                 # removed --protein from command since we only use dayhoff signatures, and it will make loading the signatures ~2x faster (I think)
-                command = f"sourmash compute --quiet --track-abundance --input-is-protein --scaled {scaled} {ksizes_flag} --dayhoff {fasta} --name '{cell_id}' -o {output} \n"
+                if input_is_protein:
+                    moltype_flag = '--input-is-protein --protein --dayhoff'
+                else: 
+                    moltype_flag = '--dna'
+                command = f"sourmash compute --quiet --track-abundance --scaled {scaled} {ksizes_flag} {moltype_flag} {fasta} --name '{name}' -o {output} \n"
                 fh.write(command)
 
             except KeyError:
@@ -75,6 +89,7 @@ def remove_ribosomal(
     original_sig_path: str,
     ribosomal_sig_path: str, 
     remove_ribosomal_output_dir: str, 
+    moltype="dayhoff",
     
 ):
     """
@@ -82,7 +97,7 @@ def remove_ribosomal(
     """
     
     sketch_id = sig_utils.make_sketch_id(
-        "dayhoff", ksize, style='scaled', value=10
+        moltype, ksize, style='scaled', value=10
     ) 
                 
     remove_ribosomal_sketch_id_dir = os.path.join(
@@ -100,14 +115,14 @@ def remove_ribosomal(
     original_sig = sourmash.load_one_signature(
         original_sig_path,
         ksize=ksize,
-        select_moltype="dayhoff"
+        select_moltype=moltype
     )
         
     original_sig_copy = copy.deepcopy(original_sig)
     flattened_sig = sig_utils._flatten(
         original_sig_copy, 
         ksize, 
-        "dayhoff",
+        moltype,
         cell_id,
         md5=None, 
         name=None
@@ -117,7 +132,8 @@ def remove_ribosomal(
         flattened_sig, 
         ribosomal_sig_path, 
         ksize,
-        cell_id
+        cell_id,
+        moltype=moltype
     )
     
     intersected_sig = sig_utils._intersect(
@@ -125,6 +141,7 @@ def remove_ribosomal(
         [subtracted_sig, original_sig], 
         original_sig,
         cell_id, # to rename 
+        moltype=moltype,
     )
        
     try:
@@ -140,6 +157,10 @@ def make_sourmash_sbts(
     ksizes: list, 
     merged_sigs_output_folder: str, 
     index_command_file_name: str, 
+    moltype='dayhoff',
+    sbt_prefix='mouse',
+    n_jobs=22,
+    
 ):
     """
     sbt_base_dir: this is where the output SBTs will be
@@ -149,12 +170,17 @@ def make_sourmash_sbts(
     """
     with open(index_command_file_name, "w") as fh:
         for k in ksizes:
-            sketch_id = sig_utils.make_sketch_id("dayhoff", k, style='scaled', value=10) 
-            flags = "--quiet --dayhoff"
-            command = f"sourmash index -k {k} {flags} {sbt_base_dir}/mouse_ksize_{k}.sbt.zip --traverse-directory {merged_sigs_output_folder}/{sketch_id} \n"
+            sketch_id = sig_utils.make_sketch_id(moltype, k, style='scaled', value=10) 
+            if moltype.lower() == 'dna':
+                moltype_args = f'--{moltype.lower()} --no-protein --no-dayhoff'
+            else:
+                moltype_args = f'--{moltype} --no-dna'
+            flags = f"--traverse-directory --quiet {moltype_args}"
+            command = f"sourmash index -k {k} {flags} {sbt_base_dir}/{sbt_prefix}__alphabet-{moltype}__ksize-{k}.sbt.zip {merged_sigs_output_folder}/{sketch_id} \n"
             fh.write(command)
 
-    print(f"parallel --progress --eta --jobs 96 < {index_command_file_name}")
+    print(f"parallel --progress --eta --jobs {n_jobs} < {index_command_file_name}")
+    return index_command_file_name
 
 
 def make_sourmash_search_commands(
@@ -166,7 +192,11 @@ def make_sourmash_search_commands(
     cell_ids=[],
     sbt_template_basename=r"mouse_ksize_{k}.sbt.zip", 
     query_sig_files=False, 
-    containment=True
+    containment=True,
+    moltype="dayhoff",
+    num_results=3,
+    n_jobs=96,
+    threshold=0
 ):    
     """
     PARAMS:
@@ -180,13 +210,19 @@ def make_sourmash_search_commands(
     sbt_template_basename=r"mouse_ksize_{k}.sbt.zip": what template we use to name the SBTs 
     query_sig_files: this is the signature files to be queryed
     containment=True: if you want to search with containment instead of similarity
+    moltype=dayhoff: molecule or alphabet type. either 'dayhoff', 'protein', or 'dna'
+    num_results=5: Number of search results to return. Fewer means search goes faster
     """
+#     moltype_lower = moltype.lower()
+    valid_moltypes = 'dayhoff', 'protein', 'dna'
+    if not isinstance(moltype, str) or moltype.lower() not in valid_moltypes:
+        raise ValueError(f"{moltype} is not a valid molecule type. Only one of {valid_moltypes} are allowed")
     
-    sourmash_search_command_file = os.path.join(search_dir, "sourmash_search_commands.txt")
+    sourmash_search_command_file = os.path.join(search_dir, f"sourmash_search_commands_{moltype}.txt")
     with open(sourmash_search_command_file, "w") as fh:
         for k in k_sizes:
             for scale in scaled_sizes:
-                sketch_id = sig_utils.make_sketch_id("dayhoff", k, style='scaled', value=scale)
+                sketch_id = sig_utils.make_sketch_id(moltype, k, style='scaled', value=scale)
                 sketch_id_merged_sig_dir = os.path.join(merged_sigs_dir, sketch_id)
                 sketch_id_search_dir = os.path.join(search_dir, sketch_id) # where we'll write search results to
 
@@ -205,18 +241,24 @@ def make_sourmash_search_commands(
                         for cell_id in cell_ids
                     ]
                     
-                sbt_index = os.path.join(sbt_base_dir, sbt_template_basename.format(k=k))
+                sbt_index = os.path.join(sbt_base_dir, sbt_template_basename.format(k=k, moltype=moltype))
                 for sig in query_sig_files:
                     #complete_sig_path = os.path.join(sketch_id_merged_sig_dir, sig)
                     basename = os.path.basename(sig)
                     output_csv = os.path.join(sketch_id_search_dir, basename.replace(".sig", ".csv"))
-                    flags = "--quiet "
+                    if moltype.lower() == 'dna':
+                        moltype_args = f'--{moltype} --no-protein --no-dayhoff'
+                    else:
+                        moltype_args = f'--{moltype} --no-dna'
+                    num_results_flag = f'--num-results {num_results}' if num_results is not None else ''
+                    flags = f"--quiet {moltype_args} {num_results_flag} --threshold {threshold} -k {k}"
                     if containment:
                         flags += " --containment"
-                    command = f"sourmash search {flags} --output {output_csv} {sig} {sbt_index}  \n"
+                    command = f"sourmash search {flags} --output {output_csv} {sig} {sbt_index}\n"
                     fh.write(command)
                                 
-    print(f"parallel --progress --eta --jobs 96 < {sourmash_search_command_file}")
+    print(f"parallel --progress --eta --jobs {n_jobs} < {sourmash_search_command_file}")
+    return sourmash_search_command_file
 
     
 def get_cells_with_both_aligned_unaligned_sigs_df(sig_folder):
@@ -231,6 +273,7 @@ def get_cells_with_both_aligned_unaligned_sigs_df(sig_folder):
         "__coding_reads_peptides").str[0]
     #df.head()
 
+    df['fasta_id'] = df.basename.str.split('__coding_reads').str[0]
     df['channel'] = df.cell_id.str.split('__').str[0]
     df['cell_barcode'] = df.cell_id.str.split('__').str[1]
     print(df.shape)
@@ -242,8 +285,26 @@ def get_cells_with_both_aligned_unaligned_sigs_df(sig_folder):
 
 
 
-def sample_sigs_from_ontologies(
+def make_merged_sigs_df(
     merged_sigs_dir,
+    globber_template='{merged_sigs_dir}/*/*.sig'
+):
+    globber = globber_template.format(merged_sigs_dir=merged_sigs_dir)
+    merged_sigs = df = pd.Series(glob.glob(globber), name='fullpath'
+    ).to_frame()
+    merged_sigs['basename'] = merged_sigs['fullpath'].map(os.path.basename)
+    merged_sigs["cell_id"] = merged_sigs.basename.str.split(".sig").str[0]
+    merged_sigs['channel'] = merged_sigs.cell_id.str.split('__').str[0]
+    merged_sigs['cell_barcode'] = merged_sigs.cell_id.str.split('__').str[-1]
+    merged_sigs["alphabet"] = merged_sigs.fullpath.str.split("alphabet-").str[-1].str.split("__").str[0]
+    merged_sigs["ksize"] = merged_sigs.fullpath.str.split("ksize-").str[-1].str.split("__").str[0].astype(int)
+    merged_sigs["scaled"] = merged_sigs.fullpath.str.split("scaled-").str[-1].str.split("/").str[0].astype(int)
+    merged_sigs['sketch_id'] = merged_sigs.fullpath.str.split('/').str[-2]
+    return merged_sigs
+
+
+def join_sigs_with_ontologies(
+    merged_sigs,
     metadata, # where to join cell_onotology class from, ex: one2one.obs
     metadata_cell_ontology_cols= ['cell_ontology_class', "broad_group"],
     metadata_join_cols = ["cell_barcode", "channel"],
@@ -260,20 +321,13 @@ def sample_sigs_from_ontologies(
         'Ciliated',
         'Fibroblast',
         'Smooth Muscle and Myofibroblast'
-    ]
-
+    ],
 ):
+    TOTAL_N_SKETCH_IDS = merged_sigs.sketch_id.nunique()
 
-
-    merged_sigs = df = pd.Series(
-        glob.glob(f'{merged_sigs_dir}/*/*.sig'), name='fullpath'
-    ).to_frame()
-    merged_sigs['basename'] = merged_sigs['fullpath'].map(os.path.basename)
-    merged_sigs["cell_id"] = merged_sigs.basename.str.split(".sig").str[0]
-    merged_sigs['channel'] = merged_sigs.cell_id.str.split('__').str[0]
-    merged_sigs['cell_barcode'] = merged_sigs.cell_id.str.split('__').str[-1]
-    merged_sigs["ksize"] = merged_sigs.fullpath.str.split("ksize-").str[-1].str.split("__").str[0]
-    merged_sigs["scaled"] = merged_sigs.fullpath.str.split("scaled-").str[-1].str.split("/").str[0]
+#     import pdb; pdb.set_trace()
+    # To do apples-to-apples comparisons, filter for only cell IDs present in all sketches
+    merged_sigs = merged_sigs.groupby('cell_id').filter(lambda x: x.sketch_id.nunique() == TOTAL_N_SKETCH_IDS)
     
     # merge on ontology:
     merged_sigs_w_ontology = merged_sigs.merge(
@@ -283,15 +337,72 @@ def sample_sigs_from_ontologies(
     )
     
     # subset to broad tissue types
-    merged_sigs_w_ontology_subset = merged_sigs_w_ontology[
-        merged_sigs_w_ontology[sample_from_col].isin(cell_ontology_groups)
-    ]
+    if cell_ontology_groups:
+        merged_sigs_w_ontology_subset = merged_sigs_w_ontology[
+            merged_sigs_w_ontology[sample_from_col].isin(cell_ontology_groups)
+        ]
+        return merged_sigs_w_ontology_subset
     
-    # subset to 10 cells per broad_group
-    sampled_number_of_cell_ids = merged_sigs_w_ontology_subset.sort_values(
-        [sample_from_col]
-    ).groupby(sample_from_col, observed=True).apply(lambda x: x.sample(10, random_state=0))
+    else:
+        print("not taking subsets")
+        return merged_sigs_w_ontology.dropna(subset=metadata_cell_ontology_cols)
     
-    merged_sigs_w_ontology_subset_10cell = merged_sigs_w_ontology_subset.query("cell_id in @sampled_number_of_cell_ids.cell_id.values")
     
-    return merged_sigs_w_ontology_subset_10cell
+def subsample_sig_df_ontologies(
+    merged_sigs_w_ontology_subset,
+    n_samples=10,
+    sample_from_col="broad_group",
+):
+        
+    # This is a pretty "dumb way" to do this but it's what I can think of right now.. will do something more elegant later
+#     Groupby sketch id, but only do this once since each cell should be represented once per sketch id
+    one_sketch_id = merged_sigs_w_ontology_subset.head(1)['sketch_id'].values[0]
+    df = merged_sigs_w_ontology_subset.query('sketch_id == @one_sketch_id')
+    sampled_number_of_cell_ids = df.groupby(sample_from_col, observed=True).apply(
+        lambda x: x.sample(n_samples, random_state=0, replace=False) if len(x) > n_samples else x
+    )
+    
+    merged_sigs_w_ontology_subset = merged_sigs_w_ontology_subset.query("cell_id in @sampled_number_of_cell_ids.cell_id.values")
+    
+    return merged_sigs_w_ontology_subset
+
+
+def sample_sigs_from_ontologies(
+    merged_sigs_dir,
+    metadata, # where to join cell_onotology class from, ex: one2one.obs
+    metadata_cell_ontology_cols= ['cell_ontology_class', "broad_group", 'compartment_group'],
+    metadata_join_cols = ["cell_barcode", "channel"],
+    sample_from_col = "broad_group",
+    cell_ontology_groups = [
+        'Dendritic', 
+        'Macrophage',
+        'Monocyte',
+        'B cell',
+        'T cell',
+        'Natural Killer T cell',
+        'Natural Killer',
+        'Alveolar Epithelial Type 2',
+        'Ciliated',
+        'Fibroblast',
+        'Smooth Muscle and Myofibroblast'
+    ],
+    n_samples=10,
+):
+
+    merged_sigs = make_merged_sigs_df(merged_sigs_dir)
+    
+    mouse_sigs_ontologies = join_sigs_with_ontologies(
+        merged_sigs, 
+        metadata=metadata,
+        metadata_cell_ontology_cols=metadata_cell_ontology_cols,
+        metadata_join_cols=metadata_join_cols,
+        sample_from_col=sample_from_col,
+        cell_ontology_groups=cell_ontology_groups
+    )
+    
+    mouse_sigs_ontologies_sampled = subsample_sig_df_ontologies(
+        mouse_sigs_ontologies, 
+        n_samples=n_samples,
+        sample_from_col=sample_from_col,
+    )
+    return mouse_sigs_ontologies_sampled
