@@ -18,6 +18,9 @@ KSIZES = 21,24,27,30,33,36,39,42,45,48,51,54,57,60,63,66,69,72,75
 MOLECULES = 'protein', 'dayhoff'
 SCALEDS = 2, 5, 10
 
+# Regex bulider: https://regex101.com/r/eKgZAc/1
+REFSEQ_REGEX = r'(?P<refseq_id>[NX]P_\d+\.\d) (?P<modifier>[A-Z :]* )?(?P<refseq_description>[\w\d\-,/ ]+) \[(?P<species>[\w ]+)\]'
+
 
 def calculate_moltype(dna=False, dayhoff=False, hp=False, protein=False, default=None):
     moltype = default
