@@ -28,6 +28,14 @@ SKETCH_PARAMS = ['alphabet', 'ksize', 'sketch_style', 'sketch_value']
 CELL_PARAMS = ['channel', 'cell_barcode']
 SKETCH_CELL_PARAMS = SKETCH_PARAMS + CELL_PARAMS
 
+
+def sanitize(name):
+    """Make the name able to be a valid path name. 
+    
+    No spaces or slashes, everything lowercase"""
+    return name.lower().replace(' ', '_').replace('/', '-slash-')
+
+
 def make_sketch_id(alpha, ksize, style, value):
     sketch_id = f'alphabet-{alpha}__ksize-{ksize}__{style}-{value}'
     return sketch_id
@@ -71,7 +79,7 @@ def get_sig_file_df(sig_folder, verbose=False, aligned_unaligned_merged=False):
 
 # from sourmash.sig import _check_abundance_compatibility
 
-def merge(filenames, ksize, moltype, flatten=False):
+def merge(filenames, ksize, moltype, name=None, flatten=False, outsig=None):
     """
     merge one or more signatures.
     
@@ -107,6 +115,12 @@ def merge(filenames, ksize, moltype, flatten=False):
             total_loaded += 1
 
     merged_sigobj = sourmash.SourmashSignature(mh)
+    if name is not None:
+        merged_sigobj._name = name
+    
+    if outsig is not None:
+        with open(outsig, 'wt') as f:
+            sourmash.save_signatures([merged_sigobj], fp=f)
     
     return merged_sigobj
 
@@ -364,3 +378,6 @@ def parallel_merge_aligned_unaligned_sigs(
         for (params, df), ksize in tqdm(itertools.product(grouped, ksizes), total=n_iter))
     merged_success = pd.Series(dict(merged_success))
     return merged_success
+
+
+
