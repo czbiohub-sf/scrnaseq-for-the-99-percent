@@ -1,0 +1,3 @@
+name,molecule,ksize,sigma,expected_collisions,n_unique_kmers,n_theoretical_kmers_log10,n_unique_kmers_log10,unique_over_theoretical_log10
+tupaia_chinensis,dayhoff6,17,6,6.506572676921478e-10,506371,13.228571256521942,5.7044688255625875,-7.5241024309593545
+tupaia_chinensis,protein20,8,20,7.144468364402314e-10,518316,10.40823996531185,5.714594615369453,-4.693645349942397

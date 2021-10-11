@@ -1,0 +1,3 @@
+name,molecule,ksize,sigma,expected_collisions,n_unique_kmers,n_theoretical_kmers_log10,n_unique_kmers_log10,unique_over_theoretical_log10
+ceratotherium_simum_simum,dayhoff6,17,6,5.062511947517623e-24,150,13.228571256521942,2.1760912590556813,-11.05247999746626
+ceratotherium_simum_simum,protein20,8,20,6.391304693465727e-24,159,10.40823996531185,2.2013971243204513,-8.2068428409914

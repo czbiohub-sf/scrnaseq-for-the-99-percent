@@ -1,0 +1,3 @@
+name,molecule,ksize,sigma,expected_collisions,n_unique_kmers,n_theoretical_kmers_log10,n_unique_kmers_log10,unique_over_theoretical_log10
+lipotes_vexillifer,dayhoff6,17,6,1.911688625877264e-19,2091,13.228571256521942,3.3203540328176717,-9.90821722370427
+lipotes_vexillifer,protein20,8,20,2.1889059545895806e-19,2163,10.40823996531185,3.3350565194390915,-7.0731834458727585

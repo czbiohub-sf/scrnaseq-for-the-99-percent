@@ -1,0 +1,3 @@
+name,molecule,ksize,sigma,expected_collisions,n_unique_kmers,n_theoretical_kmers_log10,n_unique_kmers_log10,unique_over_theoretical_log10
+mus_musculus,dayhoff6,17,6,7.880357034011706e-06,5443866,13.228571256521942,6.735907426564948,-6.492663829956994
+mus_musculus,protein20,8,20,8.231360554020405e-06,5505061,10.40823996531185,6.740762135626866,-3.6674778296849837

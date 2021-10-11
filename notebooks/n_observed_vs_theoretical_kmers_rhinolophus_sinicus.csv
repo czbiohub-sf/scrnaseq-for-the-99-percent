@@ -1,0 +1,3 @@
+name,molecule,ksize,sigma,expected_collisions,n_unique_kmers,n_theoretical_kmers_log10,n_unique_kmers_log10,unique_over_theoretical_log10
+rhinolophus_sinicus,dayhoff6,17,6,6.246087571163623e-21,889,13.228571256521942,2.9489017609702137,-10.279669495551728
+rhinolophus_sinicus,protein20,8,20,6.5028894589655395e-21,898,10.40823996531185,2.9532763366673045,-7.4549636286445455
