@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# OSF credentials
+.osfcli.config
+
+# Data folder
+kmer-homology-data
