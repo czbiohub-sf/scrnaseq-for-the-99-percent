@@ -1,3 +1,0 @@
-name,molecule,ksize,sigma,expected_collisions,n_unique_kmers,n_theoretical_kmers_log10,n_unique_kmers_log10,unique_over_theoretical_log10
-sorex_araneus,dayhoff6,17,6,5.209894507217045e-16,15108,13.228571256521942,4.179206976155488,-9.049364280366454
-sorex_araneus,protein20,8,20,5.664048233426425e-16,15430,10.40823996531185,4.188365926063148,-6.219874039248702

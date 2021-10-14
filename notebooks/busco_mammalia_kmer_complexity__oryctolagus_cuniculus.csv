@@ -1,3 +1,0 @@
-name,molecule,ksize,sigma,expected_collisions,n_unique_kmers,n_theoretical_kmers_log10,n_unique_kmers_log10,unique_over_theoretical_log10
-oryctolagus_cuniculus,dayhoff6,17,6,2.7128924384720415e-07,2308839,13.228571256521942,6.363393649742897,-6.865177606779045
-oryctolagus_cuniculus,protein20,8,20,2.891753832895436e-07,2346224,10.40823996531185,6.370369472962767,-4.037870492349083

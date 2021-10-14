@@ -1,3 +1,0 @@
-name,molecule,ksize,sigma,expected_collisions,n_unique_kmers,n_theoretical_kmers_log10,n_unique_kmers_log10,unique_over_theoretical_log10
-aotus_nancymaae,dayhoff6,17,6,1.343058637394534e-06,3463840,13.228571256521942,6.539557823090708,-6.689013433431234
-aotus_nancymaae,protein20,8,20,1.421344308969828e-06,3513425,10.40823996531185,6.545730687221809,-3.862509278090041
