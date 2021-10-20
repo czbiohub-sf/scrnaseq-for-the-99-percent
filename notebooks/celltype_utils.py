@@ -1,5 +1,8 @@
 
 import pandas as pd
+import scanpy as sc
+
+from path_constants import H5AD
 
 SHARED_CELLTYPES = [
     "Capillary",
@@ -34,3 +37,11 @@ BROAD_TO_COMPARTMENT = pd.Series({
 })
 broad_to_compartment = BROAD_TO_COMPARTMENT[SHARED_CELLTYPES]
 broad_to_compartment
+
+
+def get_shared_adata():
+    adata = sc.read(H5AD)
+    adata.obs = adata.obs.reset_index().set_index('cell_id')
+
+    adata_shared = adata[adata.obs.broad_group.isin(SHARED_CELLTYPES)]
+    return adata_shared
