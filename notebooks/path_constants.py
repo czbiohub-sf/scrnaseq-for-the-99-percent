@@ -32,3 +32,7 @@ top_hit_paths = {
     "bat": bat_parquet,
     "human": human_parquet,
 }
+
+H5AD = os.path.join(DATA_FOLDER, 'h5ads',
+ 'human-lemur-mouse-bat',
+ 'human-lemur-mouse-bat__lung_only.h5ad')
