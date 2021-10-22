@@ -1,3 +1,0 @@
-name,molecule,ksize,sigma,expected_collisions,n_unique_kmers,n_theoretical_kmers_log10,n_unique_kmers_log10,unique_over_theoretical_log10
-macaca_mulatta,dayhoff6,17,6,4.616362681318625e-07,2641140,13.228571256521942,6.421791422644251,-6.806779833877691
-macaca_mulatta,protein20,8,20,4.924858758554644e-07,2684633,10.40823996531185,6.4288849243116575,-3.9793550410001925

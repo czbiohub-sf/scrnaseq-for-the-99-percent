@@ -1,3 +1,0 @@
-name,molecule,ksize,sigma,expected_collisions,n_unique_kmers,n_theoretical_kmers_log10,n_unique_kmers_log10,unique_over_theoretical_log10
-phascolarctos_cinereus,dayhoff6,17,6,2.6167925216474464e-18,4022,13.228571256521942,3.6044420662607233,-9.624129190261218
-phascolarctos_cinereus,protein20,8,20,2.757474324039895e-18,4075,10.40823996531185,3.6101276130759956,-6.798112352235854

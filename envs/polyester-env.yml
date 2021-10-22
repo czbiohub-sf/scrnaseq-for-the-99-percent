@@ -1,0 +1,14 @@
+name: polyester-env
+channels:
+  - r
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r::r-base=3.6.1
+  - r::r-essentials=3.6.0
+  - bioconda::bioconductor-polyester
+  - bioconda::bioconductor-ballgown=2.18.0
+  - conda-forge::jupyterlab
+  - bioconda::bioconductor-rtracklayer
+  - bioconda::bioconductor-bsgenome

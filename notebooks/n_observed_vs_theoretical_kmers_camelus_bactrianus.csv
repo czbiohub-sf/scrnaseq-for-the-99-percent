@@ -1,3 +1,0 @@
-name,molecule,ksize,sigma,expected_collisions,n_unique_kmers,n_theoretical_kmers_log10,n_unique_kmers_log10,unique_over_theoretical_log10
-camelus_bactrianus,dayhoff6,17,6,2.747611274116868e-21,724,13.228571256521942,2.859738566197147,-10.368832690324794
-camelus_bactrianus,protein20,8,20,3.1979552873277986e-21,752,10.40823996531185,2.876217840591642,-7.532022124720208
