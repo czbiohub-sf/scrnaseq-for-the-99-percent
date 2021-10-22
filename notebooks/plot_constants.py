@@ -41,3 +41,12 @@ PEPTIDE_ALPHABET_PALETTES = {
     "protein": sns.dark_palette(PROTEIN_COLOR),
     "dayhoff": sns.dark_palette(DAYHOFF_COLOR),
 }
+
+
+def get_cmap_color(keys):
+    if 'protein' in keys:
+        return "Oranges"
+    if 'DNA' in keys:
+        return "Blues"
+    if 'dayhoff' in keys:
+        return "Greens"

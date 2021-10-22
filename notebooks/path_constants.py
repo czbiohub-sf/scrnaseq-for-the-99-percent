@@ -1,10 +1,17 @@
 import os
 
+FIGURE_FOLDER = os.path.join('..', 'figures')
+DATA_FOLDER = os.path.join('..', 'kmer-homology-data')
+
+
+
 FIGURE_FOLDER = os.path.join("..", "figures")
 DATA_FOLDER = os.path.join("..", "kmer-homology-data")
 
 # Raw data = straight from the sequencer, or downloaded from a database
 RAWDATA_FOLDER = os.path.join(DATA_FOLDER, "00--rawdata")
+
+### --- Figure 2, Supplementary Figure 1 Paths --- ###
 
 # Quest for Orthologs 2019 folder
 QFO_FOLDER = os.path.join(RAWDATA_FOLDER, "quest-for-orthologs", "2019")
@@ -39,3 +46,37 @@ SIMULATED_READS_FOLDER = os.path.join(ORPHEUM_BENCHMARKING_FOLDER, "simulated", 
 ORPHEUM_PIPELINE_RESULTS_FOLDER = os.path.join(
     ORPHEUM_BENCHMARKING_FOLDER, "orpheum-translate-on-simulated-human-data-results"
 )
+
+### --- Figure 1, Supplementary Figure 2 Paths --- ###
+
+sig_outdir_base = "/home/olga/data_lg/data_sm_copy/immune-evolution/kmer-signatures"
+
+top_hit_suffix = os.path.join(
+    "4--aggregated-results",
+    "sourmash-search-results--top-hit.parquet",
+)
+
+self2self_parquet = os.path.join(
+    sig_outdir_base, "0--mouse2mouse", "0--self2self-bootstrapped", top_hit_suffix
+)
+
+mouse2mouse_parquet = os.path.join(
+    sig_outdir_base, "0--mouse2mouse", "1--mouse2mouse", top_hit_suffix
+)
+
+lemur_parquet = os.path.join(sig_outdir_base, "4--test-lemur", top_hit_suffix)
+
+bat_parquet = os.path.join(sig_outdir_base, "3--test-bat", top_hit_suffix)
+human_parquet = os.path.join(sig_outdir_base, "2--test-human", top_hit_suffix)
+
+top_hit_paths = {
+#     "self": self2self_parquet,
+    "mouse": mouse2mouse_parquet,
+    "lemur": lemur_parquet,
+    "bat": bat_parquet,
+    "human": human_parquet,
+}
+
+H5AD = os.path.join(DATA_FOLDER, 'h5ads',
+ 'human-lemur-mouse-bat',
+ 'human-lemur-mouse-bat__lung_only.h5ad')

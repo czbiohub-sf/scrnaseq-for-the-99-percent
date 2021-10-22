@@ -1,0 +1,14 @@
+executor {
+   cpus = 120
+   memory = '512.GB'
+}
+process {
+  withName: 'translate' {
+    memory = 16.GB
+    cpus = 1
+    time = 99999999999.h
+  }
+  withName: 'multiqc|output_documentation' {
+    errorStrategy = 'ignore'
+  }
+}
