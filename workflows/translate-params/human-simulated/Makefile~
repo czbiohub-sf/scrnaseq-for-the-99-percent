@@ -1,0 +1,26 @@
+REFSEQ_FASTA=/home/olga/data_lg/czbiohub-reference/ncbi/refseq/releases/refseq-release201--2020-07-21/nonredundant-protein/complete__nonredundant_protein.faa.gz
+BUSCO_METAZOA=/home/olga/data_sm/immune-evolution/databases/busco/orthodb-v10/metazoa_odb10/metazoa_odb10.fasta
+OUTDIR_BASE=/mnt/data_sm/home/olga/pipeline-results/bat/nf-predictorthologs
+WORK_DIR=/mnt/data_sm/home/phoenix/pipeline-work/bat/nf-predictorthologs
+BAM_BASE=/mnt/data_sm/home/phoenix/batlas/BatBams/immune-tissue-softlinks
+
+
+busco_metazoa:
+	nextflow run czbiohub/nf-predictorthologs \
+		-profile docker \
+		--bam ${BAM_BASE}/*.bam \
+		--proteome_search_fasta ${REFSEQ_FASTA} \
+		--proteome_translate_fasta ${BUSCO_METAZOA} \
+		--translate_jaccard_threshold 0.95 \
+		--translate_peptide_ksize 9,10,11,12,13,14,15,16,17,18,19,20,21 \
+		--translate_molecule protein,dayhoff \
+		-with-tower \
+		--outdir ${OUTDIR_BASE}--$@/ \
+		-w ${WORK_DIR} \
+		--single_end \
+		-resume \
+		--search_noncoding \
+		--max_cpus 90 \
+		--max-memory 500.GB \
+		--max_time 200.h \
+		-r peptide-ksize-tokenize

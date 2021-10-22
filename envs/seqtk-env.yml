@@ -1,0 +1,7 @@
+name: seqtk-env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bioconda::seqtk

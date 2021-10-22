@@ -1,3 +1,0 @@
-name,molecule,ksize,sigma,expected_collisions,n_unique_kmers,n_theoretical_kmers_log10,n_unique_kmers_log10,unique_over_theoretical_log10
-chinchilla_lanigera,dayhoff6,17,6,7.480537754053476e-21,930,13.228571256521942,2.9684829485539352,-10.260088307968006
-chinchilla_lanigera,protein20,8,20,8.387813703232823e-21,957,10.40823996531185,2.9809119377768436,-7.427328027535006
