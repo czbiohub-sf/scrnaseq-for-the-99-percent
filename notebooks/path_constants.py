@@ -4,10 +4,6 @@ FIGURE_FOLDER = os.path.join('..', 'figures')
 DATA_FOLDER = os.path.join('..', 'kmer-homology-data')
 
 
-
-FIGURE_FOLDER = os.path.join("..", "figures")
-DATA_FOLDER = os.path.join("..", "kmer-homology-data")
-
 # Raw data = straight from the sequencer, or downloaded from a database
 RAWDATA_FOLDER = os.path.join(DATA_FOLDER, "00--rawdata")
 

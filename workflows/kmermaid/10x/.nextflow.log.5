@@ -1,0 +1,159 @@
+Nov-03 15:06:43.081 [main] DEBUG nextflow.cli.Launcher - $> nextflow run /home/olga/code/nf-core/kmermaid--olgabot-khtools-extract-coding -latest -profile czbiohub_local,docker --bam /home/olga/data_sm/tabula-microcebus/rawdata/aligned_micmur3/10x/antoine__180917_A00111_0211_AHGKCVDMXX/ANTOINE_LUNG_P3/ANTOINE_LUNG_P3/outs/possorted_genome_bam.bam --custom_config_base /home/olga/code/nf-core/configs --molecules dna,protein,dayhoff --peptide_fasta /home/olga/data_lg/czbiohub-reference/ensembl/release-97/fasta/homo_sapiens/pep/Homo_sapiens.GRCh38.pep.all.fa.gz --ksizes 21 --log2_sketch_sizes 10,12,14,16 --bloomfilter_tablesize 1e8 --extract_coding_peptide_ksize 11 --extract_coding_peptide_molecule dayhoff --outdir /home/olga/data_sm/tabula-microcebus/kmermaid/dayhoff_ksize11/antoine__180917_A00111_0211_AHGKCVDMXX/ANTOINE_LUNG_P3/ANTOINE_LUNG_P3/ --extract_coding_jaccard_threshold 0.5 -work-dir /home/olga/pureScratch/nextflow-intermediates/ -resume
+Nov-03 15:06:43.202 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 19.07.0-edge
+Nov-03 15:06:44.173 [main] INFO  nextflow.cli.CmdRun - Launching `/home/olga/code/nf-core/kmermaid--olgabot-khtools-extract-coding/main.nf` [romantic_panini] - revision: e83ba688e7
+Nov-03 15:06:44.185 [main] DEBUG nextflow.config.ConfigBuilder - Found config base: /home/olga/code/nf-core/kmermaid--olgabot-khtools-extract-coding/nextflow.config
+Nov-03 15:06:44.186 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/olga/code/nf-core/kmermaid--olgabot-khtools-extract-coding/nextflow.config
+Nov-03 15:06:44.196 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `czbiohub_local,docker`
+Nov-03 15:06:45.003 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [uppmax_devel, bigpurple, uppmax, test_bam, docker, gis, ccga, conda, singularity, munin, prince, czbiohub_aws, hebbe, cfc, uzh, debug, test, czbiohub_local, crick, czbiohub_aws_highpriority, phoenix, shh, mendel, uct_hex, awsbatch, binac]
+Nov-03 15:06:45.015 [main] WARN  nextflow.config.ConfigBuilder - It appears you have never run this project before -- Option `-resume` is ignored
+Nov-03 15:06:45.078 [main] DEBUG nextflow.Session - Session uuid: ead34009-a863-4ad2-9297-d33730942da7
+Nov-03 15:06:45.078 [main] DEBUG nextflow.Session - Run name: romantic_panini
+Nov-03 15:06:45.079 [main] DEBUG nextflow.Session - Executor pool size: 128
+Nov-03 15:06:45.097 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 19.07.0-edge build 5103
+  Created: 09-07-2019 11:46 UTC (04:46 PDT)
+  System: Linux 4.4.0-165-generic
+  Runtime: Groovy 2.5.6 on OpenJDK 64-Bit Server VM 1.8.0_222-8u222-b10-1ubuntu1~16.04.1-b10
+  Encoding: UTF-8 (UTF-8)
+  Process: 68401@ndnd [192.168.99.28]
+  CPUs: 128 - Mem: 2 TB (48.9 GB) - Swap: 2 TB (2 TB)
+Nov-03 15:06:45.147 [main] DEBUG nextflow.Session - Work-dir: /home/olga/pureScratch/nextflow-intermediates [nfs]
+Nov-03 15:06:45.328 [main] DEBUG nextflow.Session - Session start invoked
+Nov-03 15:06:45.334 [main] DEBUG nextflow.trace.TraceFileObserver - Flow starting -- trace file: /home/olga/data_sm/tabula-microcebus/kmermaid/dayhoff_ksize11/antoine__180917_A00111_0211_AHGKCVDMXX/ANTOINE_LUNG_P3/ANTOINE_LUNG_P3/pipeline_info/execution_trace.txt
+Nov-03 15:06:46.092 [main] WARN  nextflow.Session - There's no process matching config selector: sourmash_compute_sketch_fastx -- Did you mean: sourmash_compute_sketch_bam?
+Nov-03 15:06:46.094 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Nov-03 15:06:46.299 [main] INFO  nextflow.Nextflow - [2m----------------------------------------------------[0m
+                                        [0;32m,--.[0;30m/[0;32m,-.[0m
+[0;34m        ___     __   __   __   ___     [0;32m/,-._.--~'[0m
+[0;34m  |\ | |__  __ /  ` /  \ |__) |__         [0;33m}  {[0m
+[0;34m  | \| |       \__, \__/ |  \ |___     [0;32m\`-._,-`-,[0m
+                                        [0;32m`._,._,'[0m
+[0;35m  nf-core/kmer-similarity v1.0dev[0m
+[2m----------------------------------------------------[0m
+
+Nov-03 15:06:46.303 [main] INFO  nextflow.Nextflow - Run Name          : romantic_panini
+BAM               : /home/olga/data_sm/tabula-microcebus/rawdata/aligned_micmur3/10x/antoine__180917_A00111_0211_AHGKCVDMXX/ANTOINE_LUNG_P3/ANTOINE_LUNG_P3/outs/possorted_genome_bam.bam
+K-mer sizes       : 21
+Molecule          : dna,protein,dayhoff
+Log2 Sketch Sizes : 10,12,14,16
+One Sig per Record: false
+Bam chunk line count: 350
+Count valid reads : 0
+Saved Fastas      : fastas
+Barcode umi read metadata: false
+Max Resources     : 512 GB memory, 32 cpus, 10d time per job
+Container         : docker - nfcore/kmermaid:dev
+Output dir        : /home/olga/data_sm/tabula-microcebus/kmermaid/dayhoff_ksize11/antoine__180917_A00111_0211_AHGKCVDMXX/ANTOINE_LUNG_P3/ANTOINE_LUNG_P3/
+Launch dir        : /home/olga/code/tabula-microcebus-extract-coding/workflows/kmermaid/10x
+Working dir       : /home/olga/pureScratch/nextflow-intermediates
+Script dir        : /home/olga/code/nf-core/kmermaid--olgabot-khtools-extract-coding
+User              : olga
+Config Profile    : czbiohub_local,docker
+Config Description: Chan Zuckerberg Biohub AWS Batch profile provided by nf-core/configs.
+Config Contact    : Olga Botvinnik (@olgabot)
+Config URL        : https://www.czbiohub.org/
+Nov-03 15:06:46.304 [main] INFO  nextflow.Nextflow - [0m----------------------------------------------------[0m
+Nov-03 15:06:46.370 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:multiqc|get_software_versions` matches process get_software_versions
+Nov-03 15:06:46.372 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Nov-03 15:06:46.373 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Nov-03 15:06:46.379 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Nov-03 15:06:46.384 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=32; memory=512 GB; capacity=128; pollInterval=100ms; dumpInterval=5m
+Nov-03 15:06:46.444 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > get_software_versions -- maxForks: 128
+Nov-03 15:06:46.515 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_memory` matches label `low_memory` for process with name peptide_bloom_filter
+Nov-03 15:06:46.516 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:peptide_bloom_filter|extract_coding` matches process peptide_bloom_filter
+Nov-03 15:06:46.517 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Nov-03 15:06:46.518 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Nov-03 15:06:46.520 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > peptide_bloom_filter -- maxForks: 128
+Nov-03 15:06:46.552 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:high_memory` matches label `high_memory` for process with name sourmash_compute_sketch_bam
+Nov-03 15:06:46.552 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:sourmash_compute_sketch_bam` matches process sourmash_compute_sketch_bam
+Nov-03 15:06:46.554 [main] WARN  nextflow.script.ProcessConfig - Unknown directive `one_signature_per_record` for process `sourmash_compute_sketch_bam`
+Nov-03 15:06:46.558 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Nov-03 15:06:46.558 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Nov-03 15:06:46.564 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > sourmash_compute_sketch_bam -- maxForks: 128
+Nov-03 15:06:46.609 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_memory` matches label `low_memory` for process with name extract_coding
+Nov-03 15:06:46.609 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:peptide_bloom_filter|extract_coding` matches process extract_coding
+Nov-03 15:06:46.610 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Nov-03 15:06:46.610 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Nov-03 15:06:46.614 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > extract_coding -- maxForks: 128
+Nov-03 15:06:46.656 [Actor Thread 7] ERROR nextflow.processor.TaskProcessor - Error executing process > 'sourmash_compute_sketch_bam (possorted_genome_bam_null)'
+
+Caused by:
+  Unknown variable 'molecule' -- Make sure it is not misspelt and defined somewhere in the script before using it
+
+Source block:
+  sketch_id = "molecule-${molecule}_ksize-${ksize}_log2sketchsize-${log2_sketch_size}"
+  molecule = molecule
+  not_dna = molecule != 'dna' ? '--no-dna' : ''
+  ksize = ksize
+  min_umi_per_barcode = params.min_umi_per_barcode ? "--count-valid-reads ${params.min_umi_per_barcode}" : ''
+  line_count = params.line_count ? "--line-count ${params.line_count}" : ''
+  metadata = params.write_barcode_meta_csv ? "--write-barcode-meta-csv ${params.write_barcode_meta_csv}": ''
+  save_fastas = "--save-fastas ."
+  processes = "--processes ${params.max_cpus}"
+  def barcodes_file = params.barcodes_file ? "--barcodes-file ${barcodes_file.baseName}.tsv": ''
+  def rename_10x_barcodes = params.rename_10x_barcodes ? "--rename-10x-barcodes ${rename_10x_barcodes.baseName}.tsv": ''
+  """
+    sourmash compute \\
+      --ksize $ksize \\
+      --$molecule \\
+      $not_dna \\
+      --num-hashes \$((2**$log2_sketch_size)) \\
+      $processes \\
+      $min_umi_per_barcode \\
+      $line_count \\
+      $rename_10x_barcodes \\
+      $barcodes_file \\
+      $save_fastas \\
+      $metadata \\
+      --output ${sample_id}_${sketch_id}.sig \\
+      --input-is-10x $bam
+    find . -type f -name "*.fasta" | while read src; do if [[ \$src == *"|"* ]]; then mv "\$src" \$(echo "\$src" | tr "|" "_"); fi done
+  """
+
+Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
+Nov-03 15:06:46.670 [Actor Thread 7] DEBUG nextflow.Session - Session aborted -- Cause: Process `null` script contains error(s)
+Nov-03 15:06:46.670 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:mid_memory` matches label `mid_memory` for process with name sourmash_compute_sketch_fastx_nucleotide
+Nov-03 15:06:46.671 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Nov-03 15:06:46.672 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Nov-03 15:06:46.685 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [0, 1]
+Nov-03 15:06:46.703 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > sourmash_compute_sketch_fastx_nucleotide -- maxForks: 128
+Nov-03 15:06:46.714 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:mid_memory` matches label `mid_memory` for process with name sourmash_compute_sketch_fastx_peptide
+Nov-03 15:06:46.715 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Nov-03 15:06:46.716 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Nov-03 15:06:46.717 [Actor Thread 7] DEBUG nextflow.Session - The following nodes are still active:
+[process] sourmash_compute_sketch_bam
+  status=ACTIVE
+  port 0: (value) bound ; channel: single_ksize
+  port 1: (value) bound ; channel: single_molecule
+  port 2: (value) bound ; channel: single_log2_sketch_size
+  port 3: (queue) closed; channel: barcodes_file
+  port 4: (queue) OPEN  ; channel: -
+  port 5: (queue) OPEN  ; channel: rename_10x_barcodes
+  port 6: (cntrl) -     ; channel: $
+
+[process] extract_coding
+  status=ACTIVE
+  port 0: (value) OPEN  ; channel: -
+  port 1: (queue) OPEN  ; channel: -
+  port 2: (cntrl) -     ; channel: $
+
+Nov-03 15:06:46.719 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [0, 1, 2]
+Nov-03 15:06:46.720 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > sourmash_compute_sketch_fastx_peptide -- maxForks: 128
+Nov-03 15:06:46.743 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:high_memory` matches label `high_memory` for process with name sourmash_compare_sketches
+Nov-03 15:06:46.744 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:sourmash_compare_sketches` matches process sourmash_compare_sketches
+Nov-03 15:06:46.745 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Nov-03 15:06:46.745 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Nov-03 15:06:46.746 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > sourmash_compare_sketches -- maxForks: 128
+Nov-03 15:06:46.750 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
+Nov-03 15:06:46.750 [main] DEBUG nextflow.Session - Session await
+Nov-03 15:06:46.750 [main] DEBUG nextflow.Session - Session await > all process finished
+Nov-03 15:06:46.750 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Nov-03 15:06:46.849 [main] INFO  nextflow.Nextflow - [0;35m[nf-core/kmermaid][0;31m Pipeline completed with errors[0m
+Nov-03 15:06:46.860 [main] DEBUG nextflow.trace.StatsObserver - Workflow completed > WorkflowStats[succeedCount=0; failedCount=0; ignoredCount=0; cachedCount=0; succeedDuration=0ms; failedDuration=0ms; cachedDuration=0ms]
+Nov-03 15:06:46.860 [main] DEBUG nextflow.trace.TraceFileObserver - Flow completing -- flushing trace file
+Nov-03 15:06:46.929 [main] DEBUG nextflow.trace.ReportObserver - Flow completing -- rendering html report
+Nov-03 15:06:46.937 [main] DEBUG nextflow.trace.ReportObserver - Execution report summary data:
+  {}
+Nov-03 15:06:47.801 [main] DEBUG nextflow.trace.TimelineObserver - Flow completing -- rendering html timeline
+Nov-03 15:06:48.094 [main] DEBUG nextflow.CacheDB - Closing CacheDB done
+Nov-03 15:06:48.125 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye
