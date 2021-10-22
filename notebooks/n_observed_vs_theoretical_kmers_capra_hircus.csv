@@ -1,3 +1,0 @@
-name,molecule,ksize,sigma,expected_collisions,n_unique_kmers,n_theoretical_kmers_log10,n_unique_kmers_log10,unique_over_theoretical_log10
-capra_hircus,dayhoff6,17,6,3.2812572927263166e-13,75724,13.228571256521942,4.879233546813747,-8.349337709708195
-capra_hircus,protein20,8,20,3.5859623378039573e-13,77413,10.40823996531185,4.888813898075463,-5.519426067236387

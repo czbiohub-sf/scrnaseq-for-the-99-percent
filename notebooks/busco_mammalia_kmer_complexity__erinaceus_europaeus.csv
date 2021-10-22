@@ -1,3 +1,0 @@
-name,molecule,ksize,sigma,expected_collisions,n_unique_kmers,n_theoretical_kmers_log10,n_unique_kmers_log10,unique_over_theoretical_log10
-erinaceus_europaeus,dayhoff6,17,6,7.888326236760549e-06,5445706,13.228571256521942,6.73605419116769,-6.492517065354252
-erinaceus_europaeus,protein20,8,20,8.199258743515133e-06,5499456,10.40823996531185,6.740319731697358,-3.667920233614492
