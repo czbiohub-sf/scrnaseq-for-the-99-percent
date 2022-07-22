@@ -1,16 +1,21 @@
 import os
 
 ORPHEUM_BENCHMARKING_FOLDER = '/Users/olgabot/Downloads/00-orpheum-benchmarking'
+ORPHEUM_EXTERNAL_DATA = os.path.join(    ORPHEUM_BENCHMARKING_FOLDER,
+    "00-external-data",)
 
 QFO_EUKARYOTA_FOLDER = os.path.join(
-    ORPHEUM_BENCHMARKING_FOLDER,
-    "00-external-data",
+    ORPHEUM_EXTERNAL_DATA
     "quest-for-orthologs",
     "2019",
     "Eukaryota",
 )
 
-RESULTS_FOLDER = os.path.join(
+MAMMALIA_BUSCO_SUBSET_FOLDER = os.path.join(
+    ORPHEUM_BENCHMARKING_FOLDER, "mammalia_busco_subsets"
+)
+
+ORPHEUM_GROUND_TRUTH_FOLDER = os.path.join(
     ORPHEUM_BENCHMARKING_FOLDER, "02-results", "00-ground-truth-protein-coding-frames"
 )
 
@@ -51,9 +56,7 @@ PROCESSED_DATA_FOLDER = os.path.join(DATA_FOLDER, "01--processed-data")
 ORPHEUM_BENCHMARKING_FOLDER = os.path.join(
     PROCESSED_DATA_FOLDER, "orpheum-benchmarking"
 )
-MAMMALIA_BUSCO_SUBSET_FOLDER = os.path.join(
-    ORPHEUM_BENCHMARKING_FOLDER, "mammalia_busco_subsets"
-)
+
 
 # Human simulated reads -- output from Polyster simulated reads
 SIMULATED_READS_FOLDER = os.path.join(ORPHEUM_BENCHMARKING_FOLDER, "simulated", "human")
