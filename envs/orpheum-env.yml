@@ -9,4 +9,4 @@ dependencies:
   - s3fs
   - pip
   - pip:
-    - git+https://github.com/czbiohub/sencha
+    - git+https://github.com/czbiohub/orpheum
