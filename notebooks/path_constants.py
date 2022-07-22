@@ -1,5 +1,21 @@
 import os
 
+ORPHEUM_BENCHMARKING_FOLDER = '/Users/olgabot/Downloads/00-orpheum-benchmarking'
+
+QFO_EUKARYOTA_FOLDER = os.path.join(
+    ORPHEUM_BENCHMARKING_FOLDER,
+    "00-external-data",
+    "quest-for-orthologs",
+    "2019",
+    "Eukaryota",
+)
+
+RESULTS_FOLDER = os.path.join(
+    ORPHEUM_BENCHMARKING_FOLDER, "02-results", "00-ground-truth-protein-coding-frames"
+)
+
+SIMULATED_RNASEQ_FOLDER = os.path.join(ORPHEUM_BENCHMARKING_FOLDER, "01-simulated-rnaseq")
+
 FIGURE_FOLDER = os.path.join('..', 'figures')
 DATA_FOLDER = os.path.join('..', 'kmer-homology-data')
 
