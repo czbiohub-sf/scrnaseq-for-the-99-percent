@@ -33,3 +33,5 @@ dependencies:
   - git-filter-repo
   - joblib
   - khmer
+  pip:
+    - git+https://github.com/olgabot/orpheum
