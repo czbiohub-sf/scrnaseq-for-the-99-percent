@@ -1,29 +1,28 @@
 import os
 
-ORPHEUM_BENCHMARKING_FOLDER = '/Users/olgabot/Downloads/00-orpheum-benchmarking'
-ORPHEUM_EXTERNAL_DATA = os.path.join(    ORPHEUM_BENCHMARKING_FOLDER,
-    "00-external-data",)
+ORPHEUM_BENCHMARKING_FOLDER = "/Users/olgabot/Downloads/00-orpheum-benchmarking"
+ORPHEUM_EXTERNAL_DATA = os.path.join(ORPHEUM_BENCHMARKING_FOLDER, "00-external-data")
 
 QFO_EUKARYOTA_FOLDER = os.path.join(
-    ORPHEUM_EXTERNAL_DATA
-    "quest-for-orthologs",
-    "2019",
-    "Eukaryota",
+    ORPHEUM_EXTERNAL_DATA, "quest-for-orthologs", "2019", "Eukaryota"
+)
+
+
+ORPHEUM_GROUND_TRUTH_FOLDER = os.path.join(
+    ORPHEUM_BENCHMARKING_FOLDER, "02-results", "00-ground-truth-protein-coding-frames"
+)
+
+SIMULATED_RNASEQ_FOLDER = os.path.join(
+    ORPHEUM_BENCHMARKING_FOLDER, "01-simulated-rnaseq"
 )
 
 MAMMALIA_BUSCO_SUBSET_FOLDER = os.path.join(
     ORPHEUM_BENCHMARKING_FOLDER, "mammalia_busco_subsets"
 )
 
-ORPHEUM_GROUND_TRUTH_FOLDER = os.path.join(
-    ORPHEUM_BENCHMARKING_FOLDER, "02-results", "00-ground-truth-protein-coding-frames"
-)
 
-SIMULATED_RNASEQ_FOLDER = os.path.join(ORPHEUM_BENCHMARKING_FOLDER, "01-simulated-rnaseq")
-
-FIGURE_FOLDER = os.path.join('..', 'figures')
-DATA_FOLDER = os.path.join('..', 'kmer-homology-data')
-
+FIGURE_FOLDER = os.path.join("..", "figures")
+DATA_FOLDER = os.path.join("..", "kmer-homology-data")
 
 
 FIGURE_FOLDER = os.path.join("..", "figures")
@@ -89,13 +88,16 @@ bat_parquet = os.path.join(sig_outdir_base, "3--test-bat", top_hit_suffix)
 human_parquet = os.path.join(sig_outdir_base, "2--test-human", top_hit_suffix)
 
 top_hit_paths = {
-#     "self": self2self_parquet,
+    #     "self": self2self_parquet,
     "mouse": mouse2mouse_parquet,
     "lemur": lemur_parquet,
     "bat": bat_parquet,
     "human": human_parquet,
 }
 
-H5AD = os.path.join(DATA_FOLDER, 'h5ads',
- 'human-lemur-mouse-bat',
- 'human-lemur-mouse-bat__lung_only.h5ad')
+H5AD = os.path.join(
+    DATA_FOLDER,
+    "h5ads",
+    "human-lemur-mouse-bat",
+    "human-lemur-mouse-bat__lung_only.h5ad",
+)
