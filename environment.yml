@@ -31,3 +31,5 @@ dependencies:
   - sourmash[version='>=4.0']
   - boto3
   - git-filter-repo
+  - joblib
+  - khmer
