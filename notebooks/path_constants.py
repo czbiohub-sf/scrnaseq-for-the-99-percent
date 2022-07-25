@@ -23,10 +23,7 @@ QFO_EUKARYOTA_FOLDER = os.path.join(
     ORPHEUM_EXTERNAL_DATA, "quest-for-orthologs", "2019", "Eukaryota"
 )
 
-# Folder for simulated human rna-seq data
-SIMULATED_RNASEQ_FOLDER = os.path.join(
-    ORPHEUM_BENCHMARKING_FOLDER, "01-simulated-rnaseq"
-)
+
 
 # Ground truth of the reading frame for each simulated rna-seq read
 ORPHEUM_GROUND_TRUTH_FOLDER = os.path.join(
@@ -53,15 +50,9 @@ BUSCO_MAMMALIA_FOLDER = os.path.join(
 PROCESSED_DATA_FOLDER = os.path.join(DATA_FOLDER, "01--processed-data")
 
 
-# Data related to orpheum benchmarking
-ORPHEUM_BENCHMARKING_FOLDER = os.path.join(
-    PROCESSED_DATA_FOLDER, "orpheum-benchmarking"
-)
-
-
 # Human simulated reads -- output from Polyster simulated reads
 SIMULATED_RNASEQ_FOLDER = os.path.join(
-    ORPHEUM_BENCHMARKING_FOLDER, "simulated", "human"
+    ORPHEUM_BENCHMARKING_FOLDER, "01-simulated-rnaseq"
 )
 SIMULATED_READS_FASTQ = os.path.join(
     SIMULATED_RNASEQ_FOLDER, "Homo_sapiens_9606_qfo_dna_01.fq.gz"
