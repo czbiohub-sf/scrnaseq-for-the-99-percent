@@ -12,7 +12,7 @@ DATA_FOLDER = os.path.join("..", "kmer-homology-data")
 RAWDATA_FOLDER = os.path.join(DATA_FOLDER, "00--rawdata")
 
 ### --- Figure 2, Supplementary Figure 1 Paths --- ###
-ORPHEUM_BENCHMARKING_FOLDER = "/Users/olgabot/Downloads/00-orpheum-benchmarking"
+ORPHEUM_BENCHMARKING_FOLDER = "/Volumes/1TB/Downloads/00-orpheum-benchmarking"
 ORPHEUM_EXTERNAL_DATA = os.path.join(ORPHEUM_BENCHMARKING_FOLDER, "00-external-data")
 
 # Quest for Orthologs 2019 folder
@@ -26,9 +26,10 @@ QFO_EUKARYOTA_FOLDER = os.path.join(
 
 
 # Ground truth of the reading frame for each simulated rna-seq read
-ORPHEUM_GROUND_TRUTH_FOLDER = os.path.join(
-    ORPHEUM_BENCHMARKING_FOLDER, "02-results", "00-ground-truth-protein-coding-frames"
-)
+ORPHEUM_RESULTS_FOLDER = os.path.join(
+    ORPHEUM_BENCHMARKING_FOLDER, "02-results")
+
+ORPHEUM_GROUND_TRUTH_FOLDER = os.path.join(ORPHEUM_RESULTS_FOLDER, "00-ground-truth-protein-coding-frames")
 
 
 MAMMALIA_BUSCO_SUBSET_FOLDER = os.path.join(
@@ -63,7 +64,7 @@ SIMULATED_READS_BUSCO_ORTHODB_FOLDER = os.path.join(
 
 # Folder of output of Orpheum translate on human reads
 ORPHEUM_PIPELINE_RESULTS_FOLDER = os.path.join(
-    ORPHEUM_BENCHMARKING_FOLDER, "orpheum-translate-on-simulated-human-data-results"
+    ORPHEUM_RESULTS_FOLDER, "01-orpheum-translate-on-simulated-human-data-results"
 )
 
 ### --- Figure 1, Supplementary Figure 2 Paths --- ###
