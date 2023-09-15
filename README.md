@@ -2,3 +2,135 @@
 Code accompanying [Botvinnik et al, 2021. Single-cell transcriptomics for the 99.9% of species without reference genomes](https://www.biorxiv.org/content/10.1101/2021.07.09.450799v1). 
 
 > **_NOTE:_** We are figuring out how to share the human k-mer signature data in a way that respects the prviacy of the patients. Thank you for your patience as we establish what aspects of the data we can release while remaining compliant with HIPPA.
+
+
+<details><summary>Data Organization</summary>
+
+
+```commandline
+mouse2mouse/
+    self2self-bootstrapped/
+        0--train-mouse1-single-cells/
+            iteration-00/
+                DNA/
+                protein/
+                dayhoff/
+            iteration-01/
+                ...
+        1--test-mouse1-single-cells/
+            iteration-00/
+                DNA/
+                protein/
+                dayhoff/
+            iteration-01/
+                ...                
+        2--train-mouse1-merged-celltype-sigs/
+            iteration-00/
+                DNA/
+                protein/
+                dayhoff/
+            iteration-01/
+                ...
+        3--train-mouse1-celltype-remove-common-kmers/
+            iteration-00/
+                DNA/
+                protein/
+                dayhoff/
+            iteration-01/
+                ...
+        4--train-mouse1--celltype-sbt-dbs/
+            iteration-00/
+                DNA/
+                protein/
+                dayhoff/
+            iteration-01/
+                ...
+        5--search-results/
+            iteration-00/
+                DNA/
+                protein/
+                dayhoff/
+            iteration-00/
+                ...
+    mouse1-mouse2/
+        0--train-mouse1-single-cells/
+            DNA/
+            protein/
+            dayhoff/
+        1--test-mouse2-single-cells/
+            DNA/
+            protein/
+            dayhoff/
+        2--train-mouse1-merged-celltype-sigs/
+            DNA/
+            protein/
+            dayhoff/
+        3--train-mouse1-celltype-remove-common-kmers/
+            DNA/
+            protein/
+            dayhoff/
+        4--train-mouse1-celltype-sbt-dbs/
+            DNA/
+            protein/
+            dayhoff
+        5--search-results/
+            DNA/
+            protein/
+            dayhoff/
+train-mouse/
+    0--protein-coding-fastas/
+        nucleotide/
+        peptide/
+    1--single-cell-sigs/
+        DNA/
+        protein/
+        dayhoff/
+    2--merged-celltype-sigs/
+        DNA/
+        protein/
+        dayhoff/
+    3--celltype-remove-common-kmers/
+        DNA/
+        protein/
+        dayhoff/
+    4--celltype-sbt-dbs/
+        DNA/
+        protein/
+        dayhoff/
+test-human/
+    0--protein-coding-fastas/
+        nucleotide/
+        peptide/
+    1--single-cell-sigs/
+        DNA/
+        protein/
+        dayhoff/
+    2--mouse-search-results/
+        DNA/
+        protein/
+        dayhoffl
+test-lemur/
+    0--protein-coding-fastas/
+        nucleotide/
+        peptide/
+    1--single-cell-sigs/
+        protein/
+        dayhoff/
+    2--mouse-search-results/
+        DNA/
+        protein/
+        dayhoff/
+test-bat/
+    0--protein-coding-fastas/
+        nucleotide/
+        peptide/
+    1--single-cell-sigs/
+        protein/
+        dayhoff/
+    2--mouse-search-results/
+        DNA/
+        protein/
+        dayhoff/
+```
+ 
+</details>
